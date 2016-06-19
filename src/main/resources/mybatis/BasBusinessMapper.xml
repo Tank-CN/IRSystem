@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tank.mapper.BasBusinessMapper" >
+  <resultMap id="BaseResultMap" type="com.tank.model.BasBusiness" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="LONGITUDE" property="longitude" jdbcType="DECIMAL" />
+    <result column="LATITUDE" property="latitude" jdbcType="DECIMAL" />
+    <result column="REGION" property="region" jdbcType="VARCHAR" />
+    <result column="REGIONNAME" property="regionname" jdbcType="VARCHAR" />
+    <result column="PICURL" property="picurl" jdbcType="VARCHAR" />
+    <result column="INTRODUCE" property="introduce" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="SPELL" property="spell" jdbcType="VARCHAR" />
+    <result column="WEBSITE" property="website" jdbcType="VARCHAR" />
+    <result column="SERVERTIME" property="servertime" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="TINYINT" />
+    <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="CREATEUSER" property="createuser" jdbcType="BIGINT" />
+    <result column="LASTMODIFYUSER" property="lastmodifyuser" jdbcType="BIGINT" />
+    <result column="LASTMODIFYDATE" property="lastmodifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TITLE, ADDRESS, LONGITUDE, LATITUDE, REGION, REGIONNAME, PICURL, INTRODUCE, TELEPHONE, 
+    SPELL, WEBSITE, SERVERTIME, FLAG, CREATEDATE, CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tank.model.BasBusinessExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bas_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bas_business
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bas_business
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tank.model.BasBusinessExample" >
+    delete from bas_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tank.model.BasBusiness" >
+    insert into bas_business (ID, TITLE, ADDRESS, 
+      LONGITUDE, LATITUDE, REGION, 
+      REGIONNAME, PICURL, INTRODUCE, 
+      TELEPHONE, SPELL, WEBSITE, 
+      SERVERTIME, FLAG, CREATEDATE, 
+      CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{region,jdbcType=VARCHAR}, 
+      #{regionname,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{spell,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{servertime,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=BIGINT}, #{lastmodifyuser,jdbcType=BIGINT}, #{lastmodifydate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tank.model.BasBusiness" >
+    insert into bas_business
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE,
+      </if>
+      <if test="latitude != null" >
+        LATITUDE,
+      </if>
+      <if test="region != null" >
+        REGION,
+      </if>
+      <if test="regionname != null" >
+        REGIONNAME,
+      </if>
+      <if test="picurl != null" >
+        PICURL,
+      </if>
+      <if test="introduce != null" >
+        INTRODUCE,
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE,
+      </if>
+      <if test="spell != null" >
+        SPELL,
+      </if>
+      <if test="website != null" >
+        WEBSITE,
+      </if>
+      <if test="servertime != null" >
+        SERVERTIME,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE,
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER,
+      </if>
+      <if test="lastmodifyuser != null" >
+        LASTMODIFYUSER,
+      </if>
+      <if test="lastmodifydate != null" >
+        LASTMODIFYDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="regionname != null" >
+        #{regionname,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null" >
+        #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="servertime != null" >
+        #{servertime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=BIGINT},
+      </if>
+      <if test="lastmodifyuser != null" >
+        #{lastmodifyuser,jdbcType=BIGINT},
+      </if>
+      <if test="lastmodifydate != null" >
+        #{lastmodifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tank.model.BasBusinessExample" resultType="java.lang.Integer" >
+    select count(*) from bas_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bas_business
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.latitude != null" >
+        LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.region != null" >
+        REGION = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionname != null" >
+        REGIONNAME = #{record.regionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picurl != null" >
+        PICURL = #{record.picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduce != null" >
+        INTRODUCE = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spell != null" >
+        SPELL = #{record.spell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null" >
+        WEBSITE = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servertime != null" >
+        SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flag != null" >
+        FLAG = #{record.flag,jdbcType=TINYINT},
+      </if>
+      <if test="record.createdate != null" >
+        CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createuser != null" >
+        CREATEUSER = #{record.createuser,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastmodifyuser != null" >
+        LASTMODIFYUSER = #{record.lastmodifyuser,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastmodifydate != null" >
+        LASTMODIFYDATE = #{record.lastmodifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bas_business
+    set ID = #{record.id,jdbcType=BIGINT},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      REGION = #{record.region,jdbcType=VARCHAR},
+      REGIONNAME = #{record.regionname,jdbcType=VARCHAR},
+      PICURL = #{record.picurl,jdbcType=VARCHAR},
+      INTRODUCE = #{record.introduce,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      SPELL = #{record.spell,jdbcType=VARCHAR},
+      WEBSITE = #{record.website,jdbcType=VARCHAR},
+      SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      FLAG = #{record.flag,jdbcType=TINYINT},
+      CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
+      CREATEUSER = #{record.createuser,jdbcType=BIGINT},
+      LASTMODIFYUSER = #{record.lastmodifyuser,jdbcType=BIGINT},
+      LASTMODIFYDATE = #{record.lastmodifydate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tank.model.BasBusiness" >
+    update bas_business
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE = #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null" >
+        LATITUDE = #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="region != null" >
+        REGION = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="regionname != null" >
+        REGIONNAME = #{regionname,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        PICURL = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null" >
+        SPELL = #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        WEBSITE = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="servertime != null" >
+        SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER = #{createuser,jdbcType=BIGINT},
+      </if>
+      <if test="lastmodifyuser != null" >
+        LASTMODIFYUSER = #{lastmodifyuser,jdbcType=BIGINT},
+      </if>
+      <if test="lastmodifydate != null" >
+        LASTMODIFYDATE = #{lastmodifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tank.model.BasBusiness" >
+    update bas_business
+    set TITLE = #{title,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      LONGITUDE = #{longitude,jdbcType=DECIMAL},
+      LATITUDE = #{latitude,jdbcType=DECIMAL},
+      REGION = #{region,jdbcType=VARCHAR},
+      REGIONNAME = #{regionname,jdbcType=VARCHAR},
+      PICURL = #{picurl,jdbcType=VARCHAR},
+      INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      SPELL = #{spell,jdbcType=VARCHAR},
+      WEBSITE = #{website,jdbcType=VARCHAR},
+      SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=TINYINT},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      CREATEUSER = #{createuser,jdbcType=BIGINT},
+      LASTMODIFYUSER = #{lastmodifyuser,jdbcType=BIGINT},
+      LASTMODIFYDATE = #{lastmodifydate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

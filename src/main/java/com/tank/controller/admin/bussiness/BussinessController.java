@@ -6,9 +6,9 @@ import com.bs.util.CommonUtils;
 import com.bs.util.HttpPostUploadUtil;
 import com.bs.util.ResultCode;
 import com.tank.controller.admin.AdminBaseController;
-import com.tank.manage.BasADBannerManage;
+import com.tank.manage.BasBusinessManage;
 import com.tank.model.Admin;
-import com.tank.model.BasAdBanner;
+import com.tank.model.BasBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,15 +34,15 @@ import java.util.Map;
 public class BussinessController extends AdminBaseController {
 
     @Autowired
-    BasADBannerManage basADBannerManage;
+    BasBusinessManage basBusinessManage;
 
 
     @Autowired
     HttpPostUploadUtil imageUploadService;
 
-    @RequestMapping(value = "adbanner")
+    @RequestMapping(value = "bussiness")
     public ModelAndView basOrganization(String currentpage) {
-        ModelAndView modelAndView = new ModelAndView("admin/bas/adbanner");
+        ModelAndView modelAndView = new ModelAndView("admin/bas/bussiness");
         modelAndView.addObject("currentpage", CommonUtils.isNull(currentpage) ? "1" : currentpage);
         return modelAndView;
     }
@@ -55,33 +55,33 @@ public class BussinessController extends AdminBaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "adbanner/list", method = RequestMethod.POST)
+    @RequestMapping(value = "bussiness/list", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
 
         Map<String, Object> regMsg = new HashMap<String, Object>();
-        regMsg.put("data", basADBannerManage.list(page, length));
-        regMsg.put("total", basADBannerManage.count());
+        regMsg.put("data", basBusinessManage.list(page, length));
+        regMsg.put("total", basBusinessManage.count());
         regMsg.put("code", ResultCode.SUCCESS);
         return regMsg;
     }
 
 
-    @RequestMapping(value = "adbanner/updateView")
+    @RequestMapping(value = "bussiness/updateView")
     public ModelAndView updateView(Long id, String currentpage) {
-        ModelAndView modelAndView = new ModelAndView("admin/bas/adbanner_update");
+        ModelAndView modelAndView = new ModelAndView("admin/bas/bussiness_update");
         modelAndView.addObject("id", id);
         modelAndView.addObject("currentpage", currentpage);
         return modelAndView;
     }
 
-    @RequestMapping(value = "adbanner/addView")
+    @RequestMapping(value = "bussiness/addView")
     public String addView() {
-        return "admin/bas/adbanner_add";
+        return "admin/bas/bussiness_add";
     }
 
-    @RequestMapping(value = "adbanner/saveorupdate", method = RequestMethod.POST)
-    public void insertOrUpdate(BasAdBanner organization, @RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "bussiness/saveorupdate", method = RequestMethod.POST)
+    public void insertOrUpdate(BasBusiness organization, @RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Admin account = getAdmin(request);
         JSONObject map = new JSONObject();
         boolean flag = false;
@@ -99,14 +99,14 @@ public class BussinessController extends AdminBaseController {
             if (organization.getId() != null) {
                 organization.setLastmodifyuser(account.getId());
                 organization.setLastmodifydate(new Date());
-                map.put("code", basADBannerManage.update(organization));
+                map.put("code", basBusinessManage.update(organization));
                 map.put("data", organization.getId());
                 response.getWriter().println(map.toJSONString());
             } else {
                 organization.setCreateuser(account.getId());
                 organization.setCreatedate(new Date());
                 map.put("code", ResultCode.SUCCESS);
-                map.put("data", basADBannerManage.insertBackId(organization));
+                map.put("data", basBusinessManage.insertBackId(organization));
                 response.getWriter().println(map.toJSONString());
             }
         } else {
@@ -115,17 +115,17 @@ public class BussinessController extends AdminBaseController {
         }
     }
 
-    @RequestMapping(value = "adbanner/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "bussiness/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Boolean delete(@PathVariable("id") Long id) {
-        return basADBannerManage.delete(id) == 1;
+        return basBusinessManage.delete(id) == 1;
 
     }
 
-    @RequestMapping(value = "adbanner/detail/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "bussiness/detail/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public BasAdBanner detail(@PathVariable("id") Long id) {
-        return basADBannerManage.getById(id);
+    public BasBusiness detail(@PathVariable("id") Long id) {
+        return basBusinessManage.getById(id);
     }
 
 }

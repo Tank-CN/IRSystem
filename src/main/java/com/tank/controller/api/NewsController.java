@@ -1,7 +1,9 @@
 package com.tank.controller.api;
 
-/**
- * Created by Administrator on 2016/6/19.
- */
-public class NewsController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value = "/api/auth/news")
+public class NewsController extends ApiBaseController{
 }
