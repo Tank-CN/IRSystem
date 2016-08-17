@@ -82,13 +82,13 @@ define(function (require, exports, module) {
 
             $.ajax({
                 type: "POST",
-                url: ROOTPAth + "/admin/bas/adbanner/detail/" + organizationID,
+                url: ROOTPAth + "/admin/bas/aditem/detail/" + organizationID,
                 dataType: "json",
                 success: function (data) {
                     tool.stopPageLoading();
                     $addForm[0].reset();
                     $addForm.autofill(data);
-                    $("#summernote-con").html(data.context);
+                    $("#summernote-con").html(data.content);
                     if (data.picurl) {
                         $("#imgurl").attr("src", data.picurl).show();
                     }
@@ -188,7 +188,7 @@ define(function (require, exports, module) {
                     $(fm).ajaxSubmit({
                         type: "POST",
                         dataType: "html",
-                        url: ROOTPAth + "/admin/bas/adbanner/saveorupdate",
+                        url: ROOTPAth + "/admin/bas/aditem/saveorupdate",
                         data: {
                             id: organizationID
                         },
@@ -214,7 +214,7 @@ define(function (require, exports, module) {
                                 if (newdata.code === 1) {
 
                                     $tipModal.on('show.bs.modal', function (event) {
-                                        $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth + "/admin/bas/adbanner/updateView?id=" + organizationID + "&pcode=AD&subcode=ADBanner&currentpage=" + currentpage)
+                                        $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth + "/admin/bas/aditem/updateView?id=" + organizationID + "&pcode=AD&subcode=ADItem&currentpage=" + currentpage)
                                     });
                                     $tipModal.modal("show");
                                 }

@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.tank.model.ActivitySignup" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="AID" property="aid" jdbcType="BIGINT" />
+    <result column="ATITLE" property="atitle" jdbcType="VARCHAR" />
     <result column="UID" property="uid" jdbcType="BIGINT" />
+    <result column="UNAME" property="uname" jdbcType="VARCHAR" />
     <result column="LINKMAN" property="linkman" jdbcType="VARCHAR" />
     <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
     <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, AID, UID, LINKMAN, MOBILE, CREATEDATE
+    ID, AID, ATITLE, UID, UNAME, LINKMAN, MOBILE, CREATEDATE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tank.model.ActivitySignupExample" >
     select
@@ -101,9 +103,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.tank.model.ActivitySignup" >
-    insert into activity_signup (ID, AID, UID, LINKMAN, 
+    insert into activity_signup (ID, AID, ATITLE, 
+      UID, UNAME, LINKMAN, 
       MOBILE, CREATEDATE)
-    values (#{id,jdbcType=BIGINT}, #{aid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{linkman,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{aid,jdbcType=BIGINT}, #{atitle,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=BIGINT}, #{uname,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.tank.model.ActivitySignup" >
@@ -115,8 +119,14 @@
       <if test="aid != null" >
         AID,
       </if>
+      <if test="atitle != null" >
+        ATITLE,
+      </if>
       <if test="uid != null" >
         UID,
+      </if>
+      <if test="uname != null" >
+        UNAME,
       </if>
       <if test="linkman != null" >
         LINKMAN,
@@ -135,8 +145,14 @@
       <if test="aid != null" >
         #{aid,jdbcType=BIGINT},
       </if>
+      <if test="atitle != null" >
+        #{atitle,jdbcType=VARCHAR},
+      </if>
       <if test="uid != null" >
         #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
       </if>
       <if test="linkman != null" >
         #{linkman,jdbcType=VARCHAR},
@@ -164,8 +180,14 @@
       <if test="record.aid != null" >
         AID = #{record.aid,jdbcType=BIGINT},
       </if>
+      <if test="record.atitle != null" >
+        ATITLE = #{record.atitle,jdbcType=VARCHAR},
+      </if>
       <if test="record.uid != null" >
         UID = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uname != null" >
+        UNAME = #{record.uname,jdbcType=VARCHAR},
       </if>
       <if test="record.linkman != null" >
         LINKMAN = #{record.linkman,jdbcType=VARCHAR},
@@ -185,7 +207,9 @@
     update activity_signup
     set ID = #{record.id,jdbcType=BIGINT},
       AID = #{record.aid,jdbcType=BIGINT},
+      ATITLE = #{record.atitle,jdbcType=VARCHAR},
       UID = #{record.uid,jdbcType=BIGINT},
+      UNAME = #{record.uname,jdbcType=VARCHAR},
       LINKMAN = #{record.linkman,jdbcType=VARCHAR},
       MOBILE = #{record.mobile,jdbcType=VARCHAR},
       CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP}
@@ -199,8 +223,14 @@
       <if test="aid != null" >
         AID = #{aid,jdbcType=BIGINT},
       </if>
+      <if test="atitle != null" >
+        ATITLE = #{atitle,jdbcType=VARCHAR},
+      </if>
       <if test="uid != null" >
         UID = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null" >
+        UNAME = #{uname,jdbcType=VARCHAR},
       </if>
       <if test="linkman != null" >
         LINKMAN = #{linkman,jdbcType=VARCHAR},
@@ -217,7 +247,9 @@
   <update id="updateByPrimaryKey" parameterType="com.tank.model.ActivitySignup" >
     update activity_signup
     set AID = #{aid,jdbcType=BIGINT},
+      ATITLE = #{atitle,jdbcType=VARCHAR},
       UID = #{uid,jdbcType=BIGINT},
+      UNAME = #{uname,jdbcType=VARCHAR},
       LINKMAN = #{linkman,jdbcType=VARCHAR},
       MOBILE = #{mobile,jdbcType=VARCHAR},
       CREATEDATE = #{createdate,jdbcType=TIMESTAMP}

@@ -34,6 +34,7 @@ define(function (require, exports, module) {
     var $allmap = $("#allmap");
     var $selImg = $("#selImg");
     var $file = $("#file");
+    var tool = require("tool");
     var editTag = false;
     // 对Date的扩展，将 Date 转化为指定格式的String
     // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
@@ -98,8 +99,7 @@ define(function (require, exports, module) {
             this.bind();
             $.ajax({
                 type: "POST",
-                url: ROOTPAth + "/admin/activity/detail",
-                data: {id: activityID},
+                url: ROOTPAth + "/admin/business/activity/detail/"+activityID,
                 dataType: "json",
                 success: function (data) {
 
@@ -202,6 +202,12 @@ define(function (require, exports, module) {
                     title: {
                         required: true
                     },
+                    bid: {
+                        required: true
+                    },
+                    bname: {
+                        required: true
+                    },
                     sdate: {
                         required: true
                     },
@@ -241,6 +247,12 @@ define(function (require, exports, module) {
                 messages: {
                     title: {
                         required: "请填写活动标题"
+                    },
+                    bid: {
+                        required: "请填写商家ID"
+                    },
+                    bname: {
+                        required: "请填写商家名称"
                     },
                     sdate: {
                         required: "请填写活动时间"
@@ -316,22 +328,27 @@ define(function (require, exports, module) {
 
                         type: "POST",
                         dataType: 'html',
-                        url: ROOTPAth + "/admin/activity/saveorupdate",
+                        url: ROOTPAth + "/admin/business/activity/saveorupdate",
                         beforeSubmit: function (formData, jqForm, options) {
                             var isSuccess = $addForm.validate().form();
+                            tool.startPageLoading();
                             return isSuccess;
                         },
                         success: function (data) {
-
+                            tool.stopPageLoading();
                             var $tipModal = $('#modal-box');
                             var newdata = JSON.parse(data);
                             if (newdata.code === 1) {
 
                                 $tipModal.on('show.bs.modal', function (event) {
-                                    $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth +"/admin/activity/updateView?id=" + newdata.data + "&pcode=Activity&subcode=ActivityList")
+                                    $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth +"/admin/business/activity/updateView?id=" + newdata.data + "&pcode=activity&subcode=activitylist")
                                 });
                                 $tipModal.modal("show");
                             }
+                        },
+                        error: function() {
+                            tool.stopPageLoading();
+                            $("#ajax_fail").modal("show")
                         }
 
 

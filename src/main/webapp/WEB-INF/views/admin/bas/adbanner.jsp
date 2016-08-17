@@ -11,7 +11,7 @@
 <body>
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">
-    <i class="iconfont">&#xe622;</i>医院管理
+    <i class="iconfont">&#xe622;</i>广告管理
 </h3>
 
 <div class="page-bar clearfix">

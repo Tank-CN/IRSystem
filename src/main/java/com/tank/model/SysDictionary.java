@@ -1,6 +1,8 @@
 package com.tank.model;
 
-public class SysDictionary {
+import java.io.Serializable;
+
+public class SysDictionary implements Serializable{
     private Long iid;
 
     private String cid;

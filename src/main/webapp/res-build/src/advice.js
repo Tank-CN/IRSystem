@@ -47,11 +47,10 @@ define(function (require, exports, module) {
             '<tr role="row" class="even" data-announcementid="${item.id}">',
             '{@/if}',
             '    <td>${item.createdatestr}</td>',
-            '    <td>${item.uid}</td>',
             '    <td>${item.content}</td>',
             '    <td class="">',
                         //点击查看的接口
-            '        <a href="' + ROOTPAth + '/admin/advice/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=Advice&subcode=AdviceList" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            '        <a href="' + ROOTPAth + '/admin/msg/pushview?uid=${item.uid}&pcode=RMsg&subcode=PushMsg" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>发送消息</a> ',
             '</tr>',
             '{@/each}',
             '{@/if}'].join(""));

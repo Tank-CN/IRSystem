@@ -3,9 +3,10 @@ package com.tank.vo;
 
 import com.tank.model.SysModule;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ModuleVo {
+public class ModuleVo implements Serializable{
 
 	private Integer id;
 

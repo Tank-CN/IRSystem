@@ -10,8 +10,14 @@
       <if test="aid != null" >
         AID,
       </if>
+      <if test="atitle != null" >
+        ATITLE,
+      </if>
       <if test="uid != null" >
         UID,
+      </if>
+      <if test="uname != null" >
+        UNAME,
       </if>
       <if test="linkman != null" >
         LINKMAN,
@@ -30,8 +36,14 @@
       <if test="aid != null" >
         #{aid,jdbcType=BIGINT},
       </if>
+      <if test="atitle != null" >
+        #{atitle,jdbcType=VARCHAR},
+      </if>
       <if test="uid != null" >
         #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
       </if>
       <if test="linkman != null" >
         #{linkman,jdbcType=VARCHAR},

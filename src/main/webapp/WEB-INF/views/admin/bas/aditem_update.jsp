@@ -76,6 +76,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3">广告标签</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control" rows="3" id="tag" placeholder="广告标签" disabled name="tag"></textarea>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label class="control-label col-md-3">广告图片</label>
@@ -84,9 +91,10 @@
                             <div id="selImg" class="form-control"><i class="iconfont">&#xe626;</i>
                                 <span>选择图片</span></div>
                             <input type="file" id="file" disabled name="file" class="">
-                            <img src="" id="imgurl" width="300" height="200" style="display: none; margin-top: 6px"
+                            <img src="" id="imgurl" style="display: none; margin-top: 6px;width: 320px;height: auto"
                                  alt=""/>
                         </div>
+
                         <div class="col-md-4" style="line-height: 34px; color: #888888">
                             建议图片尺寸：1200x800(px)
                         </div>
@@ -198,7 +206,7 @@
     <script type="text/javascript">
         var organizationID = ${id},currentpage=${currentpage};
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="adbanner_update.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="aditem_update.js"></script>
 
 </content>
 <div class="modal fade bs-example-modal-sm" id="ajax_fail" tabindex="-1" role="dialog"

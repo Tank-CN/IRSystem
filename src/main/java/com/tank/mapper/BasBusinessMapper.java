@@ -6,6 +6,7 @@ import com.tank.model.BasBusinessExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @BatisRepository
 public interface BasBusinessMapper {
     int countByExample(BasBusinessExample example);

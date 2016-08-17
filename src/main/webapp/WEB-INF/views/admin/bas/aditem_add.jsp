@@ -20,7 +20,7 @@
 <body>
 <h3 class="page-title">
     广告管理
-    <small>首页轮播</small>
+    <small>首页广告</small>
 </h3>
 
 <div class="page-bar clearfix">
@@ -28,7 +28,7 @@
         <li><i class="iconfont ico-home">&#xe60a;</i> <a href="index.html">主页</a> <i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
-        <li><a href="${ctx}/admin/bas/adbanner?pcode=AD&subcode=ADBanner">广告管理</a> <i
+        <li><a href="${ctx}/admin/bas/aditem?pcode=AD&subcode=ADItem">广告管理</a> <i
                 class="iconfont ico-angle-right">
             &#xe605;</i></li>
         <li><a href="#">新增广告</a></li>
@@ -55,6 +55,14 @@
                         <label class="control-label col-md-3">广告描述</label>
                         <div class="col-md-4">
                             <textarea class="form-control" rows="3" id="des" placeholder="广告描述" name="des"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">广告标签</label>
+
+                        <div class="col-md-4">
+                            <input type="text" id="tag" name="tag" placeholder="广告标签" class="form-control">
                         </div>
                     </div>
 
@@ -94,7 +102,7 @@
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="submit" class="btn btn-success"><i class="iconfont">&#xe62c;</i>保存
                                 </button>
-                                <a href="${ctx}/admin/bas/adbanner?pcode=AD&subcode=ADBanner"
+                                <a href="${ctx}/admin/bas/aditem?pcode=AD&subcode=ADItem"
                                    class="btn btn-default">返回</a>
                             </div>
                         </div>
@@ -126,7 +134,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="${ctx}/admin/bas/adbanner?pcode=AD&subcode=ADBanner"
+                <a href="${ctx}/admin/bas/aditem?pcode=AD&subcode=ADItem"
                    class="btn btn-success">返回列表</a>
                 <a href="#" class="btn btn-danger j-modal-closebtn">关闭</a>
             </div>
@@ -179,6 +187,6 @@
 
 <content tag="jsconfig">
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="adbanner_add.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="aditem_add.js"></script>
 
 </content>

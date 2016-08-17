@@ -1,9 +1,12 @@
 package com.tank.controller.admin.sys;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.tank.controller.admin.AdminBaseController;
 import com.tank.manage.SysDictionaryManage;
 import com.tank.model.SysDictionary;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,6 +83,12 @@ public class SysDictionaryController extends AdminBaseController {
 	@RequestMapping(value = "dictionary/create", method = RequestMethod.POST)
 	@ResponseBody
 	public Boolean create(SysDictionary sysDictionary) {
+		if(StringUtils.isEmpty(sysDictionary.getGbcode())){
+			sysDictionary.setGbcode(PinyinHelper.convertToPinyinString(sysDictionary.getTitle(), "", PinyinFormat.WITHOUT_TONE));
+		}
+		if(StringUtils.isEmpty(sysDictionary.getIdx())){
+			sysDictionary.setIdx(PinyinHelper.convertToPinyinString(sysDictionary.getTitle(), "", PinyinFormat.WITHOUT_TONE));
+		}
 		return sysDictionaryManage.save(sysDictionary);
 	}
 
@@ -93,6 +102,12 @@ public class SysDictionaryController extends AdminBaseController {
 	@RequestMapping(value = "dictionary/update", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean update(SysDictionary sysDictionary) {
+		if(StringUtils.isEmpty(sysDictionary.getGbcode())){
+			sysDictionary.setGbcode(PinyinHelper.convertToPinyinString(sysDictionary.getTitle(), "", PinyinFormat.WITHOUT_TONE));
+		}
+		if(StringUtils.isEmpty(sysDictionary.getIdx())){
+			sysDictionary.setIdx(PinyinHelper.convertToPinyinString(sysDictionary.getTitle(), "", PinyinFormat.WITHOUT_TONE));
+		}
 		return sysDictionaryManage.update(sysDictionary);
 	}
 

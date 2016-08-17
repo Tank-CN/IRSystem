@@ -11,7 +11,7 @@
 <body>
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">
-    <i class="iconfont">&#xe622;</i>医院管理
+    <i class="iconfont">&#xe622;</i>广告管理
 </h3>
 
 <div class="page-bar clearfix">
@@ -19,7 +19,7 @@
         <li><i class="iconfont ico-home">&#xe60a;</i> <a href="index.html">主页</a> <i
                 class="iconfont ico-angle-right">&#xe605;</i></li>
         <li><a href="#">广告管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">首页轮播</a></li>
+        <li><a href="#">首页广告</a></li>
     </ul>
     <!-- <ul class="page-breadcrumb">
 			<form name="Form" action="${ctx}/admin/sys/file/upload/orgs" method="post"
@@ -31,7 +31,7 @@
 		</ul> -->
     <div class="page-bar-actions">
         <a class="btn btn-success btn-sm"
-           href="${ctx}/admin/bas/adbanner/addView?pcode=AD&subcode=ADBanner"> <i
+           href="${ctx}/admin/bas/aditem/addView?pcode=AD&subcode=ADItem"> <i
                 class="iconfont">&#xe612;</i> <span class="hidden-480">添加广告</span>
         </a>
     </div>
@@ -144,5 +144,5 @@
         }
         ;
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="adbanner.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="aditem.js"></script>
 </content>

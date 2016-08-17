@@ -56,7 +56,6 @@
 								<thead>
 									<tr role="row">
 										<th class="sorting_desc">提交时间</th>
-										<th class="sorting">用户</th>
 										<th class="sorting">意见反馈</th>
 										<th class="sorting">操作</th>
 									</tr>

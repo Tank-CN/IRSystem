@@ -19,11 +19,47 @@
       <if test="latitude != null" >
         LATITUDE,
       </if>
-      <if test="region != null" >
-        REGION,
+      <if test="typeid != null" >
+        TYPEID,
       </if>
-      <if test="regionname != null" >
-        REGIONNAME,
+      <if test="typename != null" >
+        TYPENAME,
+      </if>
+      <if test="typeiid != null" >
+        TYPEIID,
+      </if>
+      <if test="typenname != null" >
+        TYPENNAME,
+      </if>
+      <if test="provinceid != null" >
+        PROVINCEID,
+      </if>
+      <if test="provincename != null" >
+        PROVINCENAME,
+      </if>
+      <if test="cityid != null" >
+        CITYID,
+      </if>
+      <if test="cityname != null" >
+        CITYNAME,
+      </if>
+      <if test="districtid != null" >
+        DISTRICTID,
+      </if>
+      <if test="districtname != null" >
+        DISTRICTNAME,
+      </if>
+      <if test="streetid != null" >
+        STREETID,
+      </if>
+      <if test="streetname != null" >
+        STREETNAME,
+      </if>
+      <if test="villageid != null" >
+        VILLAGEID,
+      </if>
+      <if test="villagename != null" >
+        VILLAGENAME,
       </if>
       <if test="picurl != null" >
         PICURL,
@@ -75,11 +111,47 @@
       <if test="latitude != null" >
         #{latitude,jdbcType=DECIMAL},
       </if>
-      <if test="region != null" >
-        #{region,jdbcType=VARCHAR},
+      <if test="typeid != null" >
+        #{typeid,jdbcType=BIGINT},
       </if>
-      <if test="regionname != null" >
-        #{regionname,jdbcType=VARCHAR},
+      <if test="typename != null" >
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeiid != null" >
+        #{typeiid,jdbcType=BIGINT},
+      </if>
+      <if test="typenname != null" >
+        #{typenname,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceid != null" >
+        #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="provincename != null" >
+        #{provincename,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null" >
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="districtid != null" >
+        #{districtid,jdbcType=VARCHAR},
+      </if>
+      <if test="districtname != null" >
+        #{districtname,jdbcType=VARCHAR},
+      </if>
+      <if test="streetid != null" >
+        #{streetid,jdbcType=VARCHAR},
+      </if>
+      <if test="streetname != null" >
+        #{streetname,jdbcType=VARCHAR},
+      </if>
+      <if test="villageid != null" >
+        #{villageid,jdbcType=VARCHAR},
+      </if>
+      <if test="villagename != null" >
+        #{villagename,jdbcType=VARCHAR},
       </if>
       <if test="picurl != null" >
         #{picurl,jdbcType=VARCHAR},

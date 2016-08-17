@@ -6,6 +6,7 @@ import com.tank.model.UserExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @BatisRepository
 public interface UserMapper {
     int countByExample(UserExample example);

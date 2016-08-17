@@ -118,7 +118,7 @@ define(function(require, exports, module) {
                     $(fm).ajaxSubmit({
                         type: "POST",
                         dataType: "html",
-                        url: ROOTPAth + "/admin/bas/adbanner/saveorupdate",
+                        url: ROOTPAth + "/admin/bas/aditem/saveorupdate",
                         beforeSubmit: function(formData, jqForm, options) {
                             if (hzuitl.byteLength($etitor.summernote("code")) / (1024 * 1024) > 4) {
                                 alert("文本内容总数不得超过4M 请减小图片大小或者精简文字");
@@ -136,7 +136,7 @@ define(function(require, exports, module) {
                             var newdata = JSON.parse(data);
                             if (newdata.code === 1) {
                                 $tipModal.on('show.bs.modal', function(event) {
-                                    $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth + "/admin/bas/adbanner/updateView?id=" + newdata.data + "&currentpage=1&pcode=2&subcode=3")
+                                    $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth + "/admin/bas/aditem/updateView?id=" + newdata.data + "&currentpage=1&pcode=2&subcode=3")
                                 });
                                 $tipModal.modal("show");
                             }

@@ -21,6 +21,8 @@ public class User {
 
     private String header;
 
+    private String info;
+
     private Byte flag;
 
     private Short regtype;
@@ -95,6 +97,14 @@ public class User {
 
     public void setHeader(String header) {
         this.header = header == null ? null : header.trim();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
     }
 
     public Byte getFlag() {

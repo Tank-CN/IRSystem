@@ -38,6 +38,22 @@ public class ActivitySignupManage extends BaseManage {
     }
 
 
+    public List<ActivitySignup> listByAid(Long aid,Integer pageNumber,
+                                     Integer pageSize) {
+        ActivitySignupExample example = new ActivitySignupExample();
+        ActivitySignupExample.Criteria criteria=example.createCriteria();
+        criteria.andAidEqualTo(aid);
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        return activitySignupExMapper.selectByExample(example);
+    }
+
+    public int countByAid(Long aid) {
+        ActivitySignupExample example = new ActivitySignupExample();
+        ActivitySignupExample.Criteria criteria=example.createCriteria();
+        criteria.andAidEqualTo(aid);
+        return activitySignupExMapper.countByExample(example);
+    }
+
     public List<ActivitySignup> list(Integer pageNumber,
                                   Integer pageSize) {
         ActivitySignupExample example = new ActivitySignupExample();

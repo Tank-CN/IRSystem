@@ -231,7 +231,7 @@
         // ,currentpage=${currentpage};
 
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="news-update.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="news_update.js"></script>
 
 </content>
 </body>

@@ -211,5 +211,5 @@
 
 <content tag="jsconfig">
     <script type="text/javascript"
-            src="${ctx}/res-build/config.js" data-init="news-add.js"></script>
+            src="${ctx}/res-build/config.js" data-init="news_add.js"></script>
 </content>

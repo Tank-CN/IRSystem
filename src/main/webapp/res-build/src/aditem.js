@@ -62,7 +62,7 @@ define(function(require, exports, module) {
             '    <td>${item.flagtext}</td>',
             '    <td class="">',
 
-            '        <a href="' + ROOTPAth + '/admin/bas/adbanner/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=AD&subcode=ADBanner" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            '        <a href="' + ROOTPAth + '/admin/bas/aditem/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=AD&subcode=ADItem" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
             //删除
             ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>删除 </button>',
 
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
 
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/bas/adbanner/list',
+                    url: ROOTPAth + '/admin/bas/aditem/list',
                     type: 'POST',
                     dataType: 'json',
                     data: function() {
@@ -179,7 +179,7 @@ define(function(require, exports, module) {
         delitem: function($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/bas/adbanner/delete/' + organizationid;
+            var delPath = ROOTPAth + '/admin/bas/aditem/delete/' + organizationid;
             $.ajax({
                 url: delPath,
                 type: "POST",

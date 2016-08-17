@@ -3,10 +3,13 @@ package com.tank.manage;
 import com.tank.mapper.ex.NewsExMapper;
 import com.tank.model.News;
 import com.tank.model.NewsExample;
+import com.tank.vo.NewsVo;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Component
@@ -17,6 +20,26 @@ public class NewsManage  extends BaseManage {
     NewsExMapper newsExMapper;
 
 
+    public NewsVo getHotestNews(){
+        NewsExample example = new NewsExample();
+        example.setOrderByClause(getPage(1, 1));
+       List<News> list= newsExMapper.selectByExample(example);
+        if(null!=list&&list.size()>0){
+            News news=list.get(0);
+            NewsVo newsVo=new NewsVo();
+            try {
+                PropertyUtils.copyProperties(newsVo,news);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            return newsVo;
+        }
+        return null;
+    }
 
     public News getById(Long id) {
         return newsExMapper.selectByPrimaryKey(id);

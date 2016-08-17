@@ -8,6 +8,7 @@ import com.tank.manage.SysRoleModuleManage;
 import com.tank.model.Admin;
 import com.tank.model.SysModule;
 import com.tank.model.SysRoleModule;
+import com.tank.vo.ModuleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class SysModuleController extends AdminBaseController {
 
 	@Autowired
 	private SysRoleModuleManage sysRoleModuleManage;
+
 
 	@RequestMapping(value = "module")
 	public String module() {
@@ -66,6 +68,7 @@ public class SysModuleController extends AdminBaseController {
 		module.setFlag(Byte.valueOf("1"));
 		module.setCreatedate(new Date());
 		module.setCreateuser(admin.getId());
+		updateSessionModule(admin,request);
 		return sysModuleManage.saveSysModule(module) > 0;
 	}
 
@@ -76,6 +79,7 @@ public class SysModuleController extends AdminBaseController {
 		module.setModifydate(new Date());
 		module.setModifyuser(admin.getId());
 		sysModuleManage.updateSysModule(module);
+		updateSessionModule(admin,request);
 		return true;
 	}
 
@@ -107,5 +111,24 @@ public class SysModuleController extends AdminBaseController {
 			map.put("data", sysModuleManage.getAllByGroup(sysRoles));
 		}
 		return map;
+	}
+
+
+
+	void updateSessionModule(Admin account , HttpServletRequest request){
+		List<ModuleVo> moduleList = null;
+		if (account.getUtype() == 0) {
+			// 后台管理员
+			if (isSuperAdmin(account)) {
+				// 超级管理员
+				moduleList = sysModuleManage.getByAdmin();
+			} else {
+				moduleList = sysModuleManage.getByUid(account.getId());
+			}
+		} else if (account.getUtype() == 2) {
+			// 商家角色
+			moduleList = sysModuleManage.getByRole((long) 2);
+		}
+		request.getSession().setAttribute("modules", moduleList);
 	}
 }

@@ -136,10 +136,8 @@
     <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
         <property name="patterns">
             <list>
-                <value>com.bsoft.platform.dao.*</value>
-                <value>com.bsoft.platform.manage.*</value>
-                <value>com.bsoft.platform.doctor.dao.*</value>
-                <value>com.bsoft.platform.doctor.service.*</value>
+                <value>com.tank.mapper.*</value>
+                <value>com.tank.manage.*</value>
             </list>
         </property>
     </bean>
@@ -151,6 +149,11 @@
     <bean id="imageUploadService" class="com.bs.util.HttpPostUploadUtil">
         <property name="uploadUrl" value="${image_url}" />
         <property name="netServiceUrl" value="${net_image_url}" />
+    </bean>
+
+    <bean id="jpushClient" class="cn.jpush.api.JPushClient">
+        <constructor-arg value="${JPush_MasterSecret}"/>
+        <constructor-arg value="${JPush_AppKey}"/>
     </bean>
 
 

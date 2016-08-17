@@ -1,9 +1,256 @@
 package com.tank.controller.api;
 
+import com.bs.util.CommonUtils;
+import com.bs.util.PassWDUtils;
+import com.bs.util.ResultCode;
+import com.bs.util.encryption.MD5Utils;
+import com.tank.manage.BasBusinessManage;
+import com.tank.manage.DynamicManage;
+import com.tank.manage.UserManage;
+import com.tank.model.User;
+import com.tank.vo.MyInfoVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/api/auth/user")
 public class UserInfoController extends ApiBaseController{
+
+    @Autowired
+    UserManage userManage;
+
+    @Autowired
+    BasBusinessManage basBusinessManage;
+
+    @Autowired
+    DynamicManage dynamicManage;
+
+
+
+    /**
+     * 个人首页
+     * 动态数，收藏数
+     *
+     */
+    @RequestMapping(value = "index", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> index( HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        Long uid = getUid(request);
+        if (CommonUtils.isNull(uid) ) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        MyInfoVo vo=new MyInfoVo();
+        vo.setBusinessCollectCount(basBusinessManage.countByCollect(uid));
+        vo.setDynamicCount(dynamicManage.countByUid(uid));
+        User user=userManage.getUserById(uid);
+        if(null!=user){
+            vo.setHeader(user.getHeader());
+            vo.setInfo(user.getInfo());
+            vo.setNickname(user.getNickname());
+        }
+        resMap.put("data",vo);
+        resMap.put("code",ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
+    /**
+     * 修改密码
+     *
+     * @param oldpwd
+     *            原始密码
+     * @param newpwd
+     *            新密码
+     * @return
+     */
+    @RequestMapping(value = "modifypassword", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> modifyPassword(String oldpwd, String newpwd, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        Long uid = getUid(request);
+        if (CommonUtils.isNull(oldpwd) || CommonUtils.isNull(newpwd)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        User account = userManage.getUserById(uid);
+        if (account == null) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "账户不存在");
+            return resMap;
+        }
+
+        String encryptionOldPassword = MD5Utils.getMD5(oldpwd);
+        if (!encryptionOldPassword.equals(account.getPassword())) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "旧密码不正确");
+            return resMap;
+        }
+        if (PassWDUtils.validate(newpwd)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "密码过于简单");
+            return resMap;
+        }
+        account.setPassword(MD5Utils.getMD5(newpwd));
+        if (userManage.updateUser(account)) {
+            resMap.put("code", ResultCode.SUCCESS);
+            resMap.put("msg", "修改成功");
+            return resMap;
+        } else {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "修改失败,数据库写入失败,联系开发者");
+            return resMap;
+        }
+    }
+
+    /**
+     * 修改用户姓名
+     *
+     * @param name
+     *            姓名
+     * @return
+     */
+    @RequestMapping(value = "modify/name")
+    @ResponseBody
+    public Map<String, Object> modifyName(String name, HttpServletRequest request) {
+        Long uid = getUid(request);
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(uid) || CommonUtils.isNull(name)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "参数不能为空");
+            return resMap;
+        }
+        String temp = userManage.modifyName(uid, name);
+        if ("S01".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "用户不存在");
+            return resMap;
+        } else if ("S02".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "修改失败,联系管理员");
+            return resMap;
+        }
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "修改成功");
+        return resMap;
+
+    }
+
+
+
+    /**
+     * 修改个性签名
+     *
+     * @param info
+     *            个性签名
+     * @return
+     */
+    @RequestMapping(value = "modify/info")
+    @ResponseBody
+    public Map<String, Object> modifyInfo(String info, HttpServletRequest request) {
+        Long uid = getUid(request);
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(uid) || CommonUtils.isNull(info)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "参数不能为空");
+            return resMap;
+        }
+        String temp = userManage.modifyInfo(uid, info);
+        if ("S01".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "用户不存在");
+            return resMap;
+        } else if ("S02".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "修改失败,联系管理员");
+            return resMap;
+        }
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "修改成功");
+        return resMap;
+
+    }
+
+    /**
+     * 修改生日
+     *
+     * @param birthday
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "modify/birthday")
+    @ResponseBody
+    public Map<String, Object> modifyBirthday(Date birthday, HttpServletRequest request) {
+        Long uid = getUid(request);
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (uid == null || birthday == null) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "参数不能为空");
+            return resMap;
+        }
+        String temp = userManage.modifyBirthday(uid, birthday);
+        if ("S01".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "用户不存在");
+            return resMap;
+        } else if ("S02".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "修改失败,联系管理员");
+            return resMap;
+        }
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "修改成功");
+        return resMap;
+
+    }
+
+
+
+    /**
+     * 修改用户性别
+     *
+     * @param sexcode
+     *            性别编码
+     * @return
+     */
+    @RequestMapping(value = "modify/sex")
+    @ResponseBody
+    public Map<String, Object> modifySex(Byte sexcode, HttpServletRequest request) {
+        Long uid = getUid(request);
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (uid == null || sexcode == null) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "参数不能为空");
+            return resMap;
+        }
+        String temp = userManage.modifySex(uid, sexcode);
+        if ("S01".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "用户不存在");
+            return resMap;
+        } else if ("S02".equals(temp)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "修改失败,联系管理员");
+            return resMap;
+        }
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "修改成功");
+        return resMap;
+
+    }
+
+
+
+
 }

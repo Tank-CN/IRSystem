@@ -86,7 +86,7 @@ public class BasADItemController extends AdminBaseController {
         JSONObject map = new JSONObject();
         boolean flag = false;
         if (file != null) {
-            String ret = imageUploadService.formUpload(file, "1200x800", "750x500");
+            String ret = imageUploadService.formUpload(file, "200x200", "100x100");
             if (!CommonUtils.isNull(ret)) {
                 Map jmap = JSON.parseObject(ret, Map.class);
                 if ("1".equals(jmap.get("code").toString())) {

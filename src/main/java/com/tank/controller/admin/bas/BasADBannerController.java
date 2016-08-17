@@ -86,7 +86,7 @@ public class BasADBannerController extends AdminBaseController {
         JSONObject map = new JSONObject();
         boolean flag = false;
         if (file != null) {
-            String ret = imageUploadService.formUpload(file, "1200x800", "750x500");
+            String ret = imageUploadService.formUpload(file, "1080x360", "720x240", "480x160");
             if (!CommonUtils.isNull(ret)) {
                 Map jmap = JSON.parseObject(ret, Map.class);
                 if ("1".equals(jmap.get("code").toString())) {

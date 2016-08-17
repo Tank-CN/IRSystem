@@ -88,7 +88,7 @@ define(function (require, exports, module) {
                     tool.stopPageLoading();
                     $addForm[0].reset();
                     $addForm.autofill(data);
-                    $("#summernote-con").html(data.context);
+                    $("#summernote-con").html(data.content);
                     if (data.picurl) {
                         $("#imgurl").attr("src", data.picurl).show();
                     }

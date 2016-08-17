@@ -7,7 +7,11 @@ public class ActivitySignup {
 
     private Long aid;
 
+    private String atitle;
+
     private Long uid;
+
+    private String uname;
 
     private String linkman;
 
@@ -31,12 +35,28 @@ public class ActivitySignup {
         this.aid = aid;
     }
 
+    public String getAtitle() {
+        return atitle;
+    }
+
+    public void setAtitle(String atitle) {
+        this.atitle = atitle == null ? null : atitle.trim();
+    }
+
     public Long getUid() {
         return uid;
     }
 
     public void setUid(Long uid) {
         this.uid = uid;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname == null ? null : uname.trim();
     }
 
     public String getLinkman() {

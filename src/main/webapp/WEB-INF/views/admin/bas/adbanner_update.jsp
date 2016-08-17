@@ -84,7 +84,7 @@
                             <div id="selImg" class="form-control"><i class="iconfont">&#xe626;</i>
                                 <span>选择图片</span></div>
                             <input type="file" id="file" disabled name="file" class="">
-                            <img src="" id="imgurl" width="300" height="200" style="display: none; margin-top: 6px"
+                            <img src="" id="imgurl" style="display: none; margin-top: 6px;width: 320px;height: auto"
                                  alt=""/>
                         </div>
                         <div class="col-md-4" style="line-height: 34px; color: #888888">
