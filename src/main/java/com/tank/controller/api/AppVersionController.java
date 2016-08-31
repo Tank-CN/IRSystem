@@ -2,8 +2,8 @@ package com.tank.controller.api;
 
 import com.bs.util.CommonUtils;
 import com.bs.util.ResultCode;
-import com.tank.manage.SysAppVersionManage;
-import com.tank.model.SysAppVersion;
+import com.tank.manage.BasAppVersionManage;
+import com.tank.model.BasAppVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import java.util.Map;
 public class AppVersionController {
 
 	@Autowired
-	SysAppVersionManage appVersionManage;
+	BasAppVersionManage appVersionManage;
 
 	/**
 	 * 当前版本号
@@ -41,7 +41,7 @@ public class AppVersionController {
 			map.put("msg", "传入参数不能为空");
 			return map;
 		}
-		SysAppVersion version = appVersionManage.getByCode(appcode);
+		BasAppVersion version = appVersionManage.getByCode(appcode);
 		if (null == version) {
 			map.put("code", ResultCode.ERROR);
 			return map;
@@ -93,7 +93,7 @@ public class AppVersionController {
 //			map.put("data", data);
 //			return map;
 //		} else if ("S02".equals(updateCode)) {
-//			SysAppVersion appVersion = (SysAppVersion) updateMap.get("data");
+//			BasAppVersion appVersion = (BasAppVersion) updateMap.get("data");
 //
 //			Map<String, String> data = new HashMap<String, String>();
 //			data.put("code", "402");
@@ -106,7 +106,7 @@ public class AppVersionController {
 //			map.put("data", data);
 //			return map;
 //		} else {
-//			SysAppVersion appVersion = (SysAppVersion) updateMap.get("data");
+//			BasAppVersion appVersion = (BasAppVersion) updateMap.get("data");
 //			Map<String, String> data = new HashMap<String, String>();
 //			data.put("code", "403");
 //			data.put("msg", "需要强制更新");

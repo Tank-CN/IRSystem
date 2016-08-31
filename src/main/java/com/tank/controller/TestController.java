@@ -6,6 +6,7 @@ import com.tank.push.PushInfo;
 import com.tank.push.impl.JPushService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,7 +20,9 @@ import java.util.Map;
 @RequestMapping(value = "/test")
 public class TestController {
 
-    String s_url =null;
+//    String s_url =null;
+
+    String s_url ="http://114.55.253.28:8090/";
 
     @Autowired
     JPushService jPushService;
@@ -58,8 +61,10 @@ public class TestController {
         }
         List<User> listu = userManage.list(1, 1000);
         for (User activity : listu) {
-            activity.setHeader(getURL(activity.getHeader()));
-            userManage.update(activity);
+            if(!StringUtils.isEmpty(activity.getHeader())) {
+                activity.setHeader(getURL(activity.getHeader()));
+                userManage.update(activity);
+            }
         }
         List<BasAdBanner> listbanner = basADBannerManage.list(1, 1000);
         for (BasAdBanner activity : listbanner) {

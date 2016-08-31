@@ -1,11 +1,9 @@
 package com.tank.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class SysAppVersion implements Serializable {
-
-	private Long id;
+public class BasAppVersion {
+    private Long id;
 
     private String appname;
 

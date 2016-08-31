@@ -10,6 +10,16 @@ import java.io.Serializable;
 public class ActivityVo extends Activity implements Serializable{
     //报名数
     public int signCount;
+    //是否已参加
+    public int isSign=0;
+
+    public int getIsSign() {
+        return isSign;
+    }
+
+    public void setIsSign(int isSign) {
+        this.isSign = isSign;
+    }
 
     public int getSignCount() {
         return signCount;

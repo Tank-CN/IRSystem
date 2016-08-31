@@ -61,6 +61,7 @@ public class UserManage extends BaseManage {
         user.setMobile(mobile);
         user.setFlag(Byte.valueOf("1"));
         user.setRegtype(Short.valueOf("1"));
+        user.setVip(Byte.valueOf("0"));
 
         UserInfo userInfo = new UserInfo();
         userInfo.setRegdate(new Date());
@@ -291,5 +292,7 @@ public class UserManage extends BaseManage {
         }
         return "S200";
     }
+
+
 
 }

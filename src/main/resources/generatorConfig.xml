@@ -41,6 +41,7 @@
 		<!--<table tableName="dynamic_reply"></table>-->
 
 		<!--<table tableName="user"></table>-->
+		<!--<table tableName="bas_app_version"></table>-->
 		<!--<table tableName="bas_business"></table>-->
 		<!--<table tableName="business_reply"></table>-->
 		<!--<table tableName="news"></table>-->

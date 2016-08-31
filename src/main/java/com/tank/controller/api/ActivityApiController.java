@@ -2,6 +2,7 @@ package com.tank.controller.api;
 
 import com.bs.util.ResultCode;
 import com.tank.manage.ActivityManage;
+import com.tank.model.ActivitySignup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,22 +22,36 @@ public class ActivityApiController extends ApiBaseController {
     ActivityManage activityManage;
 
 
-    @RequestMapping(value = "list")
+
+
+
+
+
+
+
+    @RequestMapping(value = "listbyuid")
     @ResponseBody
-    public Map<String, Object> list(@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+    public Map<String, Object> listbyuid(@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+        Long uid = getUid(request);
         Map<String, Object> resMap = new HashMap<String, Object>();
-        resMap.put("data", activityManage.listAll(pageno, pagesize));
+        resMap.put("data", activityManage.listByUid(uid,pageno, pagesize));
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;
     }
 
 
-    @RequestMapping(value = "listbyuid")
+    @RequestMapping(value = "sign")
     @ResponseBody
-    public Map<String, Object> list(Long uid,@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+    public Map<String, Object> sign(ActivitySignup activitySignup, HttpServletRequest request) {
+        Long uid = getUid(request);
         Map<String, Object> resMap = new HashMap<String, Object>();
-        resMap.put("data", activityManage.list(pageno, pagesize));
-        resMap.put("code", ResultCode.SUCCESS);
+        if(activityManage.sign(activitySignup)){
+            resMap.put("msg", "报名成功");
+            resMap.put("code", ResultCode.SUCCESS);
+        }else{
+            resMap.put("msg", "报名失败");
+            resMap.put("code", ResultCode.ERROR);
+        }
         return resMap;
     }
 

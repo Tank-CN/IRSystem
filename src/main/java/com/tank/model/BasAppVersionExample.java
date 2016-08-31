@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SysAppVersionExample {
+public class BasAppVersionExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SysAppVersionExample() {
+    public BasAppVersionExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

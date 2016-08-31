@@ -3,9 +3,9 @@ package com.tank.controller.admin.sys;
 import com.alibaba.fastjson.JSONObject;
 import com.bs.util.ResultCode;
 import com.tank.controller.admin.AdminBaseController;
-import com.tank.manage.SysAppVersionManage;
+import com.tank.manage.BasAppVersionManage;
 import com.tank.model.Admin;
-import com.tank.model.SysAppVersion;
+import com.tank.model.BasAppVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +27,10 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/admin/sys")
-public class SysAppVersionController extends AdminBaseController {
+public class BasAppVersionController extends AdminBaseController {
 
 	@Autowired
-	private SysAppVersionManage sysAppVersionManage;
+	private BasAppVersionManage BasAppVersionManage;
 
 	@RequestMapping(value = "appversion")
 	public String index() {
@@ -58,14 +58,14 @@ public class SysAppVersionController extends AdminBaseController {
 			ServletRequest servletRequest) {
 		Map regMsg = new HashMap();
 		regMsg.put("code", ResultCode.SUCCESS);
-		regMsg.put("data", sysAppVersionManage.list(page, length));
-		regMsg.put("total", sysAppVersionManage.count());
+		regMsg.put("data", BasAppVersionManage.list(page, length));
+		regMsg.put("total", BasAppVersionManage.count());
 		return regMsg;
 	}
 
 	@RequestMapping(value = "appversion/save", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean save(SysAppVersion appVersion,
+	public Boolean save(BasAppVersion appVersion,
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest request) throws IOException {
 		Admin admin=getAdmin(request);
@@ -90,17 +90,17 @@ public class SysAppVersionController extends AdminBaseController {
 		}
 		appVersion.setCreatedate(new Date());
 		appVersion.setCreateuser(admin.getId());
-		return sysAppVersionManage.save(appVersion) == 1;
+		return BasAppVersionManage.save(appVersion) == 1;
 	}
 
 	@RequestMapping(value = "appversion/detail/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public SysAppVersion getById(@PathVariable("id") Long id) {
-		return sysAppVersionManage.getById(id);
+	public BasAppVersion getById(@PathVariable("id") Long id) {
+		return BasAppVersionManage.getById(id);
 	}
 
 	@RequestMapping(value = "appversion/update", method = RequestMethod.POST)
-	public void update(SysAppVersion appVersion,
+	public void update(BasAppVersion appVersion,
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest request,HttpServletResponse response) throws IOException {
 		Admin admin=getAdmin(request);
@@ -127,13 +127,13 @@ public class SysAppVersionController extends AdminBaseController {
 		}
 		appVersion.setModifydate(new Date());
 		appVersion.setModifyuser(admin.getId());
-		map.put("code", sysAppVersionManage.update(appVersion));
+		map.put("code", BasAppVersionManage.update(appVersion));
 		response.getWriter().println(map.toJSONString());
 	}
 
 	@RequestMapping(value = "appversion/del/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Boolean delete(@PathVariable("id") Long id) {
-		return sysAppVersionManage.delete(id) == 1;
+		return BasAppVersionManage.delete(id) == 1;
 	}
 }

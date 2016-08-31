@@ -1,15 +1,13 @@
 package com.tank.controller.api;
 
-import com.bs.util.CommonUtils;
-import com.bs.util.PassWDUtils;
-import com.bs.util.RequestUtils;
-import com.bs.util.ResultCode;
+import com.bs.util.*;
 import com.bs.util.encryption.DESUtils;
 import com.bs.util.encryption.MD5Utils;
 import com.tank.Constants;
 import com.tank.cache.DeviceCacheManage;
 import com.tank.manage.BasPhoneCaptchaManage;
 import com.tank.manage.UserManage;
+import com.tank.model.BasPhoneCaptcha;
 import com.tank.model.BasUserDevice;
 import com.tank.model.User;
 import com.tank.service.SmsService;
@@ -18,10 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.xml.sax.SAXException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -193,161 +195,110 @@ public class UserController extends ApiBaseController{
     }
 
 
-//    /**
-//     * 检查手机号码是否注册[密码找回]
-//     *
-//     * @param mobile
-//     * @return
-//     */
-//    @RequestMapping(value = "findpsw/mobileisexists")
-//    @ResponseBody
-//    public Map<String, Object> mobileIsExists(String mobile, String utype) throws ParserConfigurationException, SAXException, IOException {
-//        Map<String, Object> resMap = new HashMap<String, Object>();
-//        if (CommonUtils.isNull(mobile)) {
-//            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
-//            resMap.put("msg", "传入参数不能为空");
-//            return resMap;
-//        }
-//        // 目前只支持居民和医生的注册
-//        if (!"1".equals(utype) && !"2".equals(utype)) {
-//            resMap.put("code", ResultCode.PARAMETERS_NOTLEGAL);
-//            resMap.put("msg", "传入参数不对");
-//            return resMap;
-//        }
-//
-//        Account account = accountManage.getAccountByMobile(mobile, utype);
-//        if (account == null) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "手机号未注册");
-//            return resMap;
-//        } else {
-//            String code = RandomCharData.createData();
-//            BasPhoneCaptcha phoneCaptcha = new BasPhoneCaptcha(mobile, code, new Date());
-//            Boolean temp = basPhoneCaptchaManage.addPhoneCode(phoneCaptcha);
-//            if (temp) {
-//                return smsService.sendSmsCode(mobile, code, 1);
-//            } else {
-//                resMap.put("code", ResultCode.ERROR);
-//                resMap.put("msg", "验证码存储失败");
-//                return resMap;
-//            }
-//        }
-//    }
-//
-//    /**
-//     * 手机验证码验证[密码找回]
-//     *
-//     * @param mobile 手机号码
-//     * @param code
-//     * @return 需要返回是否绑定身份信息
-//     */
-//    @RequestMapping(value = "findpsw/verifycode")
-//    @ResponseBody
-//    public Map<String, Object> verifyCode(String mobile, String code, @RequestParam("utype") String utype) {
-//        Map<String, Object> resMap = new HashMap<String, Object>();
-//        if (CommonUtils.isNull(mobile) || CommonUtils.isNull(code)) {
-//            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
-//            resMap.put("msg", "传入参数不能为空");
-//            return resMap;
-//        }
-//        // 目前只支持居民和医生的注册
-//        if (!"1".equals(utype) && !"2".equals(utype)) {
-//            resMap.put("code", ResultCode.PARAMETERS_NOTLEGAL);
-//            resMap.put("msg", "传入参数不对");
-//            return resMap;
-//        }
-//
-//        Map<String, Object> captchaMap = basPhoneCaptchaManage.verifyCode(mobile, code);
-//        if ((Boolean) captchaMap.get("success")) {
-//            Map<String, Object> data = new HashMap<String, Object>();
-//            data.put("hascard", accountManage.isHaveCard(mobile, utype));
-//            resMap.put("code", ResultCode.SUCCESS);
-//            resMap.put("msg", "验证码正确");
-//            resMap.put("data", data);
-//            return resMap;
-//        } else {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", captchaMap.get("msg"));
-//            return resMap;
-//        }
-//    }
-//
-//    /**
-//     * 通过手机号码验证证件号码[密码找回]
-//     *
-//     * @param mobile
-//     * @param idcard
-//     * @return
-//     */
-//    @RequestMapping(value = "findpsw/checkcard")
-//    @ResponseBody
-//    public Map<String, Object> checkCard(String mobile, String idcard, @RequestParam("utype") String utype) {
-//        Map<String, Object> resMap = new HashMap<String, Object>();
-//
-//        if (CommonUtils.isNull(mobile) || CommonUtils.isNull(idcard)) {
-//            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
-//            resMap.put("msg", "传入参数不能为空");
-//            return resMap;
-//        }
-//        // 目前只支持居民和医生的注册
-//        if (!"1".equals(utype) && !"2".equals(utype)) {
-//            resMap.put("code", ResultCode.PARAMETERS_NOTLEGAL);
-//            resMap.put("msg", "传入参数不对");
-//            return resMap;
-//        }
-//        Boolean temp = accountManage.checkCardNumByPhone(mobile, idcard, utype);
-//        if (temp) {
-//            resMap.put("code", ResultCode.SUCCESS);
-//            resMap.put("msg", "验证通过,证件跟手机一致");
-//            return resMap;
-//        } else {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "验证不通过,证件号与已绑定的不一致");
-//            return resMap;
-//        }
-//    }
-//
-//    /**
-//     * 修改密码通过手机找回[密码找回]
-//     *
-//     * @param mobile   手机号码
-//     * @param password 新密码
-//     * @return
-//     */
-//    @RequestMapping(value = "findpsw/modifypwd")
-//    @ResponseBody
-//    public Map<String, Object> modifyPasswordByMobile(String mobile, String password, @RequestParam("utype") String utype) {
-//        Map<String, Object> resMap = new HashMap<String, Object>();
-//        if (CommonUtils.isNull(mobile) || CommonUtils.isNull(password)) {
-//            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
-//            resMap.put("msg", "传入参数不能为空");
-//            return resMap;
-//        }
-//        // 目前只支持居民和医生的注册
-//        if (!"1".equals(utype) && !"2".equals(utype)) {
-//            resMap.put("code", ResultCode.PARAMETERS_NOTLEGAL);
-//            resMap.put("msg", "传入参数不对");
-//            return resMap;
-//        }
-//        if (PassWDUtils.validate(password)) {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "密码过于简单");
-//            return resMap;
-//        }
-//
-//        Account account = accountManage.getAccountByMobile(mobile, utype);
-//        account.setPassword(MD5Utils.getMD5(password));
-//        Integer temp = accountManage.updateAccount(account);
-//        if (temp == 1) {
-//            resMap.put("code", ResultCode.SUCCESS);
-//            resMap.put("msg", "修改成功");
-//            return resMap;
-//        } else {
-//            resMap.put("code", ResultCode.ERROR);
-//            resMap.put("msg", "修改失败,数据库写入失败,联系开发者");
-//            return resMap;
-//        }
-//    }
+    /**
+     * 检查手机号码是否注册[密码找回]
+     *
+     * @param mobile
+     * @return
+     */
+    @RequestMapping(value = "findpsw/mobileisexists")
+    @ResponseBody
+    public Map<String, Object> mobileIsExists(String mobile) throws ParserConfigurationException, SAXException, IOException {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(mobile)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+
+
+        User account = userManage.getUserByMobile(mobile);
+        if (account == null) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "手机号未注册");
+            return resMap;
+        } else {
+            String code = RandomCharData.createData();
+            BasPhoneCaptcha phoneCaptcha = new BasPhoneCaptcha(mobile, code, new Date());
+            Boolean temp = basPhoneCaptchaManage.addPhoneCode(phoneCaptcha);
+            if (temp) {
+                return smsService.sendSmsCode(mobile, code, 1);
+            } else {
+                resMap.put("code", ResultCode.ERROR);
+                resMap.put("msg", "验证码存储失败");
+                return resMap;
+            }
+        }
+    }
+
+    /**
+     * 手机验证码验证[密码找回]
+     *
+     * @param mobile 手机号码
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "findpsw/verifycode")
+    @ResponseBody
+    public Map<String, Object> verifyCode(String mobile, String code) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(mobile) || CommonUtils.isNull(code)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+
+
+        Map<String, Object> captchaMap = basPhoneCaptchaManage.verifyCode(mobile, code);
+        if ((Boolean) captchaMap.get("success")) {
+            Map<String, Object> data = new HashMap<String, Object>();
+            resMap.put("code", ResultCode.SUCCESS);
+            resMap.put("msg", "验证码正确");
+            resMap.put("data", data);
+            return resMap;
+        } else {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", captchaMap.get("msg"));
+            return resMap;
+        }
+    }
+
+    /**
+     * 修改密码通过手机找回[密码找回]
+     *
+     * @param mobile   手机号码
+     * @param password 新密码
+     * @return
+     */
+    @RequestMapping(value = "findpsw/modifypwd")
+    @ResponseBody
+    public Map<String, Object> modifyPasswordByMobile(String mobile, String password) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(mobile) || CommonUtils.isNull(password)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+
+
+        if (PassWDUtils.validate(password)) {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "密码过于简单");
+            return resMap;
+        }
+
+        User account = userManage.getUserByMobile(mobile);
+        account.setPassword(MD5Utils.getMD5(password));
+        if (userManage.updateUser(account)) {
+            resMap.put("code", ResultCode.SUCCESS);
+            resMap.put("msg", "修改成功");
+            return resMap;
+        } else {
+            resMap.put("code", ResultCode.ERROR);
+            resMap.put("msg", "修改失败,数据库写入失败,联系开发者");
+            return resMap;
+        }
+    }
 
     public Map<String, Object> createByAccount(User user, String sn) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -357,6 +308,7 @@ public class UserController extends ApiBaseController{
         map.put("username", user.getUsername());
         map.put("realname", user.getNickname());
         map.put("sexcode", user.getSexcode());
+        map.put("vip", user.getVip());
         map.put("sn", sn);
         map.put("birthdate", null == user.getBirthdate() ? null : user.getBirthdate().getTime());
         map.put("header", user.getHeader());

@@ -705,6 +705,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andVipIsNull() {
+            addCriterion("VIP is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipIsNotNull() {
+            addCriterion("VIP is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipEqualTo(Byte value) {
+            addCriterion("VIP =", value, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipNotEqualTo(Byte value) {
+            addCriterion("VIP <>", value, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipGreaterThan(Byte value) {
+            addCriterion("VIP >", value, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipGreaterThanOrEqualTo(Byte value) {
+            addCriterion("VIP >=", value, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipLessThan(Byte value) {
+            addCriterion("VIP <", value, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipLessThanOrEqualTo(Byte value) {
+            addCriterion("VIP <=", value, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipIn(List<Byte> values) {
+            addCriterion("VIP in", values, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipNotIn(List<Byte> values) {
+            addCriterion("VIP not in", values, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipBetween(Byte value1, Byte value2) {
+            addCriterion("VIP between", value1, value2, "vip");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipNotBetween(Byte value1, Byte value2) {
+            addCriterion("VIP not between", value1, value2, "vip");
+            return (Criteria) this;
+        }
+
         public Criteria andInfoIsNull() {
             addCriterion("INFO is null");
             return (Criteria) this;

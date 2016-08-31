@@ -26,25 +26,27 @@ public class DynamicApiController extends ApiBaseController {
     @Autowired
     HttpPostUploadUtil imageUploadService;
 
-    @RequestMapping(value = "list")
+
+
+
+    @RequestMapping(value = "listbyuid")
     @ResponseBody
-    public Map<String, Object> list(Long uid, @RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+    public Map<String, Object> listbyuid(Long uid, @RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
         if (CommonUtils.isNull(uid)) {
-            resMap.put("data", dynamicManage.listAll(pageno, pagesize));
-        } else {
-            resMap.put("data", dynamicManage.listByUid(uid, pageno, pagesize));
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
         }
+        resMap.put("data", dynamicManage.listByUid(uid, pageno, pagesize));
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;
     }
 
 
-
-
-
     /**
      * 评论列表
+     *
      * @param did
      * @param pageno
      * @param pagesize
@@ -63,12 +65,12 @@ public class DynamicApiController extends ApiBaseController {
 
     @RequestMapping(value = "reply")
     @ResponseBody
-    public Map<String, Object> reply(Long did,String uname,Long ruid,String runame,String content, HttpServletRequest request) {
-        Long uid=getUid(request);
-        DynamicReply vo=new DynamicReply();
+    public Map<String, Object> reply(Long did, String uname, Long ruid, String runame, String content, HttpServletRequest request) {
+        Long uid = getUid(request);
+        DynamicReply vo = new DynamicReply();
         vo.setUid(uid);
         vo.setCreatedate(new Date());
-        vo.setKinds((byte)1);
+        vo.setKinds((byte) 1);
         vo.setUname(uname);
         vo.setDid(did);
         vo.setRuid(ruid);
@@ -107,12 +109,12 @@ public class DynamicApiController extends ApiBaseController {
 
     @RequestMapping(value = "like")
     @ResponseBody
-    public Map<String, Object> like(Long did,String uname,Long ruid,String runame, HttpServletRequest request) {
-        Long uid=getUid(request);
-        DynamicReply vo=new DynamicReply();
+    public Map<String, Object> like(Long did, String uname, Long ruid, String runame, HttpServletRequest request) {
+        Long uid = getUid(request);
+        DynamicReply vo = new DynamicReply();
         vo.setUid(uid);
         vo.setCreatedate(new Date());
-        vo.setKinds((byte)2);
+        vo.setKinds((byte) 2);
         vo.setUname(uname);
         vo.setDid(did);
         vo.setRuid(ruid);
@@ -127,9 +129,9 @@ public class DynamicApiController extends ApiBaseController {
     @ResponseBody
     public Map<String, Object> unreply(Long id, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
-        if(dynamicManage.delectReply(id)){
+        if (dynamicManage.delectReply(id)) {
             resMap.put("code", ResultCode.SUCCESS);
-        }else{
+        } else {
             resMap.put("code", ResultCode.ERROR);
         }
         return resMap;
@@ -140,9 +142,9 @@ public class DynamicApiController extends ApiBaseController {
     @ResponseBody
     public Map<String, Object> unlike(Long id, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
-        if(dynamicManage.delectLike(id)){
+        if (dynamicManage.delectLike(id)) {
             resMap.put("code", ResultCode.SUCCESS);
-        }else{
+        } else {
             resMap.put("code", ResultCode.ERROR);
         }
         return resMap;

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tank.mapper.SysAppVersionMapper" >
-<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
-  <resultMap id="BaseResultMap" type="com.tank.model.SysAppVersion" >
+<mapper namespace="com.tank.mapper.BasAppVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.tank.model.BasAppVersion" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="APPNAME" property="appname" jdbcType="VARCHAR" />
     <result column="APPCODE" property="appcode" jdbcType="VARCHAR" />
@@ -77,13 +76,13 @@
     ID, APPNAME, APPCODE, APPVERSION, TYPE, DES, APPURL, CREATEDATE, CREATEUSER, MODIFYDATE, 
     MODIFYUSER
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tank.model.SysAppVersionExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tank.model.BasAppVersionExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_app_version
+    from bas_app_version
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from sys_app_version
+    from bas_app_version
     where ID = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from sys_app_version
+    delete from bas_app_version
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tank.model.SysAppVersionExample" >
-    delete from sys_app_version
+  <delete id="deleteByExample" parameterType="com.tank.model.BasAppVersionExample" >
+    delete from bas_app_version
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tank.model.SysAppVersion" >
-    insert into sys_app_version (ID, APPNAME, APPCODE, 
+  <insert id="insert" parameterType="com.tank.model.BasAppVersion" >
+    insert into bas_app_version (ID, APPNAME, APPCODE, 
       APPVERSION, TYPE, DES, 
       APPURL, CREATEDATE, CREATEUSER, 
       MODIFYDATE, MODIFYUSER)
@@ -117,8 +116,8 @@
       #{appurl,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{createuser,jdbcType=BIGINT}, 
       #{modifydate,jdbcType=TIMESTAMP}, #{modifyuser,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.tank.model.SysAppVersion" >
-    insert into sys_app_version
+  <insert id="insertSelective" parameterType="com.tank.model.BasAppVersion" >
+    insert into bas_app_version
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         ID,
@@ -190,14 +189,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tank.model.SysAppVersionExample" resultType="java.lang.Integer" >
-    select count(*) from sys_app_version
+  <select id="countByExample" parameterType="com.tank.model.BasAppVersionExample" resultType="java.lang.Integer" >
+    select count(*) from bas_app_version
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update sys_app_version
+    update bas_app_version
     <set >
       <if test="record.id != null" >
         ID = #{record.id,jdbcType=BIGINT},
@@ -238,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update sys_app_version
+    update bas_app_version
     set ID = #{record.id,jdbcType=BIGINT},
       APPNAME = #{record.appname,jdbcType=VARCHAR},
       APPCODE = #{record.appcode,jdbcType=VARCHAR},
@@ -254,8 +253,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tank.model.SysAppVersion" >
-    update sys_app_version
+  <update id="updateByPrimaryKeySelective" parameterType="com.tank.model.BasAppVersion" >
+    update bas_app_version
     <set >
       <if test="appname != null" >
         APPNAME = #{appname,jdbcType=VARCHAR},
@@ -290,8 +289,8 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tank.model.SysAppVersion" >
-    update sys_app_version
+  <update id="updateByPrimaryKey" parameterType="com.tank.model.BasAppVersion" >
+    update bas_app_version
     set APPNAME = #{appname,jdbcType=VARCHAR},
       APPCODE = #{appcode,jdbcType=VARCHAR},
       APPVERSION = #{appversion,jdbcType=INTEGER},

@@ -11,6 +11,7 @@
     <result column="SEXCODE" property="sexcode" jdbcType="TINYINT" />
     <result column="BIRTHDATE" property="birthdate" jdbcType="TIMESTAMP" />
     <result column="HEADER" property="header" jdbcType="VARCHAR" />
+    <result column="VIP" property="vip" jdbcType="TINYINT" />
     <result column="INFO" property="info" jdbcType="VARCHAR" />
     <result column="FLAG" property="flag" jdbcType="TINYINT" />
     <result column="REGTYPE" property="regtype" jdbcType="SMALLINT" />
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, USERNAME, PASSWORD, TOKEN, MOBILE, NICKNAME, SEXCODE, BIRTHDATE, HEADER, INFO, 
-    FLAG, REGTYPE
+    ID, USERNAME, PASSWORD, TOKEN, MOBILE, NICKNAME, SEXCODE, BIRTHDATE, HEADER, VIP, 
+    INFO, FLAG, REGTYPE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tank.model.UserExample" >
     select
@@ -111,12 +112,12 @@
     insert into user (ID, USERNAME, PASSWORD, 
       TOKEN, MOBILE, NICKNAME, 
       SEXCODE, BIRTHDATE, HEADER, 
-      INFO, FLAG, REGTYPE
+      VIP, INFO, FLAG, REGTYPE
       )
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{token,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
       #{sexcode,jdbcType=TINYINT}, #{birthdate,jdbcType=TIMESTAMP}, #{header,jdbcType=VARCHAR}, 
-      #{info,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, #{regtype,jdbcType=SMALLINT}
+      #{vip,jdbcType=TINYINT}, #{info,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, #{regtype,jdbcType=SMALLINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.tank.model.User" >
@@ -148,6 +149,9 @@
       </if>
       <if test="header != null" >
         HEADER,
+      </if>
+      <if test="vip != null" >
+        VIP,
       </if>
       <if test="info != null" >
         INFO,
@@ -186,6 +190,9 @@
       </if>
       <if test="header != null" >
         #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="vip != null" >
+        #{vip,jdbcType=TINYINT},
       </if>
       <if test="info != null" >
         #{info,jdbcType=VARCHAR},
@@ -234,6 +241,9 @@
       <if test="record.header != null" >
         HEADER = #{record.header,jdbcType=VARCHAR},
       </if>
+      <if test="record.vip != null" >
+        VIP = #{record.vip,jdbcType=TINYINT},
+      </if>
       <if test="record.info != null" >
         INFO = #{record.info,jdbcType=VARCHAR},
       </if>
@@ -259,6 +269,7 @@
       SEXCODE = #{record.sexcode,jdbcType=TINYINT},
       BIRTHDATE = #{record.birthdate,jdbcType=TIMESTAMP},
       HEADER = #{record.header,jdbcType=VARCHAR},
+      VIP = #{record.vip,jdbcType=TINYINT},
       INFO = #{record.info,jdbcType=VARCHAR},
       FLAG = #{record.flag,jdbcType=TINYINT},
       REGTYPE = #{record.regtype,jdbcType=SMALLINT}
@@ -293,6 +304,9 @@
       <if test="header != null" >
         HEADER = #{header,jdbcType=VARCHAR},
       </if>
+      <if test="vip != null" >
+        VIP = #{vip,jdbcType=TINYINT},
+      </if>
       <if test="info != null" >
         INFO = #{info,jdbcType=VARCHAR},
       </if>
@@ -315,6 +329,7 @@
       SEXCODE = #{sexcode,jdbcType=TINYINT},
       BIRTHDATE = #{birthdate,jdbcType=TIMESTAMP},
       HEADER = #{header,jdbcType=VARCHAR},
+      VIP = #{vip,jdbcType=TINYINT},
       INFO = #{info,jdbcType=VARCHAR},
       FLAG = #{flag,jdbcType=TINYINT},
       REGTYPE = #{regtype,jdbcType=SMALLINT}

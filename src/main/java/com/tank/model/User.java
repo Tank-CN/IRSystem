@@ -21,6 +21,8 @@ public class User {
 
     private String header;
 
+    private Byte vip;
+
     private String info;
 
     private Byte flag;
@@ -97,6 +99,14 @@ public class User {
 
     public void setHeader(String header) {
         this.header = header == null ? null : header.trim();
+    }
+
+    public Byte getVip() {
+        return vip;
+    }
+
+    public void setVip(Byte vip) {
+        this.vip = vip;
     }
 
     public String getInfo() {

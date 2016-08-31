@@ -10,25 +10,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Transactional(readOnly = true)
-public class NewsManage  extends BaseManage {
+public class NewsManage extends BaseManage {
 
     @Autowired
     NewsExMapper newsExMapper;
 
 
-    public NewsVo getHotestNews(){
+    public NewsVo getHotestNews() {
         NewsExample example = new NewsExample();
         example.setOrderByClause(getPage(1, 1));
-       List<News> list= newsExMapper.selectByExample(example);
-        if(null!=list&&list.size()>0){
-            News news=list.get(0);
-            NewsVo newsVo=new NewsVo();
+        List<News> list = newsExMapper.selectByExample(example);
+        if (null != list && list.size() > 0) {
+            News news = list.get(0);
+            NewsVo newsVo = new NewsVo();
             try {
-                PropertyUtils.copyProperties(newsVo,news);
+                PropertyUtils.copyProperties(newsVo, news);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
@@ -37,6 +38,30 @@ public class NewsManage  extends BaseManage {
                 e.printStackTrace();
             }
             return newsVo;
+        }
+        return null;
+    }
+
+
+    public List<NewsVo> listNews(Integer pageNumber,
+                                      Integer pageSize) {
+        List<News> list = list(pageNumber,pageSize);
+        if (null != list && list.size() > 0) {
+            List<NewsVo> ls=new ArrayList<>();
+            for(News vo:list){
+                NewsVo newsVo = new NewsVo();
+                try {
+                    PropertyUtils.copyProperties(newsVo, vo);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                ls.add(newsVo);
+            }
+            return ls;
         }
         return null;
     }
@@ -59,10 +84,9 @@ public class NewsManage  extends BaseManage {
 
 
     public List<News> list(Integer pageNumber,
-                                  Integer pageSize) {
+                           Integer pageSize) {
         NewsExample example = new NewsExample();
         example.setOrderByClause(getPage(pageNumber, pageSize));
-
         return newsExMapper.selectByExample(example);
     }
 
@@ -77,7 +101,6 @@ public class NewsManage  extends BaseManage {
         }
         return 0;
     }
-
 
 
 }
