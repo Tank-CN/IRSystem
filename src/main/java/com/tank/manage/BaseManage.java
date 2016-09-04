@@ -1,6 +1,8 @@
 package com.tank.manage;
 
 import com.bs.util.CommonUtils;
+import com.tank.model.User;
+import com.tank.vo.UserVo;
 
 public class BaseManage {
 
@@ -63,6 +65,19 @@ public class BaseManage {
 			return offset;
 		}
 		return 0;
+	}
+
+
+	public UserVo getUserVo(User user){
+		UserVo userVo=new UserVo();
+		userVo.setNickname(user.getNickname());
+		userVo.setHeader(user.getHeader());
+		userVo.setBirthdate(user.getBirthdate());
+		userVo.setId(user.getId());
+		userVo.setInfo(user.getInfo());
+		userVo.setSexcode(user.getSexcode());
+		userVo.setVip(user.getVip());
+		return userVo;
 	}
 
 }

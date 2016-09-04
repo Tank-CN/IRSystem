@@ -765,6 +765,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andViptimeIsNull() {
+            addCriterion("VIPTIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeIsNotNull() {
+            addCriterion("VIPTIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeEqualTo(Date value) {
+            addCriterion("VIPTIME =", value, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeNotEqualTo(Date value) {
+            addCriterion("VIPTIME <>", value, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeGreaterThan(Date value) {
+            addCriterion("VIPTIME >", value, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("VIPTIME >=", value, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeLessThan(Date value) {
+            addCriterion("VIPTIME <", value, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeLessThanOrEqualTo(Date value) {
+            addCriterion("VIPTIME <=", value, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeIn(List<Date> values) {
+            addCriterion("VIPTIME in", values, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeNotIn(List<Date> values) {
+            addCriterion("VIPTIME not in", values, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeBetween(Date value1, Date value2) {
+            addCriterion("VIPTIME between", value1, value2, "viptime");
+            return (Criteria) this;
+        }
+
+        public Criteria andViptimeNotBetween(Date value1, Date value2) {
+            addCriterion("VIPTIME not between", value1, value2, "viptime");
+            return (Criteria) this;
+        }
+
         public Criteria andInfoIsNull() {
             addCriterion("INFO is null");
             return (Criteria) this;

@@ -64,9 +64,6 @@
       <if test="picurl != null" >
         PICURL,
       </if>
-      <if test="introduce != null" >
-        INTRODUCE,
-      </if>
       <if test="telephone != null" >
         TELEPHONE,
       </if>
@@ -75,6 +72,9 @@
       </if>
       <if test="website != null" >
         WEBSITE,
+      </if>
+      <if test="score != null" >
+        SCORE,
       </if>
       <if test="servertime != null" >
         SERVERTIME,
@@ -93,6 +93,9 @@
       </if>
       <if test="lastmodifydate != null" >
         LASTMODIFYDATE,
+      </if>
+      <if test="introduce != null" >
+        INTRODUCE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -156,9 +159,6 @@
       <if test="picurl != null" >
         #{picurl,jdbcType=VARCHAR},
       </if>
-      <if test="introduce != null" >
-        #{introduce,jdbcType=VARCHAR},
-      </if>
       <if test="telephone != null" >
         #{telephone,jdbcType=VARCHAR},
       </if>
@@ -167,6 +167,9 @@
       </if>
       <if test="website != null" >
         #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
       </if>
       <if test="servertime != null" >
         #{servertime,jdbcType=VARCHAR},
@@ -185,6 +188,9 @@
       </if>
       <if test="lastmodifydate != null" >
         #{lastmodifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>

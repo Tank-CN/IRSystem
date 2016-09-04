@@ -6,6 +6,7 @@ import com.tank.model.BusinessReplyExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @BatisRepository
 public interface BusinessReplyMapper {
     int countByExample(BusinessReplyExample example);

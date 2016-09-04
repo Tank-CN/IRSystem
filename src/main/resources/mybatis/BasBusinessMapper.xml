@@ -22,16 +22,19 @@
     <result column="VILLAGEID" property="villageid" jdbcType="VARCHAR" />
     <result column="VILLAGENAME" property="villagename" jdbcType="VARCHAR" />
     <result column="PICURL" property="picurl" jdbcType="VARCHAR" />
-    <result column="INTRODUCE" property="introduce" jdbcType="VARCHAR" />
     <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
     <result column="SPELL" property="spell" jdbcType="VARCHAR" />
     <result column="WEBSITE" property="website" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="INTEGER" />
     <result column="SERVERTIME" property="servertime" jdbcType="VARCHAR" />
     <result column="FLAG" property="flag" jdbcType="TINYINT" />
     <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
     <result column="CREATEUSER" property="createuser" jdbcType="BIGINT" />
     <result column="LASTMODIFYUSER" property="lastmodifyuser" jdbcType="BIGINT" />
     <result column="LASTMODIFYDATE" property="lastmodifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tank.model.BasBusiness" extends="BaseResultMap" >
+    <result column="INTRODUCE" property="introduce" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -94,9 +97,28 @@
   <sql id="Base_Column_List" >
     ID, TITLE, ADDRESS, LONGITUDE, LATITUDE, TYPEID, TYPENAME, TYPEIID, TYPENNAME, PROVINCEID, 
     PROVINCENAME, CITYID, CITYNAME, DISTRICTID, DISTRICTNAME, STREETID, STREETNAME, VILLAGEID, 
-    VILLAGENAME, PICURL, INTRODUCE, TELEPHONE, SPELL, WEBSITE, SERVERTIME, FLAG, CREATEDATE, 
+    VILLAGENAME, PICURL, TELEPHONE, SPELL, WEBSITE, SCORE, SERVERTIME, FLAG, CREATEDATE, 
     CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
   </sql>
+  <sql id="Blob_Column_List" >
+    INTRODUCE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.tank.model.BasBusinessExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bas_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tank.model.BasBusinessExample" >
     select
     <if test="distinct" >
@@ -111,9 +133,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from bas_business
     where ID = #{id,jdbcType=BIGINT}
   </select>
@@ -134,22 +158,22 @@
       PROVINCEID, PROVINCENAME, CITYID, 
       CITYNAME, DISTRICTID, DISTRICTNAME, 
       STREETID, STREETNAME, VILLAGEID, 
-      VILLAGENAME, PICURL, INTRODUCE, 
-      TELEPHONE, SPELL, WEBSITE, 
+      VILLAGENAME, PICURL, TELEPHONE, 
+      SPELL, WEBSITE, SCORE, 
       SERVERTIME, FLAG, CREATEDATE, 
-      CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
-      )
+      CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE, 
+      INTRODUCE)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{typeid,jdbcType=BIGINT}, 
       #{typename,jdbcType=VARCHAR}, #{typeiid,jdbcType=BIGINT}, #{typenname,jdbcType=VARCHAR}, 
       #{provinceid,jdbcType=VARCHAR}, #{provincename,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
       #{cityname,jdbcType=VARCHAR}, #{districtid,jdbcType=VARCHAR}, #{districtname,jdbcType=VARCHAR}, 
       #{streetid,jdbcType=VARCHAR}, #{streetname,jdbcType=VARCHAR}, #{villageid,jdbcType=VARCHAR}, 
-      #{villagename,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
-      #{telephone,jdbcType=VARCHAR}, #{spell,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{villagename,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{spell,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
       #{servertime,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{createuser,jdbcType=BIGINT}, #{lastmodifyuser,jdbcType=BIGINT}, #{lastmodifydate,jdbcType=TIMESTAMP}
-      )
+      #{createuser,jdbcType=BIGINT}, #{lastmodifyuser,jdbcType=BIGINT}, #{lastmodifydate,jdbcType=TIMESTAMP}, 
+      #{introduce,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tank.model.BasBusiness" >
     insert into bas_business
@@ -214,9 +238,6 @@
       <if test="picurl != null" >
         PICURL,
       </if>
-      <if test="introduce != null" >
-        INTRODUCE,
-      </if>
       <if test="telephone != null" >
         TELEPHONE,
       </if>
@@ -225,6 +246,9 @@
       </if>
       <if test="website != null" >
         WEBSITE,
+      </if>
+      <if test="score != null" >
+        SCORE,
       </if>
       <if test="servertime != null" >
         SERVERTIME,
@@ -243,6 +267,9 @@
       </if>
       <if test="lastmodifydate != null" >
         LASTMODIFYDATE,
+      </if>
+      <if test="introduce != null" >
+        INTRODUCE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -306,9 +333,6 @@
       <if test="picurl != null" >
         #{picurl,jdbcType=VARCHAR},
       </if>
-      <if test="introduce != null" >
-        #{introduce,jdbcType=VARCHAR},
-      </if>
       <if test="telephone != null" >
         #{telephone,jdbcType=VARCHAR},
       </if>
@@ -317,6 +341,9 @@
       </if>
       <if test="website != null" >
         #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
       </if>
       <if test="servertime != null" >
         #{servertime,jdbcType=VARCHAR},
@@ -335,6 +362,9 @@
       </if>
       <if test="lastmodifydate != null" >
         #{lastmodifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -407,9 +437,6 @@
       <if test="record.picurl != null" >
         PICURL = #{record.picurl,jdbcType=VARCHAR},
       </if>
-      <if test="record.introduce != null" >
-        INTRODUCE = #{record.introduce,jdbcType=VARCHAR},
-      </if>
       <if test="record.telephone != null" >
         TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       </if>
@@ -418,6 +445,9 @@
       </if>
       <if test="record.website != null" >
         WEBSITE = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        SCORE = #{record.score,jdbcType=INTEGER},
       </if>
       <if test="record.servertime != null" >
         SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
@@ -437,7 +467,47 @@
       <if test="record.lastmodifydate != null" >
         LASTMODIFYDATE = #{record.lastmodifydate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.introduce != null" >
+        INTRODUCE = #{record.introduce,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update bas_business
+    set ID = #{record.id,jdbcType=BIGINT},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      TYPEID = #{record.typeid,jdbcType=BIGINT},
+      TYPENAME = #{record.typename,jdbcType=VARCHAR},
+      TYPEIID = #{record.typeiid,jdbcType=BIGINT},
+      TYPENNAME = #{record.typenname,jdbcType=VARCHAR},
+      PROVINCEID = #{record.provinceid,jdbcType=VARCHAR},
+      PROVINCENAME = #{record.provincename,jdbcType=VARCHAR},
+      CITYID = #{record.cityid,jdbcType=VARCHAR},
+      CITYNAME = #{record.cityname,jdbcType=VARCHAR},
+      DISTRICTID = #{record.districtid,jdbcType=VARCHAR},
+      DISTRICTNAME = #{record.districtname,jdbcType=VARCHAR},
+      STREETID = #{record.streetid,jdbcType=VARCHAR},
+      STREETNAME = #{record.streetname,jdbcType=VARCHAR},
+      VILLAGEID = #{record.villageid,jdbcType=VARCHAR},
+      VILLAGENAME = #{record.villagename,jdbcType=VARCHAR},
+      PICURL = #{record.picurl,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      SPELL = #{record.spell,jdbcType=VARCHAR},
+      WEBSITE = #{record.website,jdbcType=VARCHAR},
+      SCORE = #{record.score,jdbcType=INTEGER},
+      SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      FLAG = #{record.flag,jdbcType=TINYINT},
+      CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
+      CREATEUSER = #{record.createuser,jdbcType=BIGINT},
+      LASTMODIFYUSER = #{record.lastmodifyuser,jdbcType=BIGINT},
+      LASTMODIFYDATE = #{record.lastmodifydate,jdbcType=TIMESTAMP},
+      INTRODUCE = #{record.introduce,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -464,10 +534,10 @@
       VILLAGEID = #{record.villageid,jdbcType=VARCHAR},
       VILLAGENAME = #{record.villagename,jdbcType=VARCHAR},
       PICURL = #{record.picurl,jdbcType=VARCHAR},
-      INTRODUCE = #{record.introduce,jdbcType=VARCHAR},
       TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       SPELL = #{record.spell,jdbcType=VARCHAR},
       WEBSITE = #{record.website,jdbcType=VARCHAR},
+      SCORE = #{record.score,jdbcType=INTEGER},
       SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
       FLAG = #{record.flag,jdbcType=TINYINT},
       CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
@@ -538,9 +608,6 @@
       <if test="picurl != null" >
         PICURL = #{picurl,jdbcType=VARCHAR},
       </if>
-      <if test="introduce != null" >
-        INTRODUCE = #{introduce,jdbcType=VARCHAR},
-      </if>
       <if test="telephone != null" >
         TELEPHONE = #{telephone,jdbcType=VARCHAR},
       </if>
@@ -549,6 +616,9 @@
       </if>
       <if test="website != null" >
         WEBSITE = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        SCORE = #{score,jdbcType=INTEGER},
       </if>
       <if test="servertime != null" >
         SERVERTIME = #{servertime,jdbcType=VARCHAR},
@@ -568,7 +638,44 @@
       <if test="lastmodifydate != null" >
         LASTMODIFYDATE = #{lastmodifydate,jdbcType=TIMESTAMP},
       </if>
+      <if test="introduce != null" >
+        INTRODUCE = #{introduce,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tank.model.BasBusiness" >
+    update bas_business
+    set TITLE = #{title,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      LONGITUDE = #{longitude,jdbcType=DECIMAL},
+      LATITUDE = #{latitude,jdbcType=DECIMAL},
+      TYPEID = #{typeid,jdbcType=BIGINT},
+      TYPENAME = #{typename,jdbcType=VARCHAR},
+      TYPEIID = #{typeiid,jdbcType=BIGINT},
+      TYPENNAME = #{typenname,jdbcType=VARCHAR},
+      PROVINCEID = #{provinceid,jdbcType=VARCHAR},
+      PROVINCENAME = #{provincename,jdbcType=VARCHAR},
+      CITYID = #{cityid,jdbcType=VARCHAR},
+      CITYNAME = #{cityname,jdbcType=VARCHAR},
+      DISTRICTID = #{districtid,jdbcType=VARCHAR},
+      DISTRICTNAME = #{districtname,jdbcType=VARCHAR},
+      STREETID = #{streetid,jdbcType=VARCHAR},
+      STREETNAME = #{streetname,jdbcType=VARCHAR},
+      VILLAGEID = #{villageid,jdbcType=VARCHAR},
+      VILLAGENAME = #{villagename,jdbcType=VARCHAR},
+      PICURL = #{picurl,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      SPELL = #{spell,jdbcType=VARCHAR},
+      WEBSITE = #{website,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=INTEGER},
+      SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=TINYINT},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      CREATEUSER = #{createuser,jdbcType=BIGINT},
+      LASTMODIFYUSER = #{lastmodifyuser,jdbcType=BIGINT},
+      LASTMODIFYDATE = #{lastmodifydate,jdbcType=TIMESTAMP},
+      INTRODUCE = #{introduce,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tank.model.BasBusiness" >
@@ -592,10 +699,10 @@
       VILLAGEID = #{villageid,jdbcType=VARCHAR},
       VILLAGENAME = #{villagename,jdbcType=VARCHAR},
       PICURL = #{picurl,jdbcType=VARCHAR},
-      INTRODUCE = #{introduce,jdbcType=VARCHAR},
       TELEPHONE = #{telephone,jdbcType=VARCHAR},
       SPELL = #{spell,jdbcType=VARCHAR},
       WEBSITE = #{website,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=INTEGER},
       SERVERTIME = #{servertime,jdbcType=VARCHAR},
       FLAG = #{flag,jdbcType=TINYINT},
       CREATEDATE = #{createdate,jdbcType=TIMESTAMP},

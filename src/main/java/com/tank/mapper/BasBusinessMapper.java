@@ -19,15 +19,21 @@ public interface BasBusinessMapper {
 
     int insertSelective(BasBusiness record);
 
+    List<BasBusiness> selectByExampleWithBLOBs(BasBusinessExample example);
+
     List<BasBusiness> selectByExample(BasBusinessExample example);
 
     BasBusiness selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") BasBusiness record, @Param("example") BasBusinessExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") BasBusiness record, @Param("example") BasBusinessExample example);
+
     int updateByExample(@Param("record") BasBusiness record, @Param("example") BasBusinessExample example);
 
     int updateByPrimaryKeySelective(BasBusiness record);
+
+    int updateByPrimaryKeyWithBLOBs(BasBusiness record);
 
     int updateByPrimaryKey(BasBusiness record);
 }

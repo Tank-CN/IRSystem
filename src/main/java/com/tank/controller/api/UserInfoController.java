@@ -9,6 +9,7 @@ import com.tank.manage.DynamicManage;
 import com.tank.manage.UserManage;
 import com.tank.model.User;
 import com.tank.vo.MyInfoVo;
+import com.tank.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,14 +56,21 @@ public class UserInfoController extends ApiBaseController{
         vo.setDynamicCount(dynamicManage.countByUid(uid));
         User user=userManage.getUserById(uid);
         if(null!=user){
-            vo.setHeader(user.getHeader());
-            vo.setInfo(user.getInfo());
-            vo.setNickname(user.getNickname());
+            UserVo userVo=new UserVo();
+            userVo.setNickname(user.getNickname());
+            userVo.setHeader(user.getHeader());
+            userVo.setBirthdate(user.getBirthdate());
+            userVo.setId(user.getId());
+            userVo.setInfo(user.getInfo());
+            userVo.setSexcode(user.getSexcode());
+            userVo.setVip(user.getVip());
+            vo.setUserVo(userVo);
         }
         resMap.put("data",vo);
         resMap.put("code",ResultCode.SUCCESS);
         return resMap;
     }
+
 
 
     /**

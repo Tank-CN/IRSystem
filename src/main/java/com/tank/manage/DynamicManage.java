@@ -29,11 +29,11 @@ public class DynamicManage extends BaseManage {
     @Autowired
     UserManage userManage;
 
-    public long insertBackId(Dynamic dynamic) {
+    public Dynamic insertBackId(Dynamic dynamic) {
         if (dynamicExMapper.insertBackId(dynamic) > 0) {
-            return dynamic.getId();
+            return dynamic;
         }
-        return 0;
+        return null;
     }
 
 
@@ -111,11 +111,11 @@ public class DynamicManage extends BaseManage {
                     PropertyUtils.copyProperties(vo, dc);
                     user = userManage.getUserById(dc.getUid());
                     if (null != user) {
-                        vo.setNickname(user.getNickname());
-                        vo.setHeader(user.getHeader());
+                        vo.setUserVo(getUserVo(user));
                     }
+                    //去掉喜欢列表
                     //喜欢列表
-                    vo.setLikeVos(listLikeByDid(dc.getId(), 1, 10));
+//                    vo.setLikeVos(listLikeByDid(dc.getId(), 1, 10));
                     //评论列表
                     vo.setReplyList(listReplyByDid(dc.getId(), 1, 10));
                     ls.add(vo);
@@ -154,14 +154,14 @@ public class DynamicManage extends BaseManage {
             User user = null;
             for (DynamicReply r : list) {
                 DynamicReplyVo vo = new DynamicReplyVo();
+                vo.setId(r.getId());
                 vo.setCreatedate(r.getCreatedate());
                 vo.setUid(r.getUid());
                 vo.setContent(r.getContent());
                 vo.setDid(r.getDid());
                 user = userManage.getUserById(r.getUid());
                 if (null != user) {
-                    vo.setHeader(user.getHeader());
-                    vo.setUname(user.getNickname());
+                    vo.setUserVo(getUserVo(user));
                 }
                 ls.add(vo);
             }
@@ -204,7 +204,7 @@ public class DynamicManage extends BaseManage {
         vo.setCreatedate(new Date());
         vo.setKinds((byte) 1);
         if (dynamicReplyExMapper.insertBackId(vo) > 0) {
-            dynamicExMapper.replyCountadd1(vo.getId());
+            dynamicExMapper.replyCountadd1(vo.getDid());
             return vo.getId();
         }
         return 0;
@@ -214,7 +214,7 @@ public class DynamicManage extends BaseManage {
         vo.setCreatedate(new Date());
         vo.setKinds((byte) 2);
         if (dynamicReplyExMapper.insertBackId(vo) > 0) {
-            dynamicExMapper.likeCountadd1(vo.getId());
+            dynamicExMapper.likeCountadd1(vo.getDid());
             return vo.getId();
         }
         return 0;
@@ -237,5 +237,6 @@ public class DynamicManage extends BaseManage {
             return false;
         }
     }
+
 
 }

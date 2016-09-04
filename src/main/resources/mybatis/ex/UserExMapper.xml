@@ -4,6 +4,7 @@
 	<insert id="insertBackId" parameterType="com.tank.model.User"
 		keyProperty="id" useGeneratedKeys="true">
 		insert into user
+		insert into user
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null" >
 				ID,
@@ -34,6 +35,9 @@
 			</if>
 			<if test="vip != null" >
 				VIP,
+			</if>
+			<if test="viptime != null" >
+				VIPTIME,
 			</if>
 			<if test="info != null" >
 				INFO,
@@ -75,6 +79,9 @@
 			</if>
 			<if test="vip != null" >
 				#{vip,jdbcType=TINYINT},
+			</if>
+			<if test="viptime != null" >
+				#{viptime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="info != null" >
 				#{info,jdbcType=VARCHAR},

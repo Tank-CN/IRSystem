@@ -11,6 +11,12 @@ public class BusinessReply {
 
     private Byte flag;
 
+    private Integer totalscore;
+
+    private Integer serverscore;
+
+    private Integer envirscore;
+
     private Date createdate;
 
     private String content;
@@ -45,6 +51,30 @@ public class BusinessReply {
 
     public void setFlag(Byte flag) {
         this.flag = flag;
+    }
+
+    public Integer getTotalscore() {
+        return totalscore;
+    }
+
+    public void setTotalscore(Integer totalscore) {
+        this.totalscore = totalscore;
+    }
+
+    public Integer getServerscore() {
+        return serverscore;
+    }
+
+    public void setServerscore(Integer serverscore) {
+        this.serverscore = serverscore;
+    }
+
+    public Integer getEnvirscore() {
+        return envirscore;
+    }
+
+    public void setEnvirscore(Integer envirscore) {
+        this.envirscore = envirscore;
     }
 
     public Date getCreatedate() {

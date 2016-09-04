@@ -6,21 +6,57 @@ import java.util.Date;
 /**
  * Created by Administrator on 2016/7/16.
  */
-public class BusinessReplyVo implements Serializable{
+public class BusinessReplyVo implements Serializable {
 
     public Long id;
 
     public Long uid;
 
-    public String header;
-
-    public String nickname;
+    public UserVo userVo;
 
     public Long bid;
+
+    public Integer totalscore;
+
+    public Integer serverscore;
+
+    public Integer envirscore;
 
     public Date createdate;
 
     public String content;
+
+    public UserVo getUserVo() {
+        return userVo;
+    }
+
+    public void setUserVo(UserVo userVo) {
+        this.userVo = userVo;
+    }
+
+    public Integer getTotalscore() {
+        return totalscore;
+    }
+
+    public void setTotalscore(Integer totalscore) {
+        this.totalscore = totalscore;
+    }
+
+    public Integer getServerscore() {
+        return serverscore;
+    }
+
+    public void setServerscore(Integer serverscore) {
+        this.serverscore = serverscore;
+    }
+
+    public Integer getEnvirscore() {
+        return envirscore;
+    }
+
+    public void setEnvirscore(Integer envirscore) {
+        this.envirscore = envirscore;
+    }
 
     public Long getId() {
         return id;
@@ -38,21 +74,6 @@ public class BusinessReplyVo implements Serializable{
         this.uid = uid;
     }
 
-    public String getHeader() {
-        return header;
-    }
-
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     public Long getBid() {
         return bid;

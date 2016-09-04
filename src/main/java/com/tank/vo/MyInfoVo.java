@@ -9,9 +9,7 @@ public class MyInfoVo implements Serializable{
 
     public int dynamicCount;
     public int businessCollectCount;
-    public String header;
-    public String nickname;
-    public String info;
+    public UserVo userVo;
 
     public int getDynamicCount() {
         return dynamicCount;
@@ -29,27 +27,11 @@ public class MyInfoVo implements Serializable{
         this.businessCollectCount = businessCollectCount;
     }
 
-    public String getHeader() {
-        return header;
+    public UserVo getUserVo() {
+        return userVo;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
+    public void setUserVo(UserVo userVo) {
+        this.userVo = userVo;
     }
 }

@@ -23,6 +23,8 @@ public class User {
 
     private Byte vip;
 
+    private Date viptime;
+
     private String info;
 
     private Byte flag;
@@ -107,6 +109,14 @@ public class User {
 
     public void setVip(Byte vip) {
         this.vip = vip;
+    }
+
+    public Date getViptime() {
+        return viptime;
+    }
+
+    public void setViptime(Date viptime) {
+        this.viptime = viptime;
     }
 
     public String getInfo() {

@@ -13,9 +13,7 @@ public class DynamicVo implements Serializable {
 
     public Long uid;
 
-    public String nickname;
-
-    public String header;
+    public UserVo userVo;
 
     public String title;
 
@@ -38,6 +36,15 @@ public class DynamicVo implements Serializable {
     public List<DynamicReplyVo> replyList;
     public List<DynamicLikeVo> likeVos;
 
+
+    public UserVo getUserVo() {
+        return userVo;
+    }
+
+    public void setUserVo(UserVo userVo) {
+        this.userVo = userVo;
+    }
+
     public Long getId() {
         return id;
     }
@@ -52,22 +59,6 @@ public class DynamicVo implements Serializable {
 
     public void setUid(Long uid) {
         this.uid = uid;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public void setHeader(String header) {
-        this.header = header;
     }
 
     public String getTitle() {

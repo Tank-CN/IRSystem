@@ -16,6 +16,15 @@
       <if test="flag != null" >
         FLAG,
       </if>
+      <if test="totalscore != null" >
+        TOTALSCORE,
+      </if>
+      <if test="serverscore != null" >
+        SERVERSCORE,
+      </if>
+      <if test="envirscore != null" >
+        ENVIRSCORE,
+      </if>
       <if test="createdate != null" >
         CREATEDATE,
       </if>
@@ -35,6 +44,15 @@
       </if>
       <if test="flag != null" >
         #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="totalscore != null" >
+        #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="serverscore != null" >
+        #{serverscore,jdbcType=INTEGER},
+      </if>
+      <if test="envirscore != null" >
+        #{envirscore,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
         #{createdate,jdbcType=TIMESTAMP},

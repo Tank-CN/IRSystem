@@ -1456,76 +1456,6 @@ public class BasBusinessExample {
             return (Criteria) this;
         }
 
-        public Criteria andIntroduceIsNull() {
-            addCriterion("INTRODUCE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceIsNotNull() {
-            addCriterion("INTRODUCE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceEqualTo(String value) {
-            addCriterion("INTRODUCE =", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceNotEqualTo(String value) {
-            addCriterion("INTRODUCE <>", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceGreaterThan(String value) {
-            addCriterion("INTRODUCE >", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceGreaterThanOrEqualTo(String value) {
-            addCriterion("INTRODUCE >=", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceLessThan(String value) {
-            addCriterion("INTRODUCE <", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceLessThanOrEqualTo(String value) {
-            addCriterion("INTRODUCE <=", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceLike(String value) {
-            addCriterion("INTRODUCE like", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceNotLike(String value) {
-            addCriterion("INTRODUCE not like", value, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceIn(List<String> values) {
-            addCriterion("INTRODUCE in", values, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceNotIn(List<String> values) {
-            addCriterion("INTRODUCE not in", values, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceBetween(String value1, String value2) {
-            addCriterion("INTRODUCE between", value1, value2, "introduce");
-            return (Criteria) this;
-        }
-
-        public Criteria andIntroduceNotBetween(String value1, String value2) {
-            addCriterion("INTRODUCE not between", value1, value2, "introduce");
-            return (Criteria) this;
-        }
-
         public Criteria andTelephoneIsNull() {
             addCriterion("TELEPHONE is null");
             return (Criteria) this;
@@ -1733,6 +1663,66 @@ public class BasBusinessExample {
 
         public Criteria andWebsiteNotBetween(String value1, String value2) {
             addCriterion("WEBSITE not between", value1, value2, "website");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreIsNull() {
+            addCriterion("SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreIsNotNull() {
+            addCriterion("SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreEqualTo(Integer value) {
+            addCriterion("SCORE =", value, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreNotEqualTo(Integer value) {
+            addCriterion("SCORE <>", value, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreGreaterThan(Integer value) {
+            addCriterion("SCORE >", value, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("SCORE >=", value, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreLessThan(Integer value) {
+            addCriterion("SCORE <", value, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("SCORE <=", value, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreIn(List<Integer> values) {
+            addCriterion("SCORE in", values, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreNotIn(List<Integer> values) {
+            addCriterion("SCORE not in", values, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreBetween(Integer value1, Integer value2) {
+            addCriterion("SCORE between", value1, value2, "score");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("SCORE not between", value1, value2, "score");
             return (Criteria) this;
         }
 

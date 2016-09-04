@@ -39,16 +39,23 @@ public class BussinessApiController extends ApiBaseController {
     }
 
 
+
     @RequestMapping(value = "detail")
     @ResponseBody
-    public Map<String, Object> detail(Long iid, HttpServletRequest request) {
+    public Map<String, Object> detail(Long id, HttpServletRequest request) {
+        Long uid = getUid(request);
         Map<String, Object> resMap = new HashMap<String, Object>();
-        if (CommonUtils.isNull(iid)) {
+        if (CommonUtils.isNull(id)) {
             resMap.put("code", ResultCode.PARAMETERS_EMPTY);
             resMap.put("msg", "传入参数不能为空");
             return resMap;
         }
-        resMap.put("data", basBusinessManage.getById(iid));
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        if (!CommonUtils.isNull(uid)) {
+            dataMap.put("isCollect", basBusinessManage.isCollect(uid, id));
+        }
+        dataMap.put("replyVos",basBusinessManage.listReplyByBid(id,1,10));
+        resMap.put("data", dataMap);
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;
     }
@@ -70,6 +77,27 @@ public class BussinessApiController extends ApiBaseController {
             return resMap;
         }
         resMap.put("data", basBusinessManage.collect(getUid(request), bid));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param bid
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "uncollect")
+    @ResponseBody
+    public Map<String, Object> uncollect(Long bid, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(bid)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        resMap.put("data", basBusinessManage.uncollect(getUid(request), bid));
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;
     }
@@ -102,26 +130,16 @@ public class BussinessApiController extends ApiBaseController {
     /**
      * 给商家评论
      *
-     * @param bid
-     * @param content
      * @param request
      * @return
      */
     @RequestMapping(value = "reply")
     @ResponseBody
-    public Map<String, Object> reply(Long bid, String content, HttpServletRequest request) {
+    public Map<String, Object> reply(BusinessReply vo, HttpServletRequest request) {
         Long uid = getUid(request);
         Map<String, Object> resMap = new HashMap<String, Object>();
-        if (CommonUtils.isNull(bid) || CommonUtils.isNull(content)) {
-            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
-            resMap.put("msg", "传入参数不能为空");
-            return resMap;
-        }
-        BusinessReply vo = new BusinessReply();
         vo.setCreatedate(new Date());
-        vo.setBid(bid);
         vo.setUid(uid);
-        vo.setContent(content);
         Long id = null;
         if ((id = basBusinessManage.reply(vo)) > 0) {
             resMap.put("data", id);
@@ -132,5 +150,53 @@ public class BussinessApiController extends ApiBaseController {
         return resMap;
     }
 
+
+    /**
+     * 删除商家评论
+     *
+     * @param id
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "unreply")
+    @ResponseBody
+    public Map<String, Object> unreply(Long id, HttpServletRequest request) {
+        Long uid = getUid(request);
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(id) ) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        if ((basBusinessManage.unreply(id))) {
+            resMap.put("code", ResultCode.SUCCESS);
+        } else {
+            resMap.put("code", ResultCode.ERROR);
+        }
+        return resMap;
+    }
+
+
+    /**
+     * 商家评论的列表
+     *
+     * @param pageno
+     * @param pagesize
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "replylist")
+    @ResponseBody
+    public Map<String, Object> replylist(Long id,@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(id)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        resMap.put("data", basBusinessManage.listReplyByBid(id, pageno, pagesize));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
 
 }

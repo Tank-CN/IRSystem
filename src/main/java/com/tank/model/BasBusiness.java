@@ -44,13 +44,13 @@ public class BasBusiness {
 
     private String picurl;
 
-    private String introduce;
-
     private String telephone;
 
     private String spell;
 
     private String website;
+
+    private Integer score;
 
     private String servertime;
 
@@ -63,6 +63,8 @@ public class BasBusiness {
     private Long lastmodifyuser;
 
     private Date lastmodifydate;
+
+    private String introduce;
 
     public Long getId() {
         return id;
@@ -224,14 +226,6 @@ public class BasBusiness {
         this.picurl = picurl == null ? null : picurl.trim();
     }
 
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce == null ? null : introduce.trim();
-    }
-
     public String getTelephone() {
         return telephone;
     }
@@ -254,6 +248,14 @@ public class BasBusiness {
 
     public void setWebsite(String website) {
         this.website = website == null ? null : website.trim();
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public String getServertime() {
@@ -302,5 +304,13 @@ public class BasBusiness {
 
     public void setLastmodifydate(Date lastmodifydate) {
         this.lastmodifydate = lastmodifydate;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce == null ? null : introduce.trim();
     }
 }

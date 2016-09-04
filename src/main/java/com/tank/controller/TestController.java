@@ -20,9 +20,9 @@ import java.util.Map;
 @RequestMapping(value = "/test")
 public class TestController {
 
-//    String s_url =null;
+    String s_url =null;
 
-    String s_url ="http://114.55.253.28:8090/";
+//    String s_url ="http://114.55.253.28:8090/";
 
     @Autowired
     JPushService jPushService;

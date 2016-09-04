@@ -12,16 +12,22 @@ public class DynamicReplyVo implements Serializable{
 
     public Long did;
 
+    public UserVo userVo;
+
     public Long uid;
-
-    public String uname;
-
-    public String header;
 
     public Date createdate;
 
     public String content;
 
+
+    public UserVo getUserVo() {
+        return userVo;
+    }
+
+    public void setUserVo(UserVo userVo) {
+        this.userVo = userVo;
+    }
 
     public Long getId() {
         return id;
@@ -45,22 +51,6 @@ public class DynamicReplyVo implements Serializable{
 
     public void setUid(Long uid) {
         this.uid = uid;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public void setHeader(String header) {
-        this.header = header;
     }
 
     public Date getCreatedate() {

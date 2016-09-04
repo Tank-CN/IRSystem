@@ -345,6 +345,186 @@ public class BusinessReplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andTotalscoreIsNull() {
+            addCriterion("TOTALSCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreIsNotNull() {
+            addCriterion("TOTALSCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreEqualTo(Integer value) {
+            addCriterion("TOTALSCORE =", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreNotEqualTo(Integer value) {
+            addCriterion("TOTALSCORE <>", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreGreaterThan(Integer value) {
+            addCriterion("TOTALSCORE >", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("TOTALSCORE >=", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreLessThan(Integer value) {
+            addCriterion("TOTALSCORE <", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreLessThanOrEqualTo(Integer value) {
+            addCriterion("TOTALSCORE <=", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreIn(List<Integer> values) {
+            addCriterion("TOTALSCORE in", values, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreNotIn(List<Integer> values) {
+            addCriterion("TOTALSCORE not in", values, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreBetween(Integer value1, Integer value2) {
+            addCriterion("TOTALSCORE between", value1, value2, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("TOTALSCORE not between", value1, value2, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreIsNull() {
+            addCriterion("SERVERSCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreIsNotNull() {
+            addCriterion("SERVERSCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreEqualTo(Integer value) {
+            addCriterion("SERVERSCORE =", value, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreNotEqualTo(Integer value) {
+            addCriterion("SERVERSCORE <>", value, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreGreaterThan(Integer value) {
+            addCriterion("SERVERSCORE >", value, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("SERVERSCORE >=", value, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreLessThan(Integer value) {
+            addCriterion("SERVERSCORE <", value, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreLessThanOrEqualTo(Integer value) {
+            addCriterion("SERVERSCORE <=", value, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreIn(List<Integer> values) {
+            addCriterion("SERVERSCORE in", values, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreNotIn(List<Integer> values) {
+            addCriterion("SERVERSCORE not in", values, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreBetween(Integer value1, Integer value2) {
+            addCriterion("SERVERSCORE between", value1, value2, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andServerscoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("SERVERSCORE not between", value1, value2, "serverscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreIsNull() {
+            addCriterion("ENVIRSCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreIsNotNull() {
+            addCriterion("ENVIRSCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreEqualTo(Integer value) {
+            addCriterion("ENVIRSCORE =", value, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreNotEqualTo(Integer value) {
+            addCriterion("ENVIRSCORE <>", value, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreGreaterThan(Integer value) {
+            addCriterion("ENVIRSCORE >", value, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ENVIRSCORE >=", value, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreLessThan(Integer value) {
+            addCriterion("ENVIRSCORE <", value, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreLessThanOrEqualTo(Integer value) {
+            addCriterion("ENVIRSCORE <=", value, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreIn(List<Integer> values) {
+            addCriterion("ENVIRSCORE in", values, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreNotIn(List<Integer> values) {
+            addCriterion("ENVIRSCORE not in", values, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreBetween(Integer value1, Integer value2) {
+            addCriterion("ENVIRSCORE between", value1, value2, "envirscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnvirscoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("ENVIRSCORE not between", value1, value2, "envirscore");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedateIsNull() {
             addCriterion("CREATEDATE is null");
             return (Criteria) this;

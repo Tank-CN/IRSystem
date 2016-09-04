@@ -218,6 +218,21 @@ public class BasBusinessManage extends BaseManage {
         return businessCollectMapper.insertSelective(collect) > 0;
     }
 
+    /**
+     * 取消收藏
+     *
+     * @param uid
+     * @param bid
+     * @return
+     */
+    public boolean uncollect(Long uid, Long bid) {
+        BusinessCollectExample example=new BusinessCollectExample();
+        BusinessCollectExample.Criteria criteria=example.createCriteria();
+        criteria.andBidEqualTo(bid);
+        criteria.andUidEqualTo(uid);
+        return businessCollectMapper.deleteByExample(example) > 0;
+    }
+
 
     /**
      * 评论
@@ -230,6 +245,33 @@ public class BasBusinessManage extends BaseManage {
         }else{
             return 0l;
         }
+    }
+
+    public boolean unreply(Long id) {
+        if(businessReplyExMapper.deleteByPrimaryKey(id) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    /**
+     * 是否收藏
+     * @param uid
+     * @param bid
+     * @return
+     */
+    public boolean isCollect(Long uid,Long bid){
+        BusinessCollectExample example=new BusinessCollectExample();
+        BusinessCollectExample.Criteria criteria=example.createCriteria();
+        criteria.andBidEqualTo(bid);
+        criteria.andUidEqualTo(uid);
+        List l=businessCollectMapper.selectByExample(example);
+        if(null!=l&&l.size()>0){
+            return true;
+        }
+        return false;
     }
 
 
@@ -256,8 +298,7 @@ public class BasBusinessManage extends BaseManage {
                     PropertyUtils.copyProperties(vo, br);
                     user = userManage.getUserById(vo.getUid());
                     if (null != user) {
-                        vo.setHeader(user.getHeader());
-                        vo.setNickname(user.getNickname());
+                        vo.setUserVo(getUserVo(user));
                     }
                     ls.add(vo);
                 } catch (IllegalAccessException e) {

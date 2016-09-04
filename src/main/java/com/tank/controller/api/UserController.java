@@ -306,7 +306,8 @@ public class UserController extends ApiBaseController{
         map.put("token", user.getToken());
         map.put("mobile", user.getMobile());
         map.put("username", user.getUsername());
-        map.put("realname", user.getNickname());
+        map.put("nickname", user.getNickname());
+        map.put("info", user.getInfo());
         map.put("sexcode", user.getSexcode());
         map.put("vip", user.getVip());
         map.put("sn", sn);
