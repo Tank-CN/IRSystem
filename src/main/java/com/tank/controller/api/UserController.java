@@ -310,6 +310,7 @@ public class UserController extends ApiBaseController{
         map.put("info", user.getInfo());
         map.put("sexcode", user.getSexcode());
         map.put("vip", user.getVip());
+        map.put("viptime", user.getViptime());
         map.put("sn", sn);
         map.put("birthdate", null == user.getBirthdate() ? null : user.getBirthdate().getTime());
         map.put("header", user.getHeader());
