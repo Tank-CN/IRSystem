@@ -39,6 +39,16 @@ public class BussinessApiController extends ApiBaseController {
     }
 
 
+    @RequestMapping(value = "search")
+    @ResponseBody
+    public Map<String, Object> search(String key, @RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        resMap.put("data", basBusinessManage.search(key, pageno, pagesize));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
 
     @RequestMapping(value = "detail")
     @ResponseBody

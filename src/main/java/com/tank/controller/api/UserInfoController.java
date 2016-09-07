@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/api/auth/user")
-public class UserInfoController extends ApiBaseController{
+public class UserInfoController extends ApiBaseController {
 
     @Autowired
     UserManage userManage;
@@ -35,28 +36,26 @@ public class UserInfoController extends ApiBaseController{
     DynamicManage dynamicManage;
 
 
-
     /**
      * 个人首页
      * 动态数，收藏数
-     *
      */
     @RequestMapping(value = "index", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> index( HttpServletRequest request) {
+    public Map<String, Object> index(HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
         Long uid = getUid(request);
-        if (CommonUtils.isNull(uid) ) {
+        if (CommonUtils.isNull(uid)) {
             resMap.put("code", ResultCode.PARAMETERS_EMPTY);
             resMap.put("msg", "传入参数不能为空");
             return resMap;
         }
-        MyInfoVo vo=new MyInfoVo();
+        MyInfoVo vo = new MyInfoVo();
         vo.setBusinessCollectCount(basBusinessManage.countByCollect(uid));
         vo.setDynamicCount(dynamicManage.countByUid(uid));
-        User user=userManage.getUserById(uid);
-        if(null!=user){
-            UserVo userVo=new UserVo();
+        User user = userManage.getUserById(uid);
+        if (null != user) {
+            UserVo userVo = new UserVo();
             userVo.setNickname(user.getNickname());
             userVo.setHeader(user.getHeader());
             userVo.setBirthdate(user.getBirthdate());
@@ -66,20 +65,36 @@ public class UserInfoController extends ApiBaseController{
             userVo.setVip(user.getVip());
             vo.setUserVo(userVo);
         }
-        resMap.put("data",vo);
-        resMap.put("code",ResultCode.SUCCESS);
+        resMap.put("data", vo);
+        resMap.put("code", ResultCode.SUCCESS);
         return resMap;
     }
 
+
+    /**
+     * 搜索用户
+     *
+     * @param key
+     * @param pageno
+     * @param pagesize
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> search(String key, @RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        resMap.put("data", userManage.search(key, pageno, pagesize));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
 
 
     /**
      * 修改密码
      *
-     * @param oldpwd
-     *            原始密码
-     * @param newpwd
-     *            新密码
+     * @param oldpwd 原始密码
+     * @param newpwd 新密码
      * @return
      */
     @RequestMapping(value = "modifypassword", method = RequestMethod.POST)
@@ -125,8 +140,7 @@ public class UserInfoController extends ApiBaseController{
     /**
      * 修改用户姓名
      *
-     * @param name
-     *            姓名
+     * @param name 姓名
      * @return
      */
     @RequestMapping(value = "modify/name")
@@ -156,12 +170,10 @@ public class UserInfoController extends ApiBaseController{
     }
 
 
-
     /**
      * 修改个性签名
      *
-     * @param info
-     *            个性签名
+     * @param info 个性签名
      * @return
      */
     @RequestMapping(value = "modify/info")
@@ -224,12 +236,10 @@ public class UserInfoController extends ApiBaseController{
     }
 
 
-
     /**
      * 修改用户性别
      *
-     * @param sexcode
-     *            性别编码
+     * @param sexcode 性别编码
      * @return
      */
     @RequestMapping(value = "modify/sex")
@@ -257,8 +267,6 @@ public class UserInfoController extends ApiBaseController{
         return resMap;
 
     }
-
-
 
 
 }

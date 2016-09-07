@@ -75,8 +75,6 @@ public class BasBusinessManage extends BaseManage {
     }
 
 
-
-
     //api//
 
     /**
@@ -104,6 +102,28 @@ public class BasBusinessManage extends BaseManage {
         }
         return null;
     }
+
+
+    /**
+     * 搜索商家
+     * @param key
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public List<BussinessVo> search(String key, Integer pageNumber,
+                                    Integer pageSize) {
+        BasBusinessExample example = new BasBusinessExample();
+        BasBusinessExample.Criteria criteria = example.createCriteria();
+        criteria.andTitleLike("%"+key+"%");
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        List<BasBusiness> list = basBusinessExMapper.selectByExample(example);
+        if (null != list && list.size() > 0) {
+            return parser(list);
+        }
+        return null;
+    }
+
 
     /**
      * 收藏的商家列表
@@ -226,8 +246,8 @@ public class BasBusinessManage extends BaseManage {
      * @return
      */
     public boolean uncollect(Long uid, Long bid) {
-        BusinessCollectExample example=new BusinessCollectExample();
-        BusinessCollectExample.Criteria criteria=example.createCriteria();
+        BusinessCollectExample example = new BusinessCollectExample();
+        BusinessCollectExample.Criteria criteria = example.createCriteria();
         criteria.andBidEqualTo(bid);
         criteria.andUidEqualTo(uid);
         return businessCollectMapper.deleteByExample(example) > 0;
@@ -236,21 +256,22 @@ public class BasBusinessManage extends BaseManage {
 
     /**
      * 评论
+     *
      * @param record
      * @return
      */
     public Long reply(BusinessReply record) {
-        if(businessReplyExMapper.insertBackId(record) > 0){
+        if (businessReplyExMapper.insertBackId(record) > 0) {
             return record.getId();
-        }else{
+        } else {
             return 0l;
         }
     }
 
     public boolean unreply(Long id) {
-        if(businessReplyExMapper.deleteByPrimaryKey(id) > 0){
+        if (businessReplyExMapper.deleteByPrimaryKey(id) > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -258,17 +279,18 @@ public class BasBusinessManage extends BaseManage {
 
     /**
      * 是否收藏
+     *
      * @param uid
      * @param bid
      * @return
      */
-    public boolean isCollect(Long uid,Long bid){
-        BusinessCollectExample example=new BusinessCollectExample();
-        BusinessCollectExample.Criteria criteria=example.createCriteria();
+    public boolean isCollect(Long uid, Long bid) {
+        BusinessCollectExample example = new BusinessCollectExample();
+        BusinessCollectExample.Criteria criteria = example.createCriteria();
         criteria.andBidEqualTo(bid);
         criteria.andUidEqualTo(uid);
-        List l=businessCollectMapper.selectByExample(example);
-        if(null!=l&&l.size()>0){
+        List l = businessCollectMapper.selectByExample(example);
+        if (null != l && l.size() > 0) {
             return true;
         }
         return false;
@@ -277,24 +299,25 @@ public class BasBusinessManage extends BaseManage {
 
     /**
      * 商家评论列表
+     *
      * @param bid
      * @param pageNumber
      * @param pageSize
      * @return
      */
-    public List<BusinessReplyVo> listReplyByBid(Long bid,Integer pageNumber,
-                                                Integer pageSize){
-        BusinessReplyExample example=new BusinessReplyExample();
-        BusinessReplyExample.Criteria criteria=example.createCriteria();
+    public List<BusinessReplyVo> listReplyByBid(Long bid, Integer pageNumber,
+                                                Integer pageSize) {
+        BusinessReplyExample example = new BusinessReplyExample();
+        BusinessReplyExample.Criteria criteria = example.createCriteria();
         criteria.andBidEqualTo(bid);
         example.setOrderByClause(getPage(pageNumber, pageSize));
-        List<BusinessReply> list=businessReplyExMapper.selectByExample(example);
-        if(null!=list&&list.size()>0){
-            List<BusinessReplyVo> ls=new ArrayList<>();
+        List<BusinessReply> list = businessReplyExMapper.selectByExample(example);
+        if (null != list && list.size() > 0) {
+            List<BusinessReplyVo> ls = new ArrayList<>();
             User user = null;
-            for(BusinessReply br:list){
+            for (BusinessReply br : list) {
                 try {
-                    BusinessReplyVo vo=new BusinessReplyVo();
+                    BusinessReplyVo vo = new BusinessReplyVo();
                     PropertyUtils.copyProperties(vo, br);
                     user = userManage.getUserById(vo.getUid());
                     if (null != user) {

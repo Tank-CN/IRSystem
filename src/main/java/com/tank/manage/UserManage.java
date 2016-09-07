@@ -47,6 +47,21 @@ public class UserManage extends BaseManage {
 
 
     /**
+     * 搜索用户
+     * @param key
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public List<User> search(String key,Integer pageNumber, Integer pageSize) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria=example.createCriteria();
+        criteria.andNicknameLike("%"+key+"%");
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        return userExMapper.selectByExample(example);
+    }
+
+    /**
      * 创建新账户[api]
      *
      * @param password
