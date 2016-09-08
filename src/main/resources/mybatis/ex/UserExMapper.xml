@@ -4,7 +4,6 @@
 	<insert id="insertBackId" parameterType="com.tank.model.User"
 		keyProperty="id" useGeneratedKeys="true">
 		insert into user
-		insert into user
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null" >
 				ID,

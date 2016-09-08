@@ -161,6 +161,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户简介</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control" rows="3" id="info" placeholder="商户简介" name="info"></textarea>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label class="control-label col-md-3">商户介绍</label>
@@ -184,6 +191,14 @@
 
                         <div class="col-md-4">
                             <input type="text" id="website" name="website" placeholder="商户网址" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户评分</label>
+
+                        <div class="col-md-4">
+                            <input type="text" id="score" name="score" placeholder="商户评分" class="form-control">
                         </div>
                     </div>
 
@@ -278,6 +293,6 @@
 
 <content tag="jsconfig">
 
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="business_add1.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="business_add.js"></script>
 
 </content>

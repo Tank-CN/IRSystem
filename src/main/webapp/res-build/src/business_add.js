@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     require("res-build/res/plugin/form/jquery.form.js");
     require("res-build/res/plugin/jquery-validation-1.13.1/dist/jquery.validate.min.js");
     require("res-build/res/plugin/jstree/dist/jstree.min.js");
@@ -7,16 +7,18 @@ define(function(require, exports, module) {
     var $allmap = $("#allmap");
     var $tree = $("#tree_3");
     var $treeCon = $("#tree-con");
+    var $treeType = $("#tree_type");
+    var $treeConType = $("#tree-con-type");
     //选择图片
     var $selImg = $("#selImg");
     var $file = $("#file");
     var tool = require("tool");
     //工具函数
     var hzuitl = {
-        formatDate: function(timestamp, format) {
+        formatDate: function (timestamp, format) {
             return formatDate(timestamp, format);
         },
-        byteLength: function(str) {
+        byteLength: function (str) {
             return byteLength(str);
         }
     };
@@ -45,7 +47,7 @@ define(function(require, exports, module) {
     }
 
     var Utilitiy = {
-        init: function() {
+        init: function () {
             this.bind();
             this.createTree();
             var map = new BMap.Map("allmap", {
@@ -70,13 +72,13 @@ define(function(require, exports, module) {
 
             map.addEventListener("click", showInfo);
         },
-        bind: function() {
+        bind: function () {
             //选择图片
-            $selImg.on("click", function() {
+            $selImg.on("click", function () {
                 $file.click();
             });
 
-            $file.on("change", function() {
+            $file.on("change", function () {
                 $selImg.find(".has-img").remove();
                 $selImg.append('<span class="has-img">' + $file.val() + '</span>');
             });
@@ -85,13 +87,18 @@ define(function(require, exports, module) {
                 height: 300
             });
             //
-            $addForm.on("focusin", 'input[name="regionname"]', function() {
+            $addForm.on("focusin", 'input[name="regionname"]', function () {
                 $tree.show();
             });
-            $tree.on("click", ".j-close-tree", function() {
+            $tree.on("click", ".j-close-tree", function () {
                 $tree.hide();
             });
-
+            $addForm.on("focusin", 'input[name="btype"]', function () {
+                $treeType.show();
+            });
+            $treeType.on("click", ".j-close-tree", function () {
+                $treeType.hide();
+            });
             //验证表单
             $addForm.validate({
                 rules: {
@@ -103,17 +110,25 @@ define(function(require, exports, module) {
                     },
                     serverpay: {
                         number: true
+                    },
+                    score:{
+                        digits:true,
+                        range:[0,5]
                     }
                 },
                 messages: {
                     title: {
-                        required: "请填写医院名称"
+                        required: "请填写商户名称"
                     },
                     regionname: {
-                        required: "请填写医院所属地区"
+                        required: "请填写商户所属地区"
                     },
                     serverpay: {
                         number: "请填写费用（必须是数字）"
+                    },
+                    score:{
+                        digits: "评分必须是数字",
+                        range:"请填写0到5的数值"
                     }
                 },
                 errorElement: 'span', //default input error message container
@@ -121,23 +136,23 @@ define(function(require, exports, module) {
                 focusInvalid: false, // do not focus the last invalid input
 
 
-                invalidHandler: function(event, validator) { //display error alert on form submit
+                invalidHandler: function (event, validator) { //display error alert on form submit
                     //	                $('.alert-danger', $('.login-form')).show();
                 },
-                highlight: function(element) { // hightlight error inputs
+                highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
 
-                success: function(label) {
+                success: function (label) {
                     label.closest('.form-group').removeClass('has-error');
                     label.remove();
                 },
 
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     error.insertAfter(element);
                 },
-                submitHandler: function(fm) {
+                submitHandler: function (fm) {
                     if ($file.val().length && (!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test($file.val()))) {
                         $("#modal-box-error").modal("show");
                         $file.focus();
@@ -146,8 +161,8 @@ define(function(require, exports, module) {
                     $(fm).ajaxSubmit({
                         type: "POST",
                         dataType: "html",
-                        url: ROOTPAth + "/admin/bas/organization/saveorupdate",
-                        beforeSubmit: function(formData, jqForm, options) {
+                        url: ROOTPAth + "/admin/business/business/saveorupdate",
+                        beforeSubmit: function (formData, jqForm, options) {
                             if (hzuitl.byteLength($etitor.summernote("code")) / (1024 * 1024) > 4) {
                                 alert("文本内容总数不得超过4M 请减小图片大小或者精简文字");
                                 return false;
@@ -158,20 +173,20 @@ define(function(require, exports, module) {
                             tool.startPageLoading();
                             return isSuccess;
                         },
-                        success: function(data) {
+                        success: function (data) {
                             tool.stopPageLoading();
                             console.log(data);
                             var $tipModal = $('#modal-box');
                             var newdata = JSON.parse(data);
                             if (newdata.code === 1) {
 
-                                $tipModal.on('show.bs.modal', function(event) {
+                                $tipModal.on('show.bs.modal', function (event) {
                                     $tipModal.find(".j-modal-closebtn").attr("href", ROOTPAth + "/admin/business/business/updateView?id=" + newdata.data + "&currentpage=1&pcode=business&subcode=businesslist")
                                 });
                                 $tipModal.modal("show");
                             }
                         },
-                        error: function() {
+                        error: function () {
                             tool.stopPageLoading();
                             $("#ajax_fail").modal("show")
                         },
@@ -180,7 +195,7 @@ define(function(require, exports, module) {
             });
 
         },
-        createTree: function() {
+        createTree: function () {
             $treeCon.jstree({
                 "state": {
                     "key": "demo"
@@ -193,11 +208,11 @@ define(function(require, exports, module) {
                     "check_callback": true,
                     'data': {
                         async: true,
-                        'url': function(node) {
+                        'url': function (node) {
                             return ROOTPAth + '/admin/bas/region/list';
                         },
                         type: "POST",
-                        'data': function(node) {
+                        'data': function (node) {
                             return {
                                 'pid': node.id === "#" ? 1 : node.id
                             };
@@ -222,23 +237,65 @@ define(function(require, exports, module) {
                     "state", "types", "wholerow"
                 ]
             });
-
+            $treeConType.jstree({
+                "state": {
+                    "key": "demo"
+                },
+                "core": {
+                    "themes": {
+                        "responsive": false
+                    },
+                    // so that create works
+                    "check_callback": true,
+                    'data': {
+                        async: true,
+                        'url': function (node) {
+                            return ROOTPAth + '/admin/business/business/typelist';
+                        },
+                        type: "POST",
+                        'data': function (node) {
+                            return {
+                                'pid': node.id === "#" ? 0 : node.id
+                            };
+                        }
+                    }
+                },
+                "types": {
+                    "#": {
+                        "max_children": 1,
+                        "max_depth": 4,
+                        "valid_children": ["root"]
+                    },
+                    "default": {
+                        "icon": "icon-folder"
+                    },
+                    "file": {
+                        "icon": "icon-file"
+                    }
+                },
+                "plugins": [
+                    "contextmenu",
+                    "state", "types", "wholerow"
+                ]
+            });
             //清楚树形菜单缓存
             $treeCon.jstree(true).clear_state();
-            $treeCon.bind('activate_node.jstree', function(e, data) {
+            $treeConType.jstree(true).clear_state();
+            $treeCon.bind('activate_node.jstree', function (e, data) {
                 if (data.node.id === '#') {
                     var postPath = ROOTPAth + '/admin/bas/region/detail/0';
                 } else {
                     var postPath = ROOTPAth + '/admin/bas/region/detail/' + data.node.id;
-                };
+                }
+                ;
                 var parentstext = "";
-                var parents = data.node.parents.sort(function(a, b) {
+                var parents = data.node.parents.sort(function (a, b) {
                     return a - b
                 });
                 if (parents.length === 1) {
                     parentstext = "中国"
                 } else {
-                    $.each(parents, function(index, val) {
+                    $.each(parents, function (index, val) {
                         if (val === "#") {
                             /*parentstext+="中国";*/
                         } else {
@@ -251,7 +308,7 @@ define(function(require, exports, module) {
                 $addForm.find('input[name="regionname"]').val(parentstext);
                 $tree.hide();
 
-                $.post(postPath, function(moduleObj) {
+                $.post(postPath, function (moduleObj) {
 
                     var obj = $.extend({}, moduleObj, {
                         "pname": parentstext
@@ -280,6 +337,43 @@ define(function(require, exports, module) {
                         $addForm.find('input[name="villageid"]').val(obj.longcode.substring(0, 11));
                         $addForm.find('input[name="villagename"]').val(parentstext_arr[4]);
                     }
+                });
+            });
+
+            $treeConType.bind('activate_node.jstree', function (e, data) {
+                if (data.node.id === '#') {
+                    var postPath = ROOTPAth + '/admin/sys/dictionary/get/0';
+                } else {
+                    var postPath = ROOTPAth + '/admin/sys/dictionary/get/' + data.node.id;
+                }
+                ;
+                var parentstext = "";
+                var parents = data.node.parents.sort(function (a, b) {
+                    return a - b
+                });
+                if (parents.length === 1) {
+                    parentstext = "请选择二级"
+                } else {
+                    $.each(parents, function (index, val) {
+                        if (val === "#") {
+                            /*parentstext+="中国";*/
+                        } else {
+                            parentstext += $("#" + val + ">.jstree-anchor").text() + ",";
+                        }
+
+                    })
+                }
+                parentstext += $("#" + data.node.id + ">.jstree-anchor").text() + ",";
+                $addForm.find('input[name="btype"]').val(parentstext);
+                $treeType.hide();
+
+                $.post(postPath, function (moduleObj) {
+                    var obj = $.extend({}, moduleObj);
+                    $addForm.find('input[name="typeid"]').val(obj.pid);
+                    $addForm.find('input[name="typename"]').val(obj.pname);
+
+                    $addForm.find('input[name="typeiid"]').val(obj.iid);
+                    $addForm.find('input[name="typenname"]').val(obj.title);
                 });
             });
         }

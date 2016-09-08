@@ -118,10 +118,6 @@ define(function(require, exports, module) {
                                         event.preventDefault();
                                         self.delitem($(element));
                                     }
-                                    /*,
-                                                                     onCancel: function () {
-                                                                     alert('cancel')
-                                                                     }*/
                             });
                         }
 
@@ -195,9 +191,7 @@ define(function(require, exports, module) {
                 url: delPath,
                 type: "POST",
                 success: function(data) {
-
                     $tr.hide();
-
                 }
             });
         }

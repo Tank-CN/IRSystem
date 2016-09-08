@@ -190,6 +190,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户简介</label>
+                        <div class="col-md-9" style="width: 50%">
+                            <textarea class="form-control" rows="3" disabled id="info" placeholder="商户简介" name="info"></textarea>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label class="control-label col-md-3">商户介绍</label>
@@ -224,6 +231,14 @@
                         <div class="col-md-4">
                             <input type="text" id="website" disabled name="website" placeholder="商户网址"
                                    class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户评分</label>
+
+                        <div class="col-md-4">
+                            <input type="text" id="score" disabled name="score" placeholder="商户评分" class="form-control">
                         </div>
                     </div>
 

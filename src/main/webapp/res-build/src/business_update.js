@@ -209,14 +209,28 @@ define(function(require, exports, module) {
                     },
                     regionname: {
                         required: true
+                    },
+                    serverpay: {
+                        number: true
+                    },
+                    score:{
+                        digits:true,
+                        range:[0,5]
                     }
                 },
                 messages: {
                     title: {
-                        required: "请填写医院名称"
+                        required: "请填写商户名称"
                     },
                     regionname: {
-                        required: "请填写医院所属地区"
+                        required: "请填写商户所属地区"
+                    },
+                    serverpay: {
+                        number: "请填写费用（必须是数字）"
+                    },
+                    score:{
+                        digits: "评分必须是数字",
+                        range:"请填写0到5的数值"
                     }
                 },
                 errorElement: 'span', //default input error message container

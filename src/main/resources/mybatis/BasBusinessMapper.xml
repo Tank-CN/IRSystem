@@ -22,6 +22,7 @@
     <result column="VILLAGEID" property="villageid" jdbcType="VARCHAR" />
     <result column="VILLAGENAME" property="villagename" jdbcType="VARCHAR" />
     <result column="PICURL" property="picurl" jdbcType="VARCHAR" />
+    <result column="INFO" property="info" jdbcType="VARCHAR" />
     <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
     <result column="SPELL" property="spell" jdbcType="VARCHAR" />
     <result column="WEBSITE" property="website" jdbcType="VARCHAR" />
@@ -97,7 +98,7 @@
   <sql id="Base_Column_List" >
     ID, TITLE, ADDRESS, LONGITUDE, LATITUDE, TYPEID, TYPENAME, TYPEIID, TYPENNAME, PROVINCEID, 
     PROVINCENAME, CITYID, CITYNAME, DISTRICTID, DISTRICTNAME, STREETID, STREETNAME, VILLAGEID, 
-    VILLAGENAME, PICURL, TELEPHONE, SPELL, WEBSITE, SCORE, SERVERTIME, FLAG, CREATEDATE, 
+    VILLAGENAME, PICURL, INFO, TELEPHONE, SPELL, WEBSITE, SCORE, SERVERTIME, FLAG, CREATEDATE, 
     CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
   </sql>
   <sql id="Blob_Column_List" >
@@ -158,22 +159,22 @@
       PROVINCEID, PROVINCENAME, CITYID, 
       CITYNAME, DISTRICTID, DISTRICTNAME, 
       STREETID, STREETNAME, VILLAGEID, 
-      VILLAGENAME, PICURL, TELEPHONE, 
-      SPELL, WEBSITE, SCORE, 
-      SERVERTIME, FLAG, CREATEDATE, 
-      CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE, 
-      INTRODUCE)
+      VILLAGENAME, PICURL, INFO, 
+      TELEPHONE, SPELL, WEBSITE, 
+      SCORE, SERVERTIME, FLAG, 
+      CREATEDATE, CREATEUSER, LASTMODIFYUSER, 
+      LASTMODIFYDATE, INTRODUCE)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{typeid,jdbcType=BIGINT}, 
       #{typename,jdbcType=VARCHAR}, #{typeiid,jdbcType=BIGINT}, #{typenname,jdbcType=VARCHAR}, 
       #{provinceid,jdbcType=VARCHAR}, #{provincename,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
       #{cityname,jdbcType=VARCHAR}, #{districtid,jdbcType=VARCHAR}, #{districtname,jdbcType=VARCHAR}, 
       #{streetid,jdbcType=VARCHAR}, #{streetname,jdbcType=VARCHAR}, #{villageid,jdbcType=VARCHAR}, 
-      #{villagename,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{spell,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
-      #{servertime,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{createuser,jdbcType=BIGINT}, #{lastmodifyuser,jdbcType=BIGINT}, #{lastmodifydate,jdbcType=TIMESTAMP}, 
-      #{introduce,jdbcType=LONGVARCHAR})
+      #{villagename,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{spell,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER}, #{servertime,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{createuser,jdbcType=BIGINT}, #{lastmodifyuser,jdbcType=BIGINT}, 
+      #{lastmodifydate,jdbcType=TIMESTAMP}, #{introduce,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tank.model.BasBusiness" >
     insert into bas_business
@@ -237,6 +238,9 @@
       </if>
       <if test="picurl != null" >
         PICURL,
+      </if>
+      <if test="info != null" >
+        INFO,
       </if>
       <if test="telephone != null" >
         TELEPHONE,
@@ -332,6 +336,9 @@
       </if>
       <if test="picurl != null" >
         #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null" >
         #{telephone,jdbcType=VARCHAR},
@@ -437,6 +444,9 @@
       <if test="record.picurl != null" >
         PICURL = #{record.picurl,jdbcType=VARCHAR},
       </if>
+      <if test="record.info != null" >
+        INFO = #{record.info,jdbcType=VARCHAR},
+      </if>
       <if test="record.telephone != null" >
         TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       </if>
@@ -497,6 +507,7 @@
       VILLAGEID = #{record.villageid,jdbcType=VARCHAR},
       VILLAGENAME = #{record.villagename,jdbcType=VARCHAR},
       PICURL = #{record.picurl,jdbcType=VARCHAR},
+      INFO = #{record.info,jdbcType=VARCHAR},
       TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       SPELL = #{record.spell,jdbcType=VARCHAR},
       WEBSITE = #{record.website,jdbcType=VARCHAR},
@@ -534,6 +545,7 @@
       VILLAGEID = #{record.villageid,jdbcType=VARCHAR},
       VILLAGENAME = #{record.villagename,jdbcType=VARCHAR},
       PICURL = #{record.picurl,jdbcType=VARCHAR},
+      INFO = #{record.info,jdbcType=VARCHAR},
       TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       SPELL = #{record.spell,jdbcType=VARCHAR},
       WEBSITE = #{record.website,jdbcType=VARCHAR},
@@ -608,6 +620,9 @@
       <if test="picurl != null" >
         PICURL = #{picurl,jdbcType=VARCHAR},
       </if>
+      <if test="info != null" >
+        INFO = #{info,jdbcType=VARCHAR},
+      </if>
       <if test="telephone != null" >
         TELEPHONE = #{telephone,jdbcType=VARCHAR},
       </if>
@@ -665,6 +680,7 @@
       VILLAGEID = #{villageid,jdbcType=VARCHAR},
       VILLAGENAME = #{villagename,jdbcType=VARCHAR},
       PICURL = #{picurl,jdbcType=VARCHAR},
+      INFO = #{info,jdbcType=VARCHAR},
       TELEPHONE = #{telephone,jdbcType=VARCHAR},
       SPELL = #{spell,jdbcType=VARCHAR},
       WEBSITE = #{website,jdbcType=VARCHAR},
@@ -699,6 +715,7 @@
       VILLAGEID = #{villageid,jdbcType=VARCHAR},
       VILLAGENAME = #{villagename,jdbcType=VARCHAR},
       PICURL = #{picurl,jdbcType=VARCHAR},
+      INFO = #{info,jdbcType=VARCHAR},
       TELEPHONE = #{telephone,jdbcType=VARCHAR},
       SPELL = #{spell,jdbcType=VARCHAR},
       WEBSITE = #{website,jdbcType=VARCHAR},

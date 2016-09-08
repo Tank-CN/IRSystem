@@ -44,6 +44,8 @@ public class BasBusiness {
 
     private String picurl;
 
+    private String info;
+
     private String telephone;
 
     private String spell;
@@ -224,6 +226,14 @@ public class BasBusiness {
 
     public void setPicurl(String picurl) {
         this.picurl = picurl == null ? null : picurl.trim();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
     }
 
     public String getTelephone() {

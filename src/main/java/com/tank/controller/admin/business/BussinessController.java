@@ -82,12 +82,12 @@ public class BussinessController extends AdminBaseController {
     @RequestMapping(value = "business/list", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
-
         Map<String, Object> regMsg = new HashMap<String, Object>();
         List<BasBusiness> list= basBusinessManage.list(page, length);
         if(null!=list&&list.size()>0){
             for(BasBusiness b:list){
                 b.setIntroduce(null);
+                b.setInfo(null);
             }
         }
         regMsg.put("data", list);
