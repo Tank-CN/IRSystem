@@ -81,18 +81,28 @@ public class BussinessController extends AdminBaseController {
      */
     @RequestMapping(value = "business/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(String title, String type, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
-        List<BasBusiness> list= basBusinessManage.list(page, length);
-        if(null!=list&&list.size()>0){
-            for(BasBusiness b:list){
+        List<BasBusiness> list = null;
+        if (CommonUtils.isNull(title) && CommonUtils.isNull(type)) {
+            list = basBusinessManage.list(page, length);
+        } else {
+            list = basBusinessManage.search(title,type,page, length);
+        }
+        if (null != list && list.size() > 0) {
+            for (BasBusiness b : list) {
                 b.setIntroduce(null);
                 b.setInfo(null);
             }
+            regMsg.put("data", list);
+            regMsg.put("total", basBusinessManage.count(title,type));
+            regMsg.put("code", ResultCode.SUCCESS);
+        }else{
+            regMsg.put("data", null);
+            regMsg.put("total", 0);
+            regMsg.put("code", ResultCode.SUCCESS);
         }
-        regMsg.put("data", list);
-        regMsg.put("total", basBusinessManage.count());
-        regMsg.put("code", ResultCode.SUCCESS);
+
         return regMsg;
     }
 

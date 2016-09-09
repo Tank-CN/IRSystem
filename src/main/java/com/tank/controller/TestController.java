@@ -54,7 +54,7 @@ public class TestController {
     @ResponseBody
     public Map<String, Object> index(HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
-        List<Activity> lista = activityManage.list(1, 1000);
+        List<Activity> lista = activityManage.list(null,1, 1000);
         for (Activity activity : lista) {
             activity.setImgurl(getURL(activity.getImgurl()));
             activityManage.update(activity);
@@ -96,7 +96,6 @@ public class TestController {
 
 
     public String getURL(String url) {
-
         return (null==s_url?getIP():s_url) + url.substring(url.indexOf("8090/") + 5);
     }
 

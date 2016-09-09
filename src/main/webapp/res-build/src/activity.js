@@ -109,10 +109,8 @@ define(function(require, exports, module) {
                     dataType: 'json',
                     data: function() {
                         var title = $searchForm.find("input[name=title]").val();
-                        var region = $searchForm.find("input[name=region]").val();
                         var data = {
                             length: pagelength,
-                            region: region,
                             title: title
                         };
                         return data;

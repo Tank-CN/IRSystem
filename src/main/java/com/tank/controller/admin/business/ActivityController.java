@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,12 +63,22 @@ public class ActivityController extends AdminBaseController {
      */
     @RequestMapping(value = "activity/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
-
+    public Map<String, Object> list(String title, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
-        regMsg.put("data", activityManage.list(page, length));
-        regMsg.put("total", activityManage.count());
-        regMsg.put("code", ResultCode.SUCCESS);
+        List<Activity> list = activityManage.list(title, page, length);
+        if (null != list && list.size() > 0) {
+            for (Activity activity : list) {
+                activity.setContent(null);
+            }
+            regMsg.put("data", list);
+            regMsg.put("total", activityManage.count(title));
+            regMsg.put("code", ResultCode.SUCCESS);
+        } else {
+            regMsg.put("data", null);
+            regMsg.put("total", 0);
+            regMsg.put("code", ResultCode.SUCCESS);
+        }
+
         return regMsg;
     }
 

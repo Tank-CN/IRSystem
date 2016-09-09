@@ -1,5 +1,6 @@
 package com.tank.manage;
 
+import com.bs.util.CommonUtils;
 import com.tank.mapper.ex.ActivityExMapper;
 import com.tank.mapper.ex.ActivitySignupExMapper;
 import com.tank.model.*;
@@ -46,9 +47,13 @@ public class ActivityManage extends BaseManage {
     }
 
 
-    public List<Activity> list(Integer pageNumber,
+    public List<Activity> list(String title,Integer pageNumber,
                                Integer pageSize) {
         ActivityExample example = new ActivityExample();
+        if(!CommonUtils.isNull(title)){
+            ActivityExample.Criteria criteria=example.createCriteria();
+            criteria.andTitleLike("%" + title + "%");
+        }
         example.setOrderByClause(getPage(pageNumber, pageSize));
         return activityExMapper.selectByExample(example);
     }
@@ -61,8 +66,13 @@ public class ActivityManage extends BaseManage {
     }
 
 
-    public int count() {
-        return activityExMapper.countByExample(null);
+    public int count(String title) {
+        ActivityExample example = new ActivityExample();
+        if(!CommonUtils.isNull(title)){
+            ActivityExample.Criteria criteria=example.createCriteria();
+            criteria.andTitleLike("%" + title + "%");
+        }
+        return activityExMapper.countByExample(example);
     }
 
 

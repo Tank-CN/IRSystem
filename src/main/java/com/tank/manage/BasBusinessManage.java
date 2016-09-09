@@ -1,5 +1,6 @@
 package com.tank.manage;
 
+import com.bs.util.CommonUtils;
 import com.tank.mapper.BusinessCollectMapper;
 import com.tank.mapper.ex.BasBusinessExMapper;
 import com.tank.mapper.ex.BusinessReplyExMapper;
@@ -58,12 +59,43 @@ public class BasBusinessManage extends BaseManage {
                                   Integer pageSize) {
         BasBusinessExample example = new BasBusinessExample();
         example.setOrderByClause(getPage(pageNumber, pageSize));
-
         return basBusinessExMapper.selectByExample(example);
     }
 
-    public int count() {
-        return basBusinessExMapper.countByExample(null);
+    public List<BasBusiness> search(String title, String type, Integer pageNumber,
+                                    Integer pageSize) {
+        BasBusinessExample example = new BasBusinessExample();
+        if (!CommonUtils.isNull(title) && !CommonUtils.isNull(type)) {
+            BasBusinessExample.Criteria criteria = example.createCriteria();
+            criteria.andTitleLike("%" + title + "%");
+            criteria.andTypenameLike("%" + type + "%");
+            example.or().andTitleLike("%" + title + "%").andTypennameLike("%" + type + "%");
+        } else if (!CommonUtils.isNull(title)) {
+            BasBusinessExample.Criteria criteria = example.createCriteria();
+            criteria.andTitleLike("%" + title + "%");
+        } else if (!CommonUtils.isNull(type)) {
+            BasBusinessExample.Criteria criteria = example.createCriteria();
+            criteria.andTypenameLike("%" + type + "%");
+            example.or().andTypennameLike("%" + type + "%");
+        }
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        return basBusinessExMapper.selectByExample(example);
+    }
+
+    public int count(String title, String type) {
+        BasBusinessExample example = new BasBusinessExample();
+        BasBusinessExample.Criteria criteria = example.createCriteria();
+        if (!CommonUtils.isNull(title) && !CommonUtils.isNull(type)) {
+            criteria.andTitleLike("%" + title + "%");
+            criteria.andTypenameLike("%" + type + "%");
+            example.or().andTitleLike("%" + title + "%").andTypennameLike("%" + type + "%");
+        } else if (!CommonUtils.isNull(title)) {
+            criteria.andTitleLike("%" + title + "%");
+        } else if (!CommonUtils.isNull(type)) {
+            criteria.andTypenameLike("%" + type + "%");
+            example.or().andTypennameLike("%" + type + "%");
+        }
+        return basBusinessExMapper.countByExample(example);
     }
 
 
@@ -106,6 +138,7 @@ public class BasBusinessManage extends BaseManage {
 
     /**
      * 搜索商家
+     *
      * @param key
      * @param pageNumber
      * @param pageSize
@@ -115,7 +148,7 @@ public class BasBusinessManage extends BaseManage {
                                     Integer pageSize) {
         BasBusinessExample example = new BasBusinessExample();
         BasBusinessExample.Criteria criteria = example.createCriteria();
-        criteria.andTitleLike("%"+key+"%");
+        criteria.andTitleLike("%" + key + "%");
         example.setOrderByClause(getPage(pageNumber, pageSize));
         List<BasBusiness> list = basBusinessExMapper.selectByExample(example);
         if (null != list && list.size() > 0) {

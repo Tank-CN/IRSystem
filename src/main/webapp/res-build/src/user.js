@@ -40,6 +40,23 @@ define(function(require, exports, module) {
     var $selImg = $("#selImg");
     var $file = $("#file");
 
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
     var listTpl = juicer(
         [
             '{@if total === 0}',
@@ -57,16 +74,15 @@ define(function(require, exports, module) {
             '{@else}',
             '<tr role="row" class="even" data-organizationid="${item.id}">',
             '{@/if}',
-            '    <td>${item.id}</td>',
-            '    <td>${item.title}</td>',
-            '    <td>${item.typename}-${item.typenname}</td>',
-            '    <td class="">${item.telephone}</td>',
+            '    <td>${item.nickname}</td>',
+            '    <td><a href="#" class="has-popover" data-img="${item.header}">查看图片</a></td>',
+            '    <td>${item.mobile}</td>',
+            '    <td>${item.viptext}</td>',
             '    <td class="">',
 
-            '        <a href="' + ROOTPAth + '/admin/business/business/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=business&subcode=businesslist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
-            '        <a href="' + ROOTPAth + '/view/businessdetail/${item.id}" class="btn btn-default btn-xs j-edit" target="_blank"><span class="iconfont iconfont-xs">&#xe62d;</span>H5页面</a> ',
+            //'        <a href="' + ROOTPAth + '/admin/bas/adbanner/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=AD&subcode=ADBanner" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
             //删除
-            ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>删除 </button>',
+            //' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>删除 </button>',
 
             '    </td>',
             '</tr>',
@@ -81,36 +97,42 @@ define(function(require, exports, module) {
 
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/business/business/list',
+                    url: ROOTPAth + '/admin/bas/user/list',
                     type: 'POST',
                     dataType: 'json',
                     data: function() {
-                        var title = $searchForm.find("input[name=title]").val();
-                        var type = $searchForm.find("input[name=type]").val();
+                        var nickname = $searchForm.find("input[name=nickname]").val();
+                        var phone = $searchForm.find("input[name=phone]").val();
                         var data = {
                             length: pagelength,
-                            type: type,
-                            title: title
+                            phone: phone,
+                            nickname: nickname
                         };
                         return data;
                     },
                     success: function(res) {
-                        console.log(res);
                         tool.stopPageLoading();
                         if (res.code === 1) {
                             var newData = $.extend({}, res);
                             $.each(newData.data, function(i, val) {
 
                                 newData.data[i].currentpage = pageIndex.current;
-                                newData.data[i].sourcestext = val.sources === 1 ? "机构添加" : "系统添加";
-                                /*if (newData.data[i].status === 1) {
-                                 newData.data[i].statustxt = "正常"
-                                 }*/
+                                newData.data[i].viptext = val.vip === 1 ? "是("+new Date(val.viptime).Format("yyyy-MM-dd hh:mm:ss")+")" : "否";
                             });
                             //共多少条记录
                             $hospitalList.find(".page-info-num").text(res.total);
                             $table.find("tbody").empty().append(listTpl.render(newData));
-
+                            $hospitalList.find(".has-popover").popover({
+                                content: function() {
+                                    var $this = $(this);
+                                    var url = $this.data("img");
+                                    return '<img src="' + url + '" style="width: 100px;height: 100px" alt=""/>'
+                                },
+                                html: true,
+                                trigger: "hover",
+                                placement: "top",
+                                title: "图片预览"
+                            });
                             $hospitalList.find(".j-del").confirmation({
                                 title: "确定删除吗？",
                                 btnOkLabel: "确定",
@@ -154,18 +176,6 @@ define(function(require, exports, module) {
 
         },
         bind: function() {
-            //选择图片
-            $selImg.on("click", function() {
-                $file.click();
-            });
-
-            $file.on("change", function() {
-
-                $selImg.find(".has-img").remove();
-                $selImg.append('<span class="has-img">' + $file.val() + '</span>');
-            });
-
-            var self = this;
             //修改每页显示条数
             $hospitalList.on("change", ".j-length", function() {
                 var $this = $(this);
@@ -187,12 +197,14 @@ define(function(require, exports, module) {
         delitem: function($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/business/business/delete/' + organizationid;
+            var delPath = ROOTPAth + '/admin/bas/user/delete/' + organizationid;
             $.ajax({
                 url: delPath,
                 type: "POST",
                 success: function(data) {
+
                     $tr.hide();
+
                 }
             });
         }

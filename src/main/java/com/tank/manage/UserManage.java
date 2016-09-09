@@ -1,5 +1,6 @@
 package com.tank.manage;
 
+import com.bs.util.CommonUtils;
 import com.bs.util.encryption.MD5Utils;
 import com.tank.mapper.UserInfoMapper;
 import com.tank.mapper.ex.UserExMapper;
@@ -25,7 +26,7 @@ public class UserManage extends BaseManage {
     UserInfoMapper userInfoMapper;
 
 
-    public int update(User user){
+    public int update(User user) {
         return userExMapper.updateByPrimaryKeySelective(user);
     }
 
@@ -41,6 +42,35 @@ public class UserManage extends BaseManage {
     }
 
 
+    public List<User> search(String nickname, String phone, Integer pageNumber, Integer pageSize) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if (!CommonUtils.isNull(nickname) && !CommonUtils.isNull(phone)) {
+            criteria.andNicknameLike("%" + nickname + "%");
+            criteria.andMobileLike("%" + phone + "%");
+        } else if (!CommonUtils.isNull(nickname)) {
+            criteria.andNicknameLike("%" + nickname + "%");
+        } else if (!CommonUtils.isNull(phone)) {
+            criteria.andMobileLike("%" + phone + "%");
+        }
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        return userExMapper.selectByExample(example);
+    }
+
+    public int searchCount(String nickname, String phone) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if (!CommonUtils.isNull(nickname) && !CommonUtils.isNull(phone)) {
+            criteria.andNicknameLike("%" + nickname + "%");
+            criteria.andMobileLike("%" + phone + "%");
+        } else if (!CommonUtils.isNull(nickname)) {
+            criteria.andNicknameLike("%" + nickname + "%");
+        } else if (!CommonUtils.isNull(phone)) {
+            criteria.andMobileLike("%" + phone + "%");
+        }
+        return userExMapper.countByExample(example);
+    }
+
     public User getUserById(Long id) {
         return userExMapper.selectByPrimaryKey(id);
     }
@@ -48,15 +78,16 @@ public class UserManage extends BaseManage {
 
     /**
      * 搜索用户
+     *
      * @param key
      * @param pageNumber
      * @param pageSize
      * @return
      */
-    public List<User> search(String key,Integer pageNumber, Integer pageSize) {
+    public List<User> search(String key, Integer pageNumber, Integer pageSize) {
         UserExample example = new UserExample();
-        UserExample.Criteria criteria=example.createCriteria();
-        criteria.andNicknameLike("%"+key+"%");
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andNicknameLike("%" + key + "%");
         example.setOrderByClause(getPage(pageNumber, pageSize));
         return userExMapper.selectByExample(example);
     }
@@ -307,7 +338,6 @@ public class UserManage extends BaseManage {
         }
         return "S200";
     }
-
 
 
 }

@@ -45,12 +45,12 @@
 					<div class="portlet-search clearfix">
 						<form class="form-inline" id="search-form">
 							<div class="form-group">
-								<label for="region">所属地区</label> <input type="text" class="form-control" name="region"
-									id="region" placeholder="按所属地区搜索">
+								<label for="title">商家名称</label> <input type="text" class="form-control" name="title"
+									id="title" placeholder="按商家名称搜索">
 							</div>
 							<div class="form-group">
-								<label for="title">医院名称</label> <input type="text" class="form-control" name="title"
-									id="title" placeholder="按医院名称搜索">
+								<label for="type">商家类别</label> <input type="text" class="form-control" name="type"
+									id="type" placeholder="商家类别">
 							</div>
 							<button type="submit" class="btn btn-info">搜索</button>
 							<button type="button" class="btn btn-success j-showall">查看全部</button>
@@ -80,6 +80,7 @@
 									<tr role="row">
 										<th class="sorting_desc">序号</th>
 										<th class="sorting">名称</th>
+										<th class="sorting">类别</th>
 										<th class="sorting">电话</th>
 										<th class="heading sorting_disabled">操作</th>
 									</tr>
