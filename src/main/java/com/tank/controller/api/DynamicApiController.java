@@ -44,6 +44,24 @@ public class DynamicApiController extends ApiBaseController {
     }
 
 
+    @RequestMapping(value = "del")
+    @ResponseBody
+    public Map<String, Object> del(Long id, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(id)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        if(dynamicManage.delete(id)){
+            resMap.put("code", ResultCode.SUCCESS);
+        }else{
+            resMap.put("code", ResultCode.ERROR);
+        }
+        return resMap;
+    }
+
+
     /**
      * 评论列表
      *

@@ -41,6 +41,14 @@ public class DynamicManage extends BaseManage {
         return dynamicExMapper.updateByPrimaryKeySelective(dynamic);
     }
 
+    public boolean delete(Long id) {
+        if (dynamicExMapper.deleteByPrimaryKey(id) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public List<Dynamic> list(Integer pageNumber,
                               Integer pageSize) {
