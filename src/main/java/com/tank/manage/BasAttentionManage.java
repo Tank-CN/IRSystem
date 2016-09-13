@@ -87,7 +87,7 @@ public class BasAttentionManage extends BaseManage {
                 av.setCreatedate(vo.getCreatedate());
                 user = userManage.getUserById(vo.getAuid());
                 if (null != user) {
-                    av.setUserVo(getUserVo(user));
+                    av.setUserVo(getUserVo(vo.getUid()));
                 }
                 lists.add(av);
             }
@@ -120,7 +120,7 @@ public class BasAttentionManage extends BaseManage {
                 av.setCreatedate(vo.getCreatedate());
                 user = userManage.getUserById(vo.getUid());
                 if (null != user) {
-                    av.setUserVo(getUserVo(user));
+                    av.setUserVo(getUserVo(vo.getUid()));
                 }
                 lists.add(av);
             }

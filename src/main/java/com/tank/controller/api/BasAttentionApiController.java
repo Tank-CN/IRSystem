@@ -108,6 +108,22 @@ public class BasAttentionApiController extends ApiBaseController {
     }
 
 
+    @RequestMapping(value = "isattention")
+    @ResponseBody
+    public Map<String, Object> isattention(Long auid, HttpServletRequest request) {
+        Long uid = getUid(request);
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(auid)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        resMap.put("data", basAttentionManage.isAttention(uid,auid));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
 
 
 }

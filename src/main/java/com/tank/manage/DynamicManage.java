@@ -119,7 +119,7 @@ public class DynamicManage extends BaseManage {
                     PropertyUtils.copyProperties(vo, dc);
                     user = userManage.getUserById(dc.getUid());
                     if (null != user) {
-                        vo.setUserVo(getUserVo(user));
+                        vo.setUserVo(getUserVo(vo.getUid()));
                     }
                     //去掉喜欢列表
                     //喜欢列表
@@ -169,7 +169,7 @@ public class DynamicManage extends BaseManage {
                 vo.setDid(r.getDid());
                 user = userManage.getUserById(r.getUid());
                 if (null != user) {
-                    vo.setUserVo(getUserVo(user));
+                    vo.setUserVo(getUserVo(vo.getUid()));
                 }
                 ls.add(vo);
             }

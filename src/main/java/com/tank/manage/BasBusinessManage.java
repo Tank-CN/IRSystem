@@ -354,7 +354,7 @@ public class BasBusinessManage extends BaseManage {
                     PropertyUtils.copyProperties(vo, br);
                     user = userManage.getUserById(vo.getUid());
                     if (null != user) {
-                        vo.setUserVo(getUserVo(user));
+                        vo.setUserVo(getUserVo(vo.getUid()));
                     }
                     ls.add(vo);
                 } catch (IllegalAccessException e) {
