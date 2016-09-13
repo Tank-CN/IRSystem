@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2016/7/2.
  */
-public class UserVo implements Serializable{
+public class UserVo implements Serializable {
 
     public Long id;
 
@@ -21,6 +21,8 @@ public class UserVo implements Serializable{
     public Byte vip;
 
     public String info;
+    //是否关注
+    public boolean isAttention;
 
 
     public Long getId() {
@@ -77,5 +79,13 @@ public class UserVo implements Serializable{
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public boolean isAttention() {
+        return isAttention;
+    }
+
+    public void setAttention(boolean attention) {
+        isAttention = attention;
     }
 }
