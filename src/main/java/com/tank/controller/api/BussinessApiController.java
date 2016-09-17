@@ -3,6 +3,8 @@ package com.tank.controller.api;
 import com.bs.util.CommonUtils;
 import com.bs.util.ResultCode;
 import com.tank.manage.BasBusinessManage;
+import com.tank.manage.BusinessApplyManage;
+import com.tank.model.BusinessApply;
 import com.tank.model.BusinessReply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class BussinessApiController extends ApiBaseController {
 
     @Autowired
     BasBusinessManage basBusinessManage;
+
+    @Autowired
+    BusinessApplyManage businessReplyManage;
 
 
     @RequestMapping(value = "list")
@@ -49,7 +54,6 @@ public class BussinessApiController extends ApiBaseController {
     }
 
 
-
     @RequestMapping(value = "detail")
     @ResponseBody
     public Map<String, Object> detail(Long id, HttpServletRequest request) {
@@ -64,7 +68,7 @@ public class BussinessApiController extends ApiBaseController {
         if (!CommonUtils.isNull(uid)) {
             dataMap.put("isCollect", basBusinessManage.isCollect(uid, id));
         }
-        dataMap.put("replyVos",basBusinessManage.listReplyByBid(id,1,10));
+        dataMap.put("replyVos", basBusinessManage.listReplyByBid(id, 1, 10));
         resMap.put("data", dataMap);
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;
@@ -171,9 +175,8 @@ public class BussinessApiController extends ApiBaseController {
     @RequestMapping(value = "unreply")
     @ResponseBody
     public Map<String, Object> unreply(Long id, HttpServletRequest request) {
-        Long uid = getUid(request);
         Map<String, Object> resMap = new HashMap<String, Object>();
-        if (CommonUtils.isNull(id) ) {
+        if (CommonUtils.isNull(id)) {
             resMap.put("code", ResultCode.PARAMETERS_EMPTY);
             resMap.put("msg", "传入参数不能为空");
             return resMap;
@@ -197,7 +200,7 @@ public class BussinessApiController extends ApiBaseController {
      */
     @RequestMapping(value = "replylist")
     @ResponseBody
-    public Map<String, Object> replylist(Long id,@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
+    public Map<String, Object> replylist(Long id, @RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
         if (CommonUtils.isNull(id)) {
             resMap.put("code", ResultCode.PARAMETERS_EMPTY);
@@ -206,6 +209,48 @@ public class BussinessApiController extends ApiBaseController {
         }
         resMap.put("data", basBusinessManage.listReplyByBid(id, pageno, pagesize));
         resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
+    /**
+     * 商家申请
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "isapply")
+    @ResponseBody
+    public Map<String, Object> isapply(HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        Long uid = getUid(request);
+        if (CommonUtils.isNull(uid)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+        //-1 未申请 0 已提交申请 1 审核中 2 处理结束
+        resMap.put("data", businessReplyManage.isApplay(uid));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
+    /**
+     * 商家申请
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "apply")
+    @ResponseBody
+    public Map<String, Object> apply(BusinessApply businessApply, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (businessReplyManage.save(businessApply)) {
+            resMap.put("code", ResultCode.SUCCESS);
+        } else {
+            resMap.put("code", ResultCode.ERROR);
+        }
         return resMap;
     }
 
