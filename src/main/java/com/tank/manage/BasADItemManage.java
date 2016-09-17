@@ -3,10 +3,14 @@ package com.tank.manage;
 import com.tank.mapper.ex.BasAdItemExMapper;
 import com.tank.model.BasAdItem;
 import com.tank.model.BasAdItemExample;
+import com.tank.vo.ADItemVo;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -15,6 +19,9 @@ public class BasADItemManage extends BaseManage {
 
     @Autowired
     BasAdItemExMapper basAdItemExMapper;
+
+    @Autowired
+    BasBusinessManage basBusinessManage;
 
     public BasAdItem getById(Long id) {
         return basAdItemExMapper.selectByPrimaryKey(id);
@@ -49,5 +56,32 @@ public class BasADItemManage extends BaseManage {
             return basRegion.getId();
         }
         return 0;
+    }
+
+    //api
+    public List<ADItemVo> listVo(Integer pageNumber,
+                                 Integer pageSize) {
+        List<BasAdItem> list= list(pageNumber,pageSize);
+        if(null!=list&&list.size()>0){
+            List<ADItemVo> ls=new ArrayList<>();
+            for(BasAdItem ad:list){
+                ADItemVo vo=new ADItemVo();
+                try {
+                    PropertyUtils.copyProperties(vo,ad);
+                    if(null!=vo.getBid()&&vo.getBid()>0){
+                        vo.setBussinessVo(basBusinessManage.getVoById(vo.getBid()));
+                    }
+                    ls.add(vo);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+            return ls;
+        }
+        return null;
     }
 }

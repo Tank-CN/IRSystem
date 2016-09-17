@@ -286,11 +286,10 @@ define(function(require, exports, module) {
                     },
                     success: function(res) {
                         var newData = $.extend({}, res);
+                            $.each(res.data, function (i, val) {
 
-                        $.each(res.data, function(i, val) {
-
-                            newData.data[i].orgstxt = JSON.stringify(val.orgs);
-                        });
+                                newData.data[i].orgstxt = JSON.stringify(val.orgs);
+                            });
                         tool.stopPageLoading();
                         $accountList.find(".page-info-num").text(res.data.length);
 

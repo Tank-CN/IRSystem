@@ -97,6 +97,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商家ID</label>
+
+                        <div class="col-md-4">
+                            <input type="text" id="bid" name="bid" placeholder="商家ID" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">

@@ -125,7 +125,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">模块url地址</label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" placeholder="关键词" name="url">
+                                    <input type="text" class="form-control" placeholder="模块url地址" name="url">
                                 </div>
                             </div>
                             <div class="form-group">

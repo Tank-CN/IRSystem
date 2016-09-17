@@ -42,9 +42,9 @@ public class IndexController extends ApiBaseController {
         Map<String, Object> resMap = new HashMap<>();
         Map<String, Object> dataMap = new HashMap<>();
         //banner
-        dataMap.put("adBannerVos", basADBannerManage.list(1, 6));
+        dataMap.put("adBannerVos", basADBannerManage.listVo(1, 6));
         //广告栏
-        dataMap.put("adItemVos", basADItemManage.list(1, 6));
+        dataMap.put("adItemVos", basADItemManage.listVo(1, 6));
         //头条
         dataMap.put("newsVo", newsManage.getHotestNews());
         //热门商家

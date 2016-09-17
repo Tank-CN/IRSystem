@@ -36,6 +36,10 @@ public class DynamicManage extends BaseManage {
         return null;
     }
 
+    public Dynamic getById(Long id) {
+        return dynamicExMapper.selectByPrimaryKey(id);
+    }
+
 
     public int update(Dynamic dynamic) {
         return dynamicExMapper.updateByPrimaryKeySelective(dynamic);

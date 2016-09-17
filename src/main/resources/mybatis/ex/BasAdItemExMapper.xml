@@ -7,6 +7,9 @@
       <if test="id != null" >
         ID,
       </if>
+      <if test="bid != null" >
+        BID,
+      </if>
       <if test="title != null" >
         TITLE,
       </if>
@@ -18,9 +21,6 @@
       </if>
       <if test="picurl != null" >
         PICURL,
-      </if>
-      <if test="content != null" >
-        CONTENT,
       </if>
       <if test="weburl != null" >
         WEBURL,
@@ -40,10 +40,16 @@
       <if test="lastmodifydate != null" >
         LASTMODIFYDATE,
       </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=BIGINT},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -56,9 +62,6 @@
       </if>
       <if test="picurl != null" >
         #{picurl,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
       </if>
       <if test="weburl != null" >
         #{weburl,jdbcType=VARCHAR},
@@ -77,6 +80,9 @@
       </if>
       <if test="lastmodifydate != null" >
         #{lastmodifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>

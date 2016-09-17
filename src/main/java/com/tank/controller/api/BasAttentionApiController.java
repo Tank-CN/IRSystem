@@ -33,9 +33,13 @@ public class BasAttentionApiController extends ApiBaseController {
      */
     @RequestMapping(value = "my")
     @ResponseBody
-    public Map<String, Object> my(@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
-        Long uid = getUid(request);
+    public Map<String, Object> my(Long uid,@RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(uid)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
         resMap.put("data", basAttentionManage.listSelf(uid, pageno, pagesize));
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;

@@ -165,6 +165,66 @@ public class BasAdItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andBidIsNull() {
+            addCriterion("BID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidIsNotNull() {
+            addCriterion("BID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidEqualTo(Long value) {
+            addCriterion("BID =", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidNotEqualTo(Long value) {
+            addCriterion("BID <>", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidGreaterThan(Long value) {
+            addCriterion("BID >", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidGreaterThanOrEqualTo(Long value) {
+            addCriterion("BID >=", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidLessThan(Long value) {
+            addCriterion("BID <", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidLessThanOrEqualTo(Long value) {
+            addCriterion("BID <=", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidIn(List<Long> values) {
+            addCriterion("BID in", values, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidNotIn(List<Long> values) {
+            addCriterion("BID not in", values, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidBetween(Long value1, Long value2) {
+            addCriterion("BID between", value1, value2, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidNotBetween(Long value1, Long value2) {
+            addCriterion("BID not between", value1, value2, "bid");
+            return (Criteria) this;
+        }
+
         public Criteria andTitleIsNull() {
             addCriterion("TITLE is null");
             return (Criteria) this;
@@ -442,76 +502,6 @@ public class BasAdItemExample {
 
         public Criteria andPicurlNotBetween(String value1, String value2) {
             addCriterion("PICURL not between", value1, value2, "picurl");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentIsNull() {
-            addCriterion("CONTENT is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentIsNotNull() {
-            addCriterion("CONTENT is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentEqualTo(String value) {
-            addCriterion("CONTENT =", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotEqualTo(String value) {
-            addCriterion("CONTENT <>", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentGreaterThan(String value) {
-            addCriterion("CONTENT >", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentGreaterThanOrEqualTo(String value) {
-            addCriterion("CONTENT >=", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentLessThan(String value) {
-            addCriterion("CONTENT <", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentLessThanOrEqualTo(String value) {
-            addCriterion("CONTENT <=", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentLike(String value) {
-            addCriterion("CONTENT like", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotLike(String value) {
-            addCriterion("CONTENT not like", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentIn(List<String> values) {
-            addCriterion("CONTENT in", values, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotIn(List<String> values) {
-            addCriterion("CONTENT not in", values, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentBetween(String value1, String value2) {
-            addCriterion("CONTENT between", value1, value2, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotBetween(String value1, String value2) {
-            addCriterion("CONTENT not between", value1, value2, "content");
             return (Criteria) this;
         }
 

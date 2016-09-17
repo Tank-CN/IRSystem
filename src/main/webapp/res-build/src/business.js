@@ -99,14 +99,11 @@ define(function(require, exports, module) {
                         tool.stopPageLoading();
                         if (res.code === 1) {
                             var newData = $.extend({}, res);
-                            $.each(newData.data, function(i, val) {
-
-                                newData.data[i].currentpage = pageIndex.current;
-                                newData.data[i].sourcestext = val.sources === 1 ? "机构添加" : "系统添加";
-                                /*if (newData.data[i].status === 1) {
-                                 newData.data[i].statustxt = "正常"
-                                 }*/
-                            });
+                            if (res.total > 0) {
+                                $.each(newData.data, function (i, val) {
+                                    newData.data[i].currentpage = pageIndex.current;
+                                });
+                            }
                             //共多少条记录
                             $hospitalList.find(".page-info-num").text(res.total);
                             $table.find("tbody").empty().append(listTpl.render(newData));

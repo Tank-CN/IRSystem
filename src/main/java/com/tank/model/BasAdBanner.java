@@ -5,13 +5,13 @@ import java.util.Date;
 public class BasAdBanner {
     private Long id;
 
+    private Long bid;
+
     private String title;
 
     private String des;
 
     private String picurl;
-
-    private String content;
 
     private String weburl;
 
@@ -25,12 +25,22 @@ public class BasAdBanner {
 
     private Date lastmodifydate;
 
+    private String content;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getBid() {
+        return bid;
+    }
+
+    public void setBid(Long bid) {
+        this.bid = bid;
     }
 
     public String getTitle() {
@@ -55,14 +65,6 @@ public class BasAdBanner {
 
     public void setPicurl(String picurl) {
         this.picurl = picurl == null ? null : picurl.trim();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 
     public String getWeburl() {
@@ -111,5 +113,13 @@ public class BasAdBanner {
 
     public void setLastmodifydate(Date lastmodifydate) {
         this.lastmodifydate = lastmodifydate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

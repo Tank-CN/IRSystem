@@ -127,6 +127,7 @@ public class BasBusinessManage extends BaseManage {
         if (null != typeiid && typeiid > 0) {
             criteria.andTypeiidEqualTo(typeiid);
         }
+        criteria.andFlagEqualTo(Byte.valueOf("1"));
         example.setOrderByClause(getPage(pageNumber, pageSize));
         List<BasBusiness> list = basBusinessExMapper.selectByExample(example);
         if (null != list && list.size() > 0) {
@@ -149,6 +150,7 @@ public class BasBusinessManage extends BaseManage {
         BasBusinessExample example = new BasBusinessExample();
         BasBusinessExample.Criteria criteria = example.createCriteria();
         criteria.andTitleLike("%" + key + "%");
+        criteria.andFlagEqualTo(Byte.valueOf("1"));
         example.setOrderByClause(getPage(pageNumber, pageSize));
         List<BasBusiness> list = basBusinessExMapper.selectByExample(example);
         if (null != list && list.size() > 0) {
@@ -170,7 +172,8 @@ public class BasBusinessManage extends BaseManage {
                                            Integer pageSize) {
         BasBusinessExample example = new BasBusinessExample();
         BasBusinessExample.Criteria criteria = example.createCriteria();
-
+        //// TODO: 2016/9/17  
+        criteria.andFlagEqualTo(Byte.valueOf("1"));
         example.setOrderByClause(getPage(pageNumber, pageSize));
         List<BasBusiness> list = basBusinessExMapper.selectByExample(example);
         if (null != list && list.size() > 0) {
@@ -217,6 +220,7 @@ public class BasBusinessManage extends BaseManage {
         BasBusinessExample example = new BasBusinessExample();
         BasBusinessExample.Criteria criteria = example.createCriteria();
         criteria.andTypeidEqualTo(typeid);
+        criteria.andFlagEqualTo(Byte.valueOf("1"));
         example.setOrderByClause(getPage(pageNumber, pageSize));
         return basBusinessExMapper.selectByExample(example);
     }
@@ -227,6 +231,7 @@ public class BasBusinessManage extends BaseManage {
         BasBusinessExample example = new BasBusinessExample();
         BasBusinessExample.Criteria criteria = example.createCriteria();
         criteria.andTypeiidEqualTo(typeiid);
+        criteria.andFlagEqualTo(Byte.valueOf("1"));
         example.setOrderByClause(getPage(pageNumber, pageSize));
         return basBusinessExMapper.selectByExample(example);
     }
@@ -366,6 +371,25 @@ public class BasBusinessManage extends BaseManage {
                 }
             }
             return ls;
+        }
+        return null;
+    }
+
+    public BussinessVo getVoById(Long id){
+        BasBusiness vo=getById(id);
+        if(null!=vo){
+            BussinessVo bv = new BussinessVo();
+            try {
+                PropertyUtils.copyProperties(bv, vo);
+                return bv;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+
         }
         return null;
     }

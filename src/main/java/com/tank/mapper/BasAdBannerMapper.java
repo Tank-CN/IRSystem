@@ -19,15 +19,21 @@ public interface BasAdBannerMapper {
 
     int insertSelective(BasAdBanner record);
 
+    List<BasAdBanner> selectByExampleWithBLOBs(BasAdBannerExample example);
+
     List<BasAdBanner> selectByExample(BasAdBannerExample example);
 
     BasAdBanner selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") BasAdBanner record, @Param("example") BasAdBannerExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") BasAdBanner record, @Param("example") BasAdBannerExample example);
+
     int updateByExample(@Param("record") BasAdBanner record, @Param("example") BasAdBannerExample example);
 
     int updateByPrimaryKeySelective(BasAdBanner record);
+
+    int updateByPrimaryKeyWithBLOBs(BasAdBanner record);
 
     int updateByPrimaryKey(BasAdBanner record);
 }

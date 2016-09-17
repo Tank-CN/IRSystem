@@ -76,10 +76,12 @@ define(function (require, exports, module) {
                         tool.stopPageLoading();
                         if (res.code === 1) {
                             var newData = $.extend({}, res);
-                            $.each(newData.data, function (i, val) {
-                            	newData.data[i].createdatestr = newData.data[i].createdate?new Date(newData.data[i].createdate).Format("yyyy-MM-dd hh:mm:ss"):"";
-                                newData.data[i].currentpage=pageIndex.current;
-                            });
+                            if (res.total > 0) {
+                                $.each(newData.data, function (i, val) {
+                                    newData.data[i].createdatestr = newData.data[i].createdate ? new Date(newData.data[i].createdate).Format("yyyy-MM-dd hh:mm:ss") : "";
+                                    newData.data[i].currentpage = pageIndex.current;
+                                });
+                            }
                             //共多少条记录
                             $adviceList.find(".page-info-num").text(res.total);
                             $table.find("tbody").empty().append(listTpl.render(newData));
