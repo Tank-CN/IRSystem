@@ -7,11 +7,7 @@ import com.tank.manage.UserManage;
 import com.tank.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +32,7 @@ public class UserAdminController extends AdminBaseController {
 
     @RequestMapping(value = "user/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(String nickname,String phone, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(String nickname,String phone, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
         List<User> list = null;
         if (CommonUtils.isNull(nickname)&&CommonUtils.isNull(phone)) {
@@ -57,8 +53,22 @@ public class UserAdminController extends AdminBaseController {
             regMsg.put("total", 0);
             regMsg.put("code", ResultCode.SUCCESS);
         }
-
         return regMsg;
     }
 
+
+    @RequestMapping(value = "user/vip/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean vip(@PathVariable("id") Long id) {
+        return userManage.vip(id);
+
+    }
+
+
+    @RequestMapping(value = "user/unvip/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean unvip(@PathVariable("id") Long id) {
+        return userManage.unvip(id);
+
+    }
 }

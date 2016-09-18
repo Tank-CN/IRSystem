@@ -1,5 +1,7 @@
 package com.tank.model;
 
+import java.util.Date;
+
 public class BusinessApply {
     private Long id;
 
@@ -20,6 +22,8 @@ public class BusinessApply {
     private Byte flag;
 
     private Long uid;
+
+    private Date createdate;
 
     public Long getId() {
         return id;
@@ -99,5 +103,13 @@ public class BusinessApply {
 
     public void setUid(Long uid) {
         this.uid = uid;
+    }
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
     }
 }

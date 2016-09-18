@@ -7,13 +7,13 @@ import com.bs.util.HttpPostUploadUtil;
 import com.bs.util.ResultCode;
 import com.tank.controller.admin.AdminBaseController;
 import com.tank.manage.BasBusinessManage;
+import com.tank.manage.BusinessApplyManage;
 import com.tank.manage.SysDictionaryManage;
 import com.tank.model.Admin;
 import com.tank.model.BasBusiness;
 import com.tank.model.SysDictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,6 +35,10 @@ public class BussinessController extends AdminBaseController {
 
     @Autowired
     BasBusinessManage basBusinessManage;
+
+    @Autowired
+    BusinessApplyManage businessApplyManage;
+
 
     @Autowired
     SysDictionaryManage sysDictionaryManage;
@@ -76,18 +80,17 @@ public class BussinessController extends AdminBaseController {
      *
      * @param page
      * @param length
-     * @param model
      * @return
      */
     @RequestMapping(value = "business/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(String title, String type, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(String title, String type, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
         List<BasBusiness> list = null;
         if (CommonUtils.isNull(title) && CommonUtils.isNull(type)) {
             list = basBusinessManage.list(page, length);
         } else {
-            list = basBusinessManage.search(title,type,page, length);
+            list = basBusinessManage.search(title, type, page, length);
         }
         if (null != list && list.size() > 0) {
             for (BasBusiness b : list) {
@@ -95,9 +98,9 @@ public class BussinessController extends AdminBaseController {
                 b.setInfo(null);
             }
             regMsg.put("data", list);
-            regMsg.put("total", basBusinessManage.count(title,type));
+            regMsg.put("total", basBusinessManage.count(title, type));
             regMsg.put("code", ResultCode.SUCCESS);
-        }else{
+        } else {
             regMsg.put("data", null);
             regMsg.put("total", 0);
             regMsg.put("code", ResultCode.SUCCESS);
@@ -168,4 +171,23 @@ public class BussinessController extends AdminBaseController {
         return basBusinessManage.getById(id);
     }
 
+
+
+    @RequestMapping(value = "apply")
+    public ModelAndView businessapply(String currentpage) {
+        ModelAndView modelAndView = new ModelAndView("admin/business/business_apply");
+        modelAndView.addObject("currentpage", CommonUtils.isNull(currentpage) ? "1" : currentpage);
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "business/applylist", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> applylist(String title, String phone, Byte flag, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+        Map<String, Object> regMsg = new HashMap<String, Object>();
+        regMsg.put("data", businessApplyManage.list(title, phone, flag, page, length));
+        regMsg.put("total", businessApplyManage.count(title, phone, flag));
+        regMsg.put("code", ResultCode.SUCCESS);
+        return regMsg;
+    }
 }

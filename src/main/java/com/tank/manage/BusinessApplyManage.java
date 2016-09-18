@@ -1,5 +1,6 @@
 package com.tank.manage;
 
+import com.bs.util.CommonUtils;
 import com.tank.mapper.BusinessApplyMapper;
 import com.tank.model.BusinessApply;
 import com.tank.model.BusinessApplyExample;
@@ -33,6 +34,41 @@ public class BusinessApplyManage extends BaseManage {
             return true;
         }
         return false;
+    }
+
+
+    //'0 申请 1 审核 2处理完
+    public List<BusinessApply> list(String title, String phone, Byte flag, Integer pageNumber,
+                                    Integer pageSize) {
+        BusinessApplyExample example = new BusinessApplyExample();
+        BusinessApplyExample.Criteria criteria = example.createCriteria();
+        if (!CommonUtils.isNull(title)) {
+            criteria.andTitleLike("%" + title + "%");
+        }
+        if (!CommonUtils.isNull(phone)) {
+            criteria.andTelephoneLike("%" + phone + "%");
+        }
+        if (!CommonUtils.isNull(flag)&&flag.intValue()!=-1) {
+            criteria.andFlagEqualTo(flag);
+        }
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        return businessApplyMapper.selectByExample(example);
+    }
+
+
+    public int count(String title, String phone, Byte flag) {
+        BusinessApplyExample example = new BusinessApplyExample();
+        BusinessApplyExample.Criteria criteria = example.createCriteria();
+        if (!CommonUtils.isNull(title)) {
+            criteria.andTitleLike("%" + title + "%");
+        }
+        if (!CommonUtils.isNull(phone)) {
+            criteria.andTelephoneLike("%" + phone + "%");
+        }
+        if (!CommonUtils.isNull(flag)&&flag.intValue()!=-1) {
+            criteria.andFlagEqualTo(flag);
+        }
+        return businessApplyMapper.countByExample(example);
     }
 
 

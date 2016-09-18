@@ -50,42 +50,44 @@ public class BasTipManage extends BaseManage {
     }
 
 
-    public List<TipVo> list(Byte status,Integer pageNumber,
-                             Integer pageSize) {
+    public List<TipVo> list(Byte status, Integer pageNumber,
+                            Integer pageSize) {
         BasTipExample example = new BasTipExample();
         BasTipExample.Criteria criteria = example.createCriteria();
-        if(null!=status){
+        if (null != status) {
             criteria.andStatusEqualTo(status);
         }
         example.setOrderByClause(getPage(pageNumber, pageSize));
-        List<BasTip> list= basTipMapper.selectByExample(example);
-        if(null!=list&&list.size()>0){
-            List<TipVo> ls=new ArrayList<>();
-            Dynamic dynamic=null;
-            UserVo user=null;
-            BasBusiness basBusiness=null;
-            for(BasTip tip:list){
-                TipVo vo=new TipVo();
+        List<BasTip> list = basTipMapper.selectByExample(example);
+        if (null != list && list.size() > 0) {
+            List<TipVo> ls = new ArrayList<>();
+            Dynamic dynamic = null;
+            UserVo user = null;
+            BasBusiness basBusiness = null;
+            for (BasTip tip : list) {
+                TipVo vo = new TipVo();
                 try {
-                    PropertyUtils.copyProperties(vo,tip);
+                    PropertyUtils.copyProperties(vo, tip);
                     //举报类型 1 用户 2 动态 3 商家
-                    switch (tip.getType().intValue()){
+                    switch (tip.getType().intValue()) {
                         case 1:
-                            user=userInfoCache.get(tip.getTid());
-                            if(null!=user) {
+                            user = userInfoCache.get(tip.getTid());
+                            if (null != user) {
                                 vo.setName(user.getNickname());
                                 vo.setImage(user.getHeader());
                             }
                             vo.setTypetext("用户");
                             break;
                         case 2:
-                            dynamic=dynamicManage.getById(tip.getTid());
-                            vo.setName(dynamic.getContent());
-                            vo.setImage(dynamic.getImgurl());
+                            dynamic = dynamicManage.getById(tip.getTid());
+                            if (null != dynamic) {
+                                vo.setName(dynamic.getContent());
+                                vo.setImage(dynamic.getImgurl());
+                            }
                             vo.setTypetext("动态");
                             break;
                         case 3:
-                            basBusiness=basBusinessManage.getById(tip.getId());
+                            basBusiness = basBusinessManage.getById(tip.getId());
                             vo.setName(basBusiness.getTitle());
                             vo.setImage(basBusiness.getPicurl());
                             vo.setTypetext("商家");
@@ -94,8 +96,8 @@ public class BasTipManage extends BaseManage {
                             break;
                     }
                     //举报者
-                    user=userInfoCache.get(tip.getUid());
-                    if(null!=user) {
+                    user = userInfoCache.get(tip.getUid());
+                    if (null != user) {
                         vo.setNickname(user.getNickname());
                     }
                     ls.add(vo);
@@ -116,7 +118,7 @@ public class BasTipManage extends BaseManage {
     public int count(Byte status) {
         BasTipExample example = new BasTipExample();
         BasTipExample.Criteria criteria = example.createCriteria();
-        if(null!=status){
+        if (null != status) {
             criteria.andStatusEqualTo(status);
         }
         return basTipMapper.countByExample(example);

@@ -6,7 +6,6 @@ import com.tank.controller.admin.AdminBaseController;
 import com.tank.manage.BasTipManage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,12 +44,11 @@ public class BasTipController extends AdminBaseController {
      *
      * @param page
      * @param length
-     * @param model
      * @return
      */
     @RequestMapping(value = "tip/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(Byte status, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(Byte status, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
 
         Map<String, Object> regMsg = new HashMap<String, Object>();
         regMsg.put("data", basTipManage.list(status, page, length));

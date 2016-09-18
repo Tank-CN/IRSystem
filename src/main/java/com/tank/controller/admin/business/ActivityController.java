@@ -12,7 +12,6 @@ import com.tank.manage.ActivitySignupManage;
 import com.tank.model.Activity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -58,12 +57,11 @@ public class ActivityController extends AdminBaseController {
      *
      * @param page
      * @param length
-     * @param model
      * @return
      */
     @RequestMapping(value = "activity/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(String title, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(String title, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,  HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
         List<Activity> list = activityManage.list(title, page, length);
         if (null != list && list.size() > 0) {

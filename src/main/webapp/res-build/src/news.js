@@ -82,6 +82,7 @@ define(function(require, exports, module) {
             '    <td class="">',
 
             '        <a href="' + ROOTPAth + '/admin/business/news/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=News&subcode=HotNews" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            '        <a href="' + ROOTPAth + '/view/newsdetail/${item.id}" class="btn btn-default btn-xs j-edit" target="_blank"><span class="iconfont iconfont-xs">&#xe62d;</span>H5页面</a> ',
             //删除
             ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>删除 </button>',
 

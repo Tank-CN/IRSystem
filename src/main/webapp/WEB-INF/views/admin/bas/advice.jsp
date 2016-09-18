@@ -28,12 +28,6 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="portlet">
-					<div class="portlet-search clearfix">
-						<form class="form-inline" id="search-form">
-							<button type="submit" class="btn btn-info">搜索</button>
-							<button type="button" class="btn btn-success j-showall">查看全部</button>
-						</form>
-					</div>
 					<div class="portlet-body" id="advice-list">
 						<div class="table-pages clearfix">
 							<div class="table-page clearfix"></div>

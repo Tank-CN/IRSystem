@@ -11,7 +11,6 @@ import com.tank.model.Admin;
 import com.tank.model.BasAdBanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,12 +51,11 @@ public class BasADBannerController extends AdminBaseController {
      *
      * @param page
      * @param length
-     * @param model
      * @return
      */
     @RequestMapping(value = "adbanner/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,  HttpServletRequest request) {
 
         Map<String, Object> regMsg = new HashMap<String, Object>();
         regMsg.put("data", basADBannerManage.list(page, length));

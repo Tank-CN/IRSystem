@@ -45,6 +45,8 @@ public class BussinessVo implements Serializable {
 
     private String villagename;
 
+    private String info;
+
     private String picurl;
 
     private String telephone;
@@ -55,6 +57,13 @@ public class BussinessVo implements Serializable {
 
     private Integer score;
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public Integer getScore() {
         return score;

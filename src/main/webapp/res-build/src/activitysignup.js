@@ -25,7 +25,7 @@
  *               佛祖保佑         永无BUG
  *
  */
-define(function (require, exports, module) {
+define(function(require, exports, module) {
     var Page = require("page");
     var juicer = require("juicer");
     require("res-build/res/plugin/bs-confirmation/bootstrap-confirmation.js");
@@ -36,6 +36,9 @@ define(function (require, exports, module) {
     var pagelength = 10; //一页多少条；
     var $searchForm = $("#search-form");
     var $body = $('body');
+    //选择图片
+    var $selImg = $("#selImg");
+    var $file = $("#file");
 
 
     Date.prototype.Format = function (fmt) { //author: meizz
@@ -54,6 +57,8 @@ define(function (require, exports, module) {
         return fmt;
     };
 
+
+
     var listTpl = juicer(
         [
             '{@if total === 0}',
@@ -71,59 +76,50 @@ define(function (require, exports, module) {
             '{@else}',
             '<tr role="row" class="even" data-organizationid="${item.id}">',
             '{@/if}',
-            '    <td>${item.id}</td>',
-            '    <td>${item.nickname}</td>',
-            '    <td><a href="#" class="has-popover" data-img="${item.header}">查看图片</a></td>',
-            '    <td>${item.mobile}</td>',
-            '    <td>${item.viptext}</td>',
+            'data-id="${item.id}">',
+
+            '    <td>${item.atitle}</td>',
+            '    <td>${item.counts}</td>',
             '    <td class="">',
-            '{@if item.vip==1}',
-            ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>取消VIP</button>',
-            '{@else}',
-            ' <button type="button" class="btn btn-danger btn-xs j-add" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61f;</span>开通VIP</button>',
-            '{@/if}',
+
+            '        <a href="' + ROOTPAth + '/admin/business/activitysignup_user?aid=${item.aid}&currentpage=${item.currentpage}&pcode=activity&subcode=activitysignup" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看报名人员</a> ',
+
             '    </td>',
             '</tr>',
             '{@/each}',
             '{@/if}'
         ].join(""));
     var Utilitiy = {
-        init: function () {
+        init: function() {
             var self = this;
             this.bind();
             tool.startPageLoading();
 
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/bas/user/list',
+                    url: ROOTPAth + '/admin/business/activitysignup/list',
                     type: 'POST',
                     dataType: 'json',
-                    data: function () {
-                        var nickname = $searchForm.find("input[name=nickname]").val();
-                        var phone = $searchForm.find("input[name=phone]").val();
+                    data: function() {
                         var data = {
-                            length: pagelength,
-                            phone: phone,
-                            nickname: nickname
+                            length: pagelength
                         };
                         return data;
                     },
-                    success: function (res) {
+                    success: function(res) {
                         tool.stopPageLoading();
                         if (res.code === 1) {
                             var newData = $.extend({}, res);
                             if (res.total > 0) {
                                 $.each(newData.data, function (i, val) {
                                     newData.data[i].currentpage = pageIndex.current;
-                                    newData.data[i].viptext = val.vip === 1 ? "是(" + new Date(val.viptime).Format("yyyy-MM-dd hh:mm:ss") + ")" : "否";
                                 });
                             }
-
                             //共多少条记录
                             $hospitalList.find(".page-info-num").text(res.total);
                             $table.find("tbody").empty().append(listTpl.render(newData));
                             $hospitalList.find(".has-popover").popover({
-                                content: function () {
+                                content: function() {
                                     var $this = $(this);
                                     var url = $this.data("img");
                                     return '<img src="' + url + '" style="width: 100px;height: 100px" alt=""/>'
@@ -133,20 +129,11 @@ define(function (require, exports, module) {
                                 placement: "top",
                                 title: "图片预览"
                             });
-                            $hospitalList.find(".j-add").confirmation({
-                                title: "确定要开通VIP吗？",
-                                btnOkLabel: "确定",
-                                btnCancelLabel: "取消",
-                                onConfirm: function (event, element) {
-                                    event.preventDefault();
-                                    self.additem($(element));
-                                }
-                            });
                             $hospitalList.find(".j-del").confirmation({
-                                title: "确定要取消VIP吗？",
+                                title: "确定删除吗？",
                                 btnOkLabel: "确定",
                                 btnCancelLabel: "取消",
-                                onConfirm: function (event, element) {
+                                onConfirm: function(event, element) {
                                     event.preventDefault();
                                     self.delitem($(element));
                                 }
@@ -154,7 +141,7 @@ define(function (require, exports, module) {
                         }
 
                     },
-                    error: function () {
+                    error: function() {
                         tool.stopPageLoading();
                         $("#ajax_fail").modal("show")
                     },
@@ -163,7 +150,7 @@ define(function (require, exports, module) {
                 /*tpl: {
                  go: true //隐藏跳转到第几页
                  },*/
-                getTotalPage: function (res) {
+                getTotalPage: function(res) {
                     //返回总页数
                     return Math.ceil(res.total / pagelength);
                 },
@@ -184,54 +171,36 @@ define(function (require, exports, module) {
             }
 
         },
-        bind: function () {
+        bind: function() {
             //修改每页显示条数
-            $hospitalList.on("change", ".j-length", function () {
+            $hospitalList.on("change", ".j-length", function() {
                 var $this = $(this);
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
                 $hospitalList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
-            $searchForm.on("submit", function (e) {
+            $searchForm.on("submit", function(e) {
                 e.preventDefault();
                 pageIndex.reset();
             });
-            $searchForm.on("click", ".j-showall", function (e) {
+            $searchForm.on("click", ".j-showall", function(e) {
                 e.preventDefault();
                 $searchForm[0].reset();
                 pageIndex.reset();
             });
         },
-        additem: function ($that) {
+        delitem: function($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/bas/user/vip/' + organizationid;
+            var delPath = ROOTPAth + '/admin/business/activity/delete/' + organizationid;
             $.ajax({
                 url: delPath,
                 type: "POST",
-                success: function (data) {
-                    pageIndex.resetgoto(pageIndex.current)
-                },
-                error: function () {
-                    tool.stopPageLoading();
-                    $("#ajax_fail").modal("show")
-                }
-            });
-        },
-        delitem: function ($that) {
-            var $tr = $that.closest("tr");
-            var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/bas/user/unvip/' + organizationid;
-            $.ajax({
-                url: delPath,
-                type: "POST",
-                success: function (data) {
-                    pageIndex.resetgoto(pageIndex.current)
-                },
-                error: function () {
-                    tool.stopPageLoading();
-                    $("#ajax_fail").modal("show")
+                success: function(data) {
+
+                    $tr.hide();
+
                 }
             });
         }

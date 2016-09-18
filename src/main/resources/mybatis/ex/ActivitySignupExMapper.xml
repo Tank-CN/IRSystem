@@ -56,4 +56,15 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getSign" parameterType="map" resultType="com.tank.vo.admin.SignCountVo">
+      select aid,atitle,COUNT(aid) as counts
+                   from activity_signup
+                   group by ATITLE limit #{offset},#{pageSize}
+  </select>
+
+
+  <select id="countSign" resultType="java.lang.Integer">
+    select COUNT(DISTINCT AID) from activity_signup
+  </select>
 </mapper>

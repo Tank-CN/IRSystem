@@ -36,7 +36,9 @@ define(function (require, exports, module) {
     var pagelength = 10; //一页多少条；
     var $searchForm = $("#search-form");
     var $body = $('body');
-
+    //选择图片
+    var $selImg = $("#selImg");
+    var $file = $("#file");
 
     Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
@@ -53,6 +55,7 @@ define(function (require, exports, module) {
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     };
+
 
     var listTpl = juicer(
         [
@@ -71,17 +74,16 @@ define(function (require, exports, module) {
             '{@else}',
             '<tr role="row" class="even" data-organizationid="${item.id}">',
             '{@/if}',
-            '    <td>${item.id}</td>',
-            '    <td>${item.nickname}</td>',
-            '    <td><a href="#" class="has-popover" data-img="${item.header}">查看图片</a></td>',
-            '    <td>${item.mobile}</td>',
-            '    <td>${item.viptext}</td>',
+            '    <td>${item.title}</td>',
+            '    <td>${item.typename}</td>',
+            '    <td>${item.telephone}</td>',
+            '    <td>${item.createdate}</td>',
+            '    <td>${item.flag}</td>',
+            '    <td>${item.uid}</td>',
             '    <td class="">',
-            '{@if item.vip==1}',
-            ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>取消VIP</button>',
-            '{@else}',
-            ' <button type="button" class="btn btn-danger btn-xs j-add" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61f;</span>开通VIP</button>',
-            '{@/if}',
+
+            '        <a href="' + ROOTPAth + '/admin/business/business/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=business&subcode=businesslist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+
             '    </td>',
             '</tr>',
             '{@/each}',
@@ -95,55 +97,45 @@ define(function (require, exports, module) {
 
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/bas/user/list',
+                    url: ROOTPAth + '/admin/business/business/applylist',
                     type: 'POST',
                     dataType: 'json',
                     data: function () {
-                        var nickname = $searchForm.find("input[name=nickname]").val();
+                        var title = $searchForm.find("input[name=title]").val();
                         var phone = $searchForm.find("input[name=phone]").val();
+                        var flag = $searchForm.find("select[name=flag]").val();
                         var data = {
                             length: pagelength,
                             phone: phone,
-                            nickname: nickname
+                            flag: flag,
+                            title: title
                         };
                         return data;
                     },
                     success: function (res) {
+                        console.log(res);
                         tool.stopPageLoading();
                         if (res.code === 1) {
                             var newData = $.extend({}, res);
                             if (res.total > 0) {
                                 $.each(newData.data, function (i, val) {
                                     newData.data[i].currentpage = pageIndex.current;
-                                    newData.data[i].viptext = val.vip === 1 ? "是(" + new Date(val.viptime).Format("yyyy-MM-dd hh:mm:ss") + ")" : "否";
+                                    if (newData.data[i].flag == 0) {
+                                        newData.data[i].flag="申请中";
+                                    } else if (newData.data[i].flag == 1) {
+                                        newData.data[i].flag="审核中";
+                                    } else if (newData.data[i].flag == 2) {
+                                        newData.data[i].flag="已处理";
+                                    }
+                                    newData.data[i].createdate=new Date(newData.data[i].createdate).Format("yyyy-MM-dd hh:mm:ss");
                                 });
                             }
-
                             //共多少条记录
                             $hospitalList.find(".page-info-num").text(res.total);
                             $table.find("tbody").empty().append(listTpl.render(newData));
-                            $hospitalList.find(".has-popover").popover({
-                                content: function () {
-                                    var $this = $(this);
-                                    var url = $this.data("img");
-                                    return '<img src="' + url + '" style="width: 100px;height: 100px" alt=""/>'
-                                },
-                                html: true,
-                                trigger: "hover",
-                                placement: "top",
-                                title: "图片预览"
-                            });
-                            $hospitalList.find(".j-add").confirmation({
-                                title: "确定要开通VIP吗？",
-                                btnOkLabel: "确定",
-                                btnCancelLabel: "取消",
-                                onConfirm: function (event, element) {
-                                    event.preventDefault();
-                                    self.additem($(element));
-                                }
-                            });
+
                             $hospitalList.find(".j-del").confirmation({
-                                title: "确定要取消VIP吗？",
+                                title: "确定删除吗？",
                                 btnOkLabel: "确定",
                                 btnCancelLabel: "取消",
                                 onConfirm: function (event, element) {
@@ -185,6 +177,18 @@ define(function (require, exports, module) {
 
         },
         bind: function () {
+            //选择图片
+            $selImg.on("click", function () {
+                $file.click();
+            });
+
+            $file.on("change", function () {
+
+                $selImg.find(".has-img").remove();
+                $selImg.append('<span class="has-img">' + $file.val() + '</span>');
+            });
+
+            var self = this;
             //修改每页显示条数
             $hospitalList.on("change", ".j-length", function () {
                 var $this = $(this);
@@ -203,35 +207,15 @@ define(function (require, exports, module) {
                 pageIndex.reset();
             });
         },
-        additem: function ($that) {
-            var $tr = $that.closest("tr");
-            var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/bas/user/vip/' + organizationid;
-            $.ajax({
-                url: delPath,
-                type: "POST",
-                success: function (data) {
-                    pageIndex.resetgoto(pageIndex.current)
-                },
-                error: function () {
-                    tool.stopPageLoading();
-                    $("#ajax_fail").modal("show")
-                }
-            });
-        },
         delitem: function ($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/bas/user/unvip/' + organizationid;
+            var delPath = ROOTPAth + '/admin/business/business/delete/' + organizationid;
             $.ajax({
                 url: delPath,
                 type: "POST",
                 success: function (data) {
-                    pageIndex.resetgoto(pageIndex.current)
-                },
-                error: function () {
-                    tool.stopPageLoading();
-                    $("#ajax_fail").modal("show")
+                    $tr.hide();
                 }
             });
         }

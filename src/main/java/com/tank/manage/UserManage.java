@@ -75,6 +75,38 @@ public class UserManage extends BaseManage {
         return userExMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 开通VIP
+     * @param uid
+     * @return
+     */
+    public  boolean vip(Long uid){
+        User user=new User();
+        user.setId(uid);
+        user.setVip(Byte.valueOf("1"));
+        user.setViptime(new Date());
+        if(userExMapper.updateByPrimaryKeySelective(user)>0){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * 开通VIP
+     * @param uid
+     * @return
+     */
+    public  boolean unvip(Long uid){
+        User user=new User();
+        user.setId(uid);
+        user.setVip(Byte.valueOf("0"));
+        if(userExMapper.updateByPrimaryKeySelective(user)>0){
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * 搜索用户

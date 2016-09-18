@@ -5,7 +5,6 @@ import com.tank.controller.admin.AdminBaseController;
 import com.tank.manage.DynamicManage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,12 +43,11 @@ public class DynamicController extends AdminBaseController {
      *
      * @param page
      * @param length
-     * @param model
      * @return
      */
     @RequestMapping(value = "dynamic/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(String content,String nickname, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, Model model, HttpServletRequest request) {
+    public Map<String, Object> list(String content,String nickname, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,  HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
 //        List<Activity> list = activityManage.list(title, page, length);
 //        if (null != list && list.size() > 0) {

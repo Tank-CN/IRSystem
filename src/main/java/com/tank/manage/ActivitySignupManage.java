@@ -4,6 +4,7 @@ import com.tank.mapper.ex.ActivityExMapper;
 import com.tank.mapper.ex.ActivitySignupExMapper;
 import com.tank.model.ActivitySignup;
 import com.tank.model.ActivitySignupExample;
+import com.tank.vo.admin.SignCountVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,15 @@ public class ActivitySignupManage extends BaseManage {
         return activitySignupExMapper.deleteByPrimaryKey(id);
     }
 
+
+    public  List<SignCountVo> getSignCounts(Integer pageNumber,
+                                            Integer pageSize){
+        return activitySignupExMapper.getSign( (pageNumber - 1) * pageSize,pageSize);
+    }
+
+    public  int countSignCounts(){
+        return activitySignupExMapper.countSign();
+    }
 
     public List<ActivitySignup> listByAid(Long aid,Integer pageNumber,
                                      Integer pageSize) {

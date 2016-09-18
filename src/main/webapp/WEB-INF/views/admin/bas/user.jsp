@@ -70,6 +70,7 @@
                                id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
                             <thead>
                             <tr role="row">
+                                <th class="sorting">ID</th>
                                 <th class="sorting">昵称</th>
                                 <th class="sorting">广告图</th>
                                 <th class="sorting">手机号码</th>
@@ -117,7 +118,7 @@
                 <div class="dialogtip-con-wrap clearfix dialogtipg-warning">
                     <div class="dialogtip-icon iconfont">&#xe615;</div>
                     <div class="dialogtip-con">
-                        <h4 class="dialogtip-tit" style="margin-top: 12px;">获取失败</h4>
+                        <h4 class="dialogtip-tit" style="margin-top: 12px;">操作失败</h4>
                     </div>
                 </div>
             </div>

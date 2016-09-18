@@ -11,30 +11,23 @@
 <body>
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">
-    <i class="iconfont">&#xe622;</i>资讯管理
+    <i class="iconfont">&#xe622;</i>商户管理
 </h3>
 
 <div class="page-bar clearfix">
     <ul class="page-breadcrumb">
         <li><i class="iconfont ico-home">&#xe60a;</i> <a href="index.html">主页</a> <i
                 class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">资讯管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
-        <li><a href="#">今日头条</a></li>
+        <li><a href="#">商户管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
+        <li><a href="#">商户申请</a></li>
     </ul>
-    <!-- <ul class="page-breadcrumb">
-			<form name="Form" action="${ctx}/admin/sys/file/upload/orgs" method="post"
-				enctype="multipart/form-data" style="float: left">
-				<input id="excel_file" type="file" name="file" style="float: left" /> <input id="excel_button"
-					type="submit" value="导入Excel" style="float: left" />
-			</form>
-			<input type="button" value="导出Excel" id="download" style="float: left; margin-left: 10px;" />
-		</ul> -->
-    <div class="page-bar-actions">
-        <a class="btn btn-success btn-sm"
-           href="${ctx}/admin/business/news/addView?pcode=News&subcode=HotNews"> <i
-                class="iconfont">&#xe612;</i> <span class="hidden-480">添加头条</span>
-        </a>
-    </div>
+
+    <%--<div class="page-bar-actions">--%>
+    <%--<a class="btn btn-success btn-sm"--%>
+    <%--href="${ctx}/admin/business/business/addView?pcode=business&subcode=businesslist"> <i--%>
+    <%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加商户</span>--%>
+    <%--</a>--%>
+    <%--</div>--%>
 </div>
 <!-- END PAGE HEADER-->
 
@@ -42,6 +35,30 @@
     <div class="row">
         <div class="col-md-12">
             <div class="portlet">
+                <div class="portlet-search clearfix">
+                    <form class="form-inline" id="search-form">
+                        <div class="form-group">
+                            <label for="title">商家名称</label> <input type="text" class="form-control" name="title"
+                                                                   id="title" placeholder="按商家名称搜索">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话号码</label> <input type="text" class="form-control" name="phone"
+                                                                   id="phone" placeholder="按电话号码搜索">
+                        </div>
+                        <div class="form-group">
+                            <label for="flag">状态</label>
+                            <select name="flag"
+                                    id="flag" class="form-control">
+                                <option value="-1">全部</option>
+                                <option value="0">申请中</option>
+                                <option value="1">审核中</option>
+                                <option value="2">已处理</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info">搜索</button>
+                        <button type="button" class="btn btn-success j-showall">查看全部</button>
+                    </form>
+                </div>
                 <div class="portlet-body" id="hospital-list">
                     <div class="table-pages clearfix">
                         <div class="table-page clearfix"></div>
@@ -64,9 +81,12 @@
                                id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
                             <thead>
                             <tr role="row">
-                                <th class="sorting">名称</th>
-                                <th class="sorting">图片</th>
-                                <th class="sorting">时间</th>
+                                <th class="sorting_desc">商家名称</th>
+                                <th class="sorting">类别名称</th>
+                                <th class="sorting">电话</th>
+                                <th class="sorting">申请时间</th>
+                                <th class="sorting">状态</th>
+                                <th class="sorting">申请人ID</th>
                                 <th class="heading sorting_disabled">操作</th>
                             </tr>
                             </thead>
@@ -110,7 +130,7 @@
                 <div class="dialogtip-con-wrap clearfix dialogtipg-warning">
                     <div class="dialogtip-icon iconfont">&#xe615;</div>
                     <div class="dialogtip-con">
-                        <h4 class="dialogtip-tit" style="margin-top: 12px;">获取失败</h4>
+                        <h4 class="dialogtip-tit" style="margin-top: 12px;">加载失败</h4>
                     </div>
                 </div>
             </div>
@@ -130,5 +150,5 @@
         }
         ;
     </script>
-    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="news.js"></script>
+    <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="business_apply.js"></script>
 </content>
