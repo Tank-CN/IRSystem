@@ -43,9 +43,10 @@ public class ActivitySignupController extends AdminBaseController {
     }
 
     @RequestMapping(value = "activitysignup_user")
-    public ModelAndView activitysignup_user(String currentpage) {
+    public ModelAndView activitysignup_user(String id,String currentpage) {
         ModelAndView modelAndView = new ModelAndView("admin/business/activitysignup_user");
         modelAndView.addObject("currentpage", CommonUtils.isNull(currentpage) ? "1" : currentpage);
+        modelAndView.addObject("id", id);
         return modelAndView;
     }
 
@@ -56,6 +57,16 @@ public class ActivitySignupController extends AdminBaseController {
         Map<String, Object> regMsg = new HashMap<String, Object>();
         regMsg.put("data", activitySignupManage.getSignCounts(page, length));
         regMsg.put("total", activitySignupManage.countSignCounts());
+        regMsg.put("code", ResultCode.SUCCESS);
+        return regMsg;
+    }
+
+    @RequestMapping(value = "activitysignup/listuser", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> listuser(Long id,@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
+        Map<String, Object> regMsg = new HashMap<String, Object>();
+        regMsg.put("data", activitySignupManage.listByAid(id,page, length));
+        regMsg.put("total", activitySignupManage.countByAid(id));
         regMsg.put("code", ResultCode.SUCCESS);
         return regMsg;
     }

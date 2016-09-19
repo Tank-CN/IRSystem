@@ -82,7 +82,7 @@ define(function(require, exports, module) {
             '    <td>${item.counts}</td>',
             '    <td class="">',
 
-            '        <a href="' + ROOTPAth + '/admin/business/activitysignup_user?aid=${item.aid}&currentpage=${item.currentpage}&pcode=activity&subcode=activitysignup" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看报名人员</a> ',
+            '        <a href="' + ROOTPAth + '/admin/business/activitysignup_user?id=${item.aid}&currentpage=${item.currentpage}&pcode=activity&subcode=activitysignup" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看报名人员</a> ',
 
             '    </td>',
             '</tr>',

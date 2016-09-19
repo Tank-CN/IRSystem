@@ -42,6 +42,9 @@ public class UserManage extends BaseManage {
     }
 
 
+
+
+
     public List<User> search(String nickname, String phone, Integer pageNumber, Integer pageSize) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();

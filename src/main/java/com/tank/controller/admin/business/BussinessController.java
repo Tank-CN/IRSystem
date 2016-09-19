@@ -98,14 +98,10 @@ public class BussinessController extends AdminBaseController {
                 b.setInfo(null);
             }
             regMsg.put("data", list);
-            regMsg.put("total", basBusinessManage.count(title, type));
-            regMsg.put("code", ResultCode.SUCCESS);
-        } else {
-            regMsg.put("data", null);
-            regMsg.put("total", 0);
-            regMsg.put("code", ResultCode.SUCCESS);
-        }
 
+        }
+        regMsg.put("total", basBusinessManage.count(title, type));
+        regMsg.put("code", ResultCode.SUCCESS);
         return regMsg;
     }
 

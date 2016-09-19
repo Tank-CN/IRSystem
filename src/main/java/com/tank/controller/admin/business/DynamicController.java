@@ -1,14 +1,12 @@
 package com.tank.controller.admin.business;
 
 import com.bs.util.CommonUtils;
+import com.bs.util.ResultCode;
 import com.tank.controller.admin.AdminBaseController;
 import com.tank.manage.DynamicManage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +24,7 @@ import java.util.Map;
 public class DynamicController extends AdminBaseController {
 
     @Autowired
-    DynamicManage    dynamicManage;
-
-
+    DynamicManage dynamicManage;
 
 
     @RequestMapping(value = "dynamic")
@@ -47,32 +43,32 @@ public class DynamicController extends AdminBaseController {
      */
     @RequestMapping(value = "dynamic/list", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> list(String content,String nickname, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length,  HttpServletRequest request) {
+    public Map<String, Object> list(String nickname, String uid, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "length", defaultValue = "20") Integer length, HttpServletRequest request) {
         Map<String, Object> regMsg = new HashMap<String, Object>();
-//        List<Activity> list = activityManage.list(title, page, length);
-//        if (null != list && list.size() > 0) {
-//            for (Activity activity : list) {
-//                activity.setContent(null);
+//        Long _uid = null;
+//        if (!CommonUtils.isNull(uid)) {
+//            try {
+//                _uid = Long.valueOf(uid);
+//            } catch (Exception e) {
+//                regMsg.put("data", null);
+//                regMsg.put("total", 0);
+//                regMsg.put("code", ResultCode.SUCCESS);
 //            }
-//            regMsg.put("data", list);
-//            regMsg.put("total", activityManage.count(title));
-//            regMsg.put("code", ResultCode.SUCCESS);
-//        } else {
-//            regMsg.put("data", null);
-//            regMsg.put("total", 0);
-//            regMsg.put("code", ResultCode.SUCCESS);
 //        }
-
+        Long _uid = null;
+        regMsg.put("data", dynamicManage.list(nickname, _uid, page, length));
+        regMsg.put("total", dynamicManage.count(nickname, _uid));
+        regMsg.put("code", ResultCode.SUCCESS);
         return regMsg;
     }
 
 
-//    @RequestMapping(value = "activity/delete/{id}", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Boolean delete(@PathVariable("id") Long id) {
-//        return activityManage.delete(id) == 1;
-//
-//    }
+    @RequestMapping(value = "dynamic/delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean delete(@PathVariable("id") Long id) {
+        return dynamicManage.delete(id);
+
+    }
 //
 //    @RequestMapping(value = "activity/detail/{id}", method = RequestMethod.POST)
 //    @ResponseBody

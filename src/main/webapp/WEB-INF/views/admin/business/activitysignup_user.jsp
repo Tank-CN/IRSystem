@@ -16,7 +16,7 @@
 
 <div class="page-bar clearfix">
 	<ul class="page-breadcrumb">
-		<li><i class="iconfont ico-home">&#xe60a;</i> <a href="index.html">主页</a> <i
+		<li><i class="iconfont ico-home">&#xe60a;</i> <a href="#">主页</a> <i
 				class="iconfont ico-angle-right">&#xe605;</i></li>
 		<li><a href="#">活动管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
 		<li><a href="#">活动报名人员</a></li>
@@ -63,6 +63,7 @@
 								<th class="sorting_desc">联系人</th>
 								<th class="sorting">电话</th>
 								<th class="sorting">参加时间</th>
+								<th class="sorting">用户ID</th>
 								<th class="sorting" style="width: 130px">操作</th>
 							</tr>
 							</thead>
@@ -96,6 +97,7 @@
 	</div>
 	<div>
 		<input type="hidden" id="webBasePath" value="${ctx}">
+		<input type="hidden" id="id" name="id" value="${id}">
 	</div>
 </div>
 <div class="modal fade bs-example-modal-sm" id="ajax_fail" tabindex="-1" role="dialog"

@@ -1,5 +1,6 @@
 package com.tank.manage;
 
+import com.bs.util.CommonUtils;
 import com.tank.mapper.ex.DynamicExMapper;
 import com.tank.mapper.ex.DynamicReplyExMapper;
 import com.tank.model.*;
@@ -51,6 +52,50 @@ public class DynamicManage extends BaseManage {
         } else {
             return false;
         }
+    }
+
+    public List<Dynamic> list(String nickname,Long uid,Integer pageNumber,
+                              Integer pageSize) {
+        DynamicExample example = new DynamicExample();
+        DynamicExample.Criteria criteria=example.createCriteria();
+//        if(!CommonUtils.isNull(uid)){
+//            criteria.andUidEqualTo(uid);
+//        }
+        if(!CommonUtils.isNull(nickname)){
+            List<User> list=userManage.search(nickname,1,1000);
+            if(null!=list&&list.size()>0){
+                List<Long> ids=new ArrayList<>();
+                for(User u:list){
+                    ids.add(u.getId());
+                }
+                criteria.andUidIn(ids);
+            }else{
+                return null;
+            }
+        }
+        example.setOrderByClause(getPage(pageNumber, pageSize));
+        return dynamicExMapper.selectByExample(example);
+    }
+
+    public int count(String nickname,Long uid) {
+        DynamicExample example = new DynamicExample();
+        DynamicExample.Criteria criteria=example.createCriteria();
+//        if(!CommonUtils.isNull(uid)){
+//            criteria.andUidEqualTo(uid);
+//        }
+        if(!CommonUtils.isNull(nickname)){
+            List<User> list=userManage.search(nickname,1,1000);
+            if(null!=list&&list.size()>0){
+                List<Long> ids=new ArrayList<>();
+                for(User u:list){
+                    ids.add(u.getId());
+                }
+                criteria.andUidIn(ids);
+            }else{
+                return 0;
+            }
+        }
+        return dynamicExMapper.countByExample(example);
     }
 
 

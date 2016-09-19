@@ -1,46 +1,15 @@
-/**
- * Created by feiwen8772 on 15/5/12.
- *                       _oo0oo_
- *                      o8888888o
- *                      88" . "88
- *                      (| -_- |)
- *                      0\  =  /0
- *                    ___/`---'\___
- *                  .' \\|     |// '.
- *                 / \\|||  :  |||// \
- *                / _||||| -:- |||||- \
- *               |   | \\\  -  /// |   |
- *               | \_|  ''\---/''  |_/ |
- *               \  .-\__  '-'  ___/-. /
- *             ___'. .'  /--.--\  `. .'___
- *          ."" '<  `.___\_<|>_/___.' >' "".
- *         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
- *         \  \ `_.   \_ __\ /__ _/   .-` /  /
- *     =====`-.____`.___ \_____/___.-`___.-'=====
- *                       `=---='
- *
- *
- *     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *
- *               佛祖保佑         永无BUG
- *
- */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var Page = require("page");
     var juicer = require("juicer");
     require("res-build/res/plugin/bs-confirmation/bootstrap-confirmation.js");
     var tool = require("tool");
     var pageIndex;
     var $table = $("#datatable_ajax");
-    var $hospitalList = $("#hospital-list");
+    var $adviceList = $("#advice-list");
     var pagelength = 10; //一页多少条；
     var $searchForm = $("#search-form");
     var $body = $('body');
-    //选择图片
-    var $selImg = $("#selImg");
-    var $file = $("#file");
-
-
+    
     Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
             "M+": this.getMonth() + 1, //月份
@@ -53,11 +22,9 @@ define(function(require, exports, module) {
         };
         if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         for (var k in o)
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     };
-
-
 
     var listTpl = juicer(
         [
@@ -76,16 +43,16 @@ define(function(require, exports, module) {
             '{@else}',
             '<tr role="row" class="even" data-organizationid="${item.id}">',
             '{@/if}',
-            'data-id="${item.id}">',
-
-
-            '    <td>${item.linkman}</td>',
-            '    <td>${item.mobile}</td>',
-            '    <td>${item.createdate}</td>',
             '    <td>${item.uid}</td>',
+            '    <td>${item.content}</td>',
+            '    <td><a href="#" class="has-popover" data-img="${item.imgurl}">查看图片</a></td>',
+            '    <td>${item.replycount}</td>',
+            '    <td>${item.createdate}</td>',
             '    <td class="">',
 
-            // '        <a href="' + ROOTPAth + '/admin/business/activity/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=activity&subcode=activitylist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            // '        <a href="' + ROOTPAth + '/admin/bas/adbanner/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=AD&subcode=ADBanner" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            //删除
+            ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>删除 </button>',
 
             '    </td>',
             '</tr>',
@@ -93,38 +60,38 @@ define(function(require, exports, module) {
             '{@/if}'
         ].join(""));
     var Utilitiy = {
-        init: function() {
+        init: function () {
             var self = this;
             this.bind();
             tool.startPageLoading();
 
             pageIndex = new Page({
                 ajax: {
-                    url: ROOTPAth + '/admin/business/activitysignup/listuser',
-                    type: 'POST',
+                   url: ROOTPAth + '/admin/business/dynamic/list',//接口
+                    type: 'post',
                     dataType: 'json',
-                    data: function() {
-                        var id = $("input[name=id]").val();
+                    data: function () {
+                        var nickname = $searchForm.find("input[name=nickname]").val();
                         var data = {
                             length: pagelength,
-                            id: id
+                            nickname: nickname
                         };
                         return data;
                     },
-                    success: function(res) {
+                    success: function (res) {
                         tool.stopPageLoading();
                         if (res.code === 1) {
                             var newData = $.extend({}, res);
                             if (res.total > 0) {
                                 $.each(newData.data, function (i, val) {
-                                    newData.data[i].currentpage = pageIndex.current;
                                     newData.data[i].createdate = newData.data[i].createdate ? new Date(newData.data[i].createdate).Format("yyyy-MM-dd hh:mm:ss") : "";
+                                    newData.data[i].currentpage = pageIndex.current;
                                 });
                             }
                             //共多少条记录
-                            $hospitalList.find(".page-info-num").text(res.total);
+                            $adviceList.find(".page-info-num").text(res.total);
                             $table.find("tbody").empty().append(listTpl.render(newData));
-                            $hospitalList.find(".has-popover").popover({
+                            $adviceList.find(".has-popover").popover({
                                 content: function() {
                                     var $this = $(this);
                                     var url = $this.data("img");
@@ -135,62 +102,46 @@ define(function(require, exports, module) {
                                 placement: "top",
                                 title: "图片预览"
                             });
-                            $hospitalList.find(".j-del").confirmation({
+                            $adviceList.find(".j-del").confirmation({
                                 title: "确定删除吗？",
                                 btnOkLabel: "确定",
                                 btnCancelLabel: "取消",
-                                onConfirm: function(event, element) {
+                                onConfirm: function (event, element) {
                                     event.preventDefault();
                                     self.delitem($(element));
                                 }
                             });
                         }
 
-                    },
-                    error: function() {
-                        tool.stopPageLoading();
-                        $("#ajax_fail").modal("show")
-                    },
+                    }
                 },
                 pageName: "page",
-                /*tpl: {
-                 go: true //隐藏跳转到第几页
-                 },*/
-                getTotalPage: function(res) {
+                getTotalPage: function (res) {
                     //返回总页数
-                    return Math.ceil(res.total / pagelength);
+                 return Math.ceil(res.total / pagelength);
+                  
                 },
                 pageWrapper: '.table-page'
             });
-            var windowurl = window.location.href;
-            var returnUrl = windowurl.indexOf("currentpage=");
-
-            if (returnUrl == -1 || returnUrl == "") {
-                pageIndex.resetgoto(1);
-            } else {
-                var returnUrl_val = parseInt(windowurl.substring(returnUrl + 12));
-                if (returnUrl_val != 1) {
-                    pageIndex.resetgoto(returnUrl_val);
-                } else {
-                    pageIndex.reset()
-                }
-            }
-
+            pageIndex.reset();
         },
-        bind: function() {
+        bind: function () {
+            var self = this;
             //修改每页显示条数
-            $hospitalList.on("change", ".j-length", function() {
+            $adviceList.on("change", ".j-length", function () {
                 var $this = $(this);
+                
                 pagelength = $this.val();
                 var index = $this.get(0).selectedIndex;
-                $hospitalList.find(".j-length").not(this).get(0).selectedIndex = index;
+                console.log( $adviceList.find(".j-length").not(this).get(0).selectedIndex);
+                $adviceList.find(".j-length").not(this).get(0).selectedIndex = index;
                 pageIndex.reset();
             });
-            $searchForm.on("submit", function(e) {
+            $searchForm.on("submit", function (e) {
                 e.preventDefault();
                 pageIndex.reset();
             });
-            $searchForm.on("click", ".j-showall", function(e) {
+            $searchForm.on("click", ".j-showall", function (e) {
                 e.preventDefault();
                 $searchForm[0].reset();
                 pageIndex.reset();
@@ -199,18 +150,15 @@ define(function(require, exports, module) {
         delitem: function($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/business/activity/delete/' + organizationid;
+            var delPath = ROOTPAth + '/admin/business/dynamic/delete/' + organizationid;
             $.ajax({
                 url: delPath,
                 type: "POST",
                 success: function(data) {
-
                     $tr.hide();
-
                 }
             });
         }
-
     };
     Utilitiy.init();
 });

@@ -36,15 +36,19 @@
 			<div class="portlet">
 				<div class="portlet-search clearfix">
 					<form class="form-inline" id="search-form">
+						<%--<div class="form-group">--%>
+							<%--<label for="title">活动名称</label> <input type="text" class="form-control" name="title"--%>
+																   <%--id="title" placeholder="按活动名称搜索">--%>
+						<%--</div>--%>
 						<div class="form-group">
-							<label for="title">活动名称</label> <input type="text" class="form-control" name="title"
-																   id="title" placeholder="按活动名称搜索">
+							<label for="nickname">用户昵称</label> <input type="text" class="form-control" name="nickname"
+																   id="nickname" placeholder="按用户昵称搜索">
 						</div>
 						<button type="submit" class="btn btn-info">搜索</button>
 						<button type="button" class="btn btn-success j-showall">查看全部</button>
 					</form>
 				</div>
-				<div class="portlet-body" id="hospital-list">
+				<div class="portlet-body" id="advice-list">
 					<div class="table-pages clearfix">
 						<div class="table-page clearfix"></div>
 						<div class="page-length">
@@ -66,10 +70,11 @@
 							   id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
 							<thead>
 							<tr role="row">
-								<th class="sorting_desc">标题</th>
-								<th class="sorting">内容概要</th>
-								<th class="sorting">联系人/电话</th>
+								<th class="sorting_desc">用户ID</th>
+								<th class="sorting">内容</th>
 								<th class="sorting" style="width: 100px">图片</th>
+								<th class="sorting">评论数</th>
+								<th class="sorting">时间</th>
 								<th class="sorting" style="width: 130px">操作</th>
 							</tr>
 							</thead>
@@ -130,5 +135,5 @@
 	{
 		currentpage
 	};
-</script> <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="activity.js"></script>
+</script> <script type="text/javascript" src="${ctx}/res-build/config.js" data-init="dynamic.js"></script>
 </content>

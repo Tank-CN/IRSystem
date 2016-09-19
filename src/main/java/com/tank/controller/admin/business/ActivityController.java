@@ -69,14 +69,9 @@ public class ActivityController extends AdminBaseController {
                 activity.setContent(null);
             }
             regMsg.put("data", list);
-            regMsg.put("total", activityManage.count(title));
-            regMsg.put("code", ResultCode.SUCCESS);
-        } else {
-            regMsg.put("data", null);
-            regMsg.put("total", 0);
-            regMsg.put("code", ResultCode.SUCCESS);
         }
-
+        regMsg.put("total", activityManage.count(title));
+        regMsg.put("code", ResultCode.SUCCESS);
         return regMsg;
     }
 
