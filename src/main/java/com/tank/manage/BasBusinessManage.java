@@ -170,16 +170,27 @@ public class BasBusinessManage extends BaseManage {
      */
     public List<BussinessVo> listByCollect(Long uid, Integer pageNumber,
                                            Integer pageSize) {
-        BasBusinessExample example = new BasBusinessExample();
-        BasBusinessExample.Criteria criteria = example.createCriteria();
-        //// TODO: 2016/9/17  
-        criteria.andFlagEqualTo(Byte.valueOf("1"));
+        BusinessCollectExample example = new BusinessCollectExample();
+        BusinessCollectExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(uid);
         example.setOrderByClause(getPage(pageNumber, pageSize));
-        List<BasBusiness> list = basBusinessExMapper.selectByExample(example);
+        List<BusinessCollect> list = businessCollectMapper.selectByExample(example);
         if (null != list && list.size() > 0) {
-            return parser(list);
+            List<Long> ids = new ArrayList<>();
+            for (BusinessCollect businessCollect : list) {
+                ids.add(businessCollect.getBid());
+            }
+            BasBusinessExample bexample = new BasBusinessExample();
+            BasBusinessExample.Criteria bcriteria = bexample.createCriteria();
+            bcriteria.andIdIn(ids);
+            List<BasBusiness> blist = basBusinessExMapper.selectByExample(bexample);
+            if (null != blist && blist.size() > 0) {
+                return parser(blist);
+            }
+            return null;
         }
         return null;
+
     }
 
     /**
@@ -375,9 +386,9 @@ public class BasBusinessManage extends BaseManage {
         return null;
     }
 
-    public BussinessVo getVoById(Long id){
-        BasBusiness vo=getById(id);
-        if(null!=vo){
+    public BussinessVo getVoById(Long id) {
+        BasBusiness vo = getById(id);
+        if (null != vo) {
             BussinessVo bv = new BussinessVo();
             try {
                 PropertyUtils.copyProperties(bv, vo);

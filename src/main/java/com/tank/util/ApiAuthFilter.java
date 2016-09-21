@@ -42,7 +42,7 @@ public class ApiAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         logger.info(request.getMethod() + "    " + request.getRequestURI());
-        Map map = request.getParameterMap();
+//        Map map = request.getParameterMap();
         // 测试
         if ("1".equals(RequestUtils.getValue(request, "t"))) {
             filterChain.doFilter(request, response);
@@ -99,6 +99,11 @@ public class ApiAuthFilter extends OncePerRequestFilter {
             //去除sign
             if (!"sign".equals(keys.get(i).toString())) {
                 sb.append(((String[]) map.get(keys.get(i)))[0]);
+//                try {
+//                    sb.append(URLDecoder.decode(((String[]) map.get(keys.get(i)))[0],"UTF-8"));
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
             }
         }
         return sb.toString();
