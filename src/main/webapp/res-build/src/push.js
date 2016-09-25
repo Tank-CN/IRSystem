@@ -137,6 +137,7 @@ define(function (require, exports, module) {
                             return isSuccess;
                         },
                         success: function (data) {
+                            tool.stopPageLoading();
                             var $tipModal= $('#modal-box');
                             if (data.code===1) {
                                 $tipModal.on('show.bs.modal', function (event) {

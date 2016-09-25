@@ -21,12 +21,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/api/util")
-public class UtilController extends ApiBaseController{
+public class UtilController extends ApiBaseController {
     @Autowired
     BasPhoneCaptchaManage basPhoneCaptchaManage;
 
     @Resource(name = "smsService")
     SmsService smsService;
+
 
     /**
      * 需要考虑安全问题 发送验证码
@@ -59,8 +60,7 @@ public class UtilController extends ApiBaseController{
     /**
      * 安全考虑 手机验证码验证
      *
-     * @param mobile
-     *            手机号码
+     * @param mobile 手机号码
      * @param code
      * @return
      */
@@ -86,4 +86,5 @@ public class UtilController extends ApiBaseController{
             return resMap;
         }
     }
+
 }

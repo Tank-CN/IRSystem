@@ -29,6 +29,8 @@ public class BasUserDevice {
 
     private Date gmtModified;
 
+    private Date modifydate;
+
     public Long getId() {
         return id;
     }
@@ -131,5 +133,13 @@ public class BasUserDevice {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public Date getModifydate() {
+        return modifydate;
+    }
+
+    public void setModifydate(Date modifydate) {
+        this.modifydate = modifydate;
     }
 }

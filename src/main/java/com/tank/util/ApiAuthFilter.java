@@ -1,5 +1,6 @@
 package com.tank.util;
 
+import com.bs.util.CommonUtils;
 import com.bs.util.RequestUtils;
 import com.bs.util.ResponseUtils;
 import com.bs.util.ResultCode;
@@ -7,6 +8,7 @@ import com.bs.util.encryption.DESUtils;
 import com.bs.util.encryption.MD5Utils;
 import com.tank.Constants;
 import com.tank.manage.UserManage;
+import com.tank.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -37,12 +39,11 @@ public class ApiAuthFilter extends OncePerRequestFilter {
     private final static long timeout = 30 * 60 * 1000;
 
     //不需要验证的url
-    String[] unAuthUrls = {};
+    String[] unAuthUrls = {"/api/auth/device"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         logger.info(request.getMethod() + "    " + request.getRequestURI());
-//        Map map = request.getParameterMap();
         // 测试
         if ("1".equals(RequestUtils.getValue(request, "t"))) {
             filterChain.doFilter(request, response);
@@ -74,14 +75,25 @@ public class ApiAuthFilter extends OncePerRequestFilter {
                 ResponseUtils.response(ResultCode.SIGN_ERROR, response);
                 return;
             }
-
-
             String sn = RequestUtils.getValue(request, "sn");
             String[] snArry = new DESUtils(Constants.DES_KEY).decryptStr(sn).split(";");
             if (null != snArry && snArry.length == 4) {
-                request.setAttribute("id", snArry[0]);
-                filterChain.doFilter(request, response);
-                return;
+                // 判断是否是同一设备
+                String oldToken = RequestUtils.getValue(request, "token");
+                User user = userManage.getUserById(Long.valueOf(snArry[0]));
+                String newToken = null;
+                if (CommonUtils.isNotNull(user)) {
+                    newToken = user.getToken();
+                }
+                if (oldToken.equals(newToken)) {
+                    request.setAttribute("id", snArry[0]);
+                    filterChain.doFilter(request, response);
+                    return;
+                } else {
+                    // 登录设备不一样
+                    ResponseUtils.response(ResultCode.REQCODE_DEVICE_DISAFFINITY, response);
+                    return;
+                }
             } else {
                 ResponseUtils.response(ResultCode.SIGN_ERROR, response);
                 return;

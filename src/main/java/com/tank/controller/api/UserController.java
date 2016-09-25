@@ -119,7 +119,7 @@ public class UserController extends ApiBaseController{
         User account = userManage.getUserByMobile(username);
         if (account == null) {
             resMap.put("code", ResultCode.ERROR);
-            resMap.put("msg", "账户不存在");
+            resMap.put("msg", "账户或密码不正确");
             return resMap;
         }
         String encryptPassworStr = MD5Utils.getMD5(password);
@@ -140,7 +140,7 @@ public class UserController extends ApiBaseController{
             return resMap;
         } else {
             resMap.put("code", ResultCode.ERROR);
-            resMap.put("msg", "密码不正确");
+            resMap.put("msg", "账户或密码不正确");
             return resMap;
         }
     }
@@ -166,7 +166,44 @@ public class UserController extends ApiBaseController{
         device.setType(Byte.valueOf(type));
         device.setDeviceName(devicename);
         device.setDeviceSysVersion(devicesysversion);
+        device.setModifydate(new Date());
         deviceCacheManage.deviceInfo(device);
+    }
+
+
+
+    /**
+     * 消息推送绑定
+     *
+     * @return
+     */
+    @RequestMapping(value = "auth/device")
+    @ResponseBody
+    public Map<String, Object> device(Long uid, String uniquecode, String uniquecode1,
+                                      String deviceId, String type, String devicename,
+                                      String devicesysversion, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isNull(uid) || CommonUtils.isNull(deviceId)
+                || CommonUtils.isNull(type)) {
+            resMap.put("code", ResultCode.PARAMETERS_PUSH_EMPTY);
+            resMap.put("msg", "传入参数不能为空");
+            return resMap;
+        }
+
+        // 登陆设备信息
+        BasUserDevice device = new BasUserDevice();
+        device.setUid(uid);
+        device.setApptype((byte)1);
+        device.setUniquecode(uniquecode);
+        device.setDeviceId(deviceId);
+        device.setType(Byte.valueOf(type));
+        device.setDeviceName(devicename);
+        device.setDeviceSysVersion(devicesysversion);
+        device.setModifydate(new Date());
+        deviceCacheManage.deviceInfo(device);
+        resMap.put("code", ResultCode.SUCCESS);
+        resMap.put("msg", "绑定成功");
+        return resMap;
     }
 
 
@@ -178,8 +215,7 @@ public class UserController extends ApiBaseController{
      */
     @RequestMapping(value = "logout")
     @ResponseBody
-    public Map<String, Object> logout(HttpServletRequest request) {
-        Long uid = getUid(request);
+    public Map<String, Object> logout(Long uid,HttpServletRequest request) {
         Map<String, Object> resMap = new HashMap<String, Object>();
         if (CommonUtils.isNull(uid)) {
             resMap.put("code", ResultCode.PARAMETERS_EMPTY);

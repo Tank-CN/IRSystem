@@ -43,10 +43,11 @@ public class DeviceCacheManage {
                     PushInfo pushInfo = new PushInfo();
                     pushInfo.setType(1);
                     pushInfo.setKinds(200);
-                    pushInfo.setTitle("掌上社区");
+                    pushInfo.setTitle("优亿佳");
                     pushInfo.setDescription("您的账号在其他设备登录,请重新登录!");
 //					pushService.push(d, pushInfo);
-//                    pushMsgService.sendInformation(d.getUid(), pushInfo.toJsonString());
+//                  pushMsgService.sendInformation(d.getUid(), pushInfo.toJsonString());
+                    jPushService.pushMsgSigle(d.getUid(),pushInfo);
                     // 更新新信息
                     basUserDeviceManage.update(device);
                     // 更新缓存

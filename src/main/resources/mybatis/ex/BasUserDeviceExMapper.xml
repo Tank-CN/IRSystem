@@ -43,6 +43,9 @@
       <if test="gmtModified != null" >
         GMT_MODIFIED,
       </if>
+      <if test="modifydate != null" >
+        MODIFYDATE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -83,6 +86,9 @@
       </if>
       <if test="gmtModified != null" >
         #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>

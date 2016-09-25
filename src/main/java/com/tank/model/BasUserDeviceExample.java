@@ -964,6 +964,66 @@ public class BasUserDeviceExample {
             addCriterion("GMT_MODIFIED not between", value1, value2, "gmtModified");
             return (Criteria) this;
         }
+
+        public Criteria andModifydateIsNull() {
+            addCriterion("MODIFYDATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateIsNotNull() {
+            addCriterion("MODIFYDATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateEqualTo(Date value) {
+            addCriterion("MODIFYDATE =", value, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateNotEqualTo(Date value) {
+            addCriterion("MODIFYDATE <>", value, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateGreaterThan(Date value) {
+            addCriterion("MODIFYDATE >", value, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateGreaterThanOrEqualTo(Date value) {
+            addCriterion("MODIFYDATE >=", value, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateLessThan(Date value) {
+            addCriterion("MODIFYDATE <", value, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateLessThanOrEqualTo(Date value) {
+            addCriterion("MODIFYDATE <=", value, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateIn(List<Date> values) {
+            addCriterion("MODIFYDATE in", values, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateNotIn(List<Date> values) {
+            addCriterion("MODIFYDATE not in", values, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateBetween(Date value1, Date value2) {
+            addCriterion("MODIFYDATE between", value1, value2, "modifydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifydateNotBetween(Date value1, Date value2) {
+            addCriterion("MODIFYDATE not between", value1, value2, "modifydate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
