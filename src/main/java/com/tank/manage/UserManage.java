@@ -7,10 +7,12 @@ import com.tank.mapper.ex.UserExMapper;
 import com.tank.model.User;
 import com.tank.model.UserExample;
 import com.tank.model.UserInfo;
+import com.tank.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -372,6 +374,28 @@ public class UserManage extends BaseManage {
             return "S03";
         }
         return "S200";
+    }
+
+
+    public List<UserVo> getUserVoByEB(String phones) {
+        ArrayList<UserVo> data = new ArrayList<>();
+        String[] arr = phones.split(",");
+        if (null != arr && arr.length > 0) {
+            List<String> ids=new ArrayList<>();
+            for (int i = 0; i < arr.length; i++) {
+                ids.add(arr[i].substring(2));
+            }
+            UserExample example=new UserExample();
+            UserExample.Criteria criteria= example.createCriteria();
+            criteria.andMobileIn(ids);
+            List<User> users=userExMapper.selectByExample(example);
+            if(null!=users&&users.size()>0){
+                for(User user:users){
+                    data.add(getUserVo(user));
+                }
+            }
+        }
+        return data;
     }
 
 

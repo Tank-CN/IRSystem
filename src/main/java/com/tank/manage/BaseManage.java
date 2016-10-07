@@ -85,6 +85,7 @@ public class BaseManage {
         userVo.setNickname(user.getNickname());
         userVo.setHeader(user.getHeader());
         userVo.setBirthdate(user.getBirthdate());
+        userVo.setMobile(user.getMobile());
         userVo.setId(user.getId());
         userVo.setInfo(user.getInfo());
         userVo.setSexcode(user.getSexcode());

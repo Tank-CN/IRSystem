@@ -1,5 +1,6 @@
 package com.tank.controller;
 
+import com.bs.util.CommonUtils;
 import com.tank.manage.*;
 import com.tank.model.*;
 import com.tank.push.PushInfo;
@@ -96,6 +97,9 @@ public class TestController {
 
 
     public String getURL(String url) {
+        if(CommonUtils.isEmpty(url)){
+            return url;
+        }
         return (null==s_url?getIP():s_url) + url.substring(url.indexOf("8090/") + 5);
     }
 

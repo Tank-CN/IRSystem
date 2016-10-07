@@ -9,7 +9,6 @@ import com.tank.manage.DynamicManage;
 import com.tank.manage.UserManage;
 import com.tank.model.User;
 import com.tank.vo.MyInfoVo;
-import com.tank.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,19 +52,41 @@ public class UserInfoController extends ApiBaseController {
         MyInfoVo vo = new MyInfoVo();
         vo.setBusinessCollectCount(basBusinessManage.countByCollect(uid));
         vo.setDynamicCount(dynamicManage.countByUid(uid));
-        User user = userManage.getUserById(uid);
-        if (null != user) {
-            UserVo userVo = new UserVo();
-            userVo.setNickname(user.getNickname());
-            userVo.setHeader(user.getHeader());
-            userVo.setBirthdate(user.getBirthdate());
-            userVo.setId(user.getId());
-            userVo.setInfo(user.getInfo());
-            userVo.setSexcode(user.getSexcode());
-            userVo.setVip(user.getVip());
-            vo.setUserVo(userVo);
-        }
+//        User user = userManage.getUserById(uid);
+//        if (null != user) {
+//            UserVo userVo = new UserVo();
+//            userVo.setNickname(user.getNickname());
+//            userVo.setHeader(user.getHeader());
+//            userVo.setBirthdate(user.getBirthdate());
+//            userVo.setId(user.getId());
+//            userVo.setInfo(user.getInfo());
+//            userVo.setSexcode(user.getSexcode());
+//            userVo.setVip(user.getVip());
+//            vo.setUserVo(userVo);
+//        }
+        vo.setUserVo(userManage.getUserVo(uid));
         resMap.put("data", vo);
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
+    /**
+     * 得到用户信息
+     *
+     * @param ids
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "info", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> info(String ids, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isEmpty(ids)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            return resMap;
+        }
+        resMap.put("data", userManage.getUserVoByEB(ids));
         resMap.put("code", ResultCode.SUCCESS);
         return resMap;
     }
