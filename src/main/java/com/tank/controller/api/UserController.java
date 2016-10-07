@@ -5,6 +5,7 @@ import com.bs.util.encryption.DESUtils;
 import com.bs.util.encryption.MD5Utils;
 import com.tank.Constants;
 import com.tank.cache.DeviceCacheManage;
+import com.tank.easemob.EasemobService;
 import com.tank.manage.BasPhoneCaptchaManage;
 import com.tank.manage.UserManage;
 import com.tank.model.BasPhoneCaptcha;
@@ -43,6 +44,9 @@ public class UserController extends ApiBaseController{
 
     @Autowired
     DeviceCacheManage deviceCacheManage;
+
+    @Autowired
+    EasemobService easemobService;
 
     /**
      * 用户注册
@@ -85,6 +89,8 @@ public class UserController extends ApiBaseController{
         User account = null;
         try {
             account = userManage.create(mobile, password, RequestUtils.getRemoteAddress(request));
+            //环信注册
+            easemobService.checkUser(mobile);
             resMap.put("code", ResultCode.SUCCESS);
             resMap.put("msg", "用户注册成功");
             resMap.put("data", createByAccount(account, getSN(account)));
@@ -136,6 +142,8 @@ public class UserController extends ApiBaseController{
                 deviceBind(account.getId(), uniquecode, uniquecode1, deviceId,
                         String.valueOf(type), devicename, devicesysversion);
             }
+            //环信注册
+            easemobService.checkUser(username);
             resMap.put("msg", "登陆成功");
             return resMap;
         } else {

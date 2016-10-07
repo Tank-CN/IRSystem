@@ -88,6 +88,7 @@ public class UserInfoCache {
         userVo.setInfo(user.getInfo());
         userVo.setSexcode(user.getSexcode());
         userVo.setVip(user.getVip());
+        userVo.setMobile(user.getMobile());
         if (!CommonUtils.isNull(id)) {
             userVo.setAttention(basAttentionManage.isAttention(id, user.getId()));
         }

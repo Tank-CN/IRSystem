@@ -156,5 +156,12 @@
         <constructor-arg value="${JPush_AppKey}"/>
     </bean>
 
+    <bean id="easemobService" class="com.tank.easemob.EasemobService"  init-method="initEasemobUtils">
+        <property name="appKey" value="${EASEMOB_APPKEY}"/>
+        <property name="appClientId" value="${EASEMOB_APP_CLIENT_ID}"/>
+        <property name="appClientSecret" value="${EASEMOB_APP_CLIENT_SECRET}"/>
+    </bean>
+
+
 
 </beans>

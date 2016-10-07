@@ -18,12 +18,22 @@ public class UserVo implements Serializable {
 
     public String header;
 
+    public String mobile;
+
     public Byte vip;
 
     public String info;
     //是否关注
     public boolean isAttention;
 
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public Long getId() {
         return id;
