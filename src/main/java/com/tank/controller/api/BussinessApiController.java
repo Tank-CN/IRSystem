@@ -28,21 +28,6 @@ public class BussinessApiController extends ApiBaseController {
     BusinessApplyManage businessReplyManage;
 
 
-    @RequestMapping(value = "list")
-    @ResponseBody
-    public Map<String, Object> list(Long typeid, Long typeiid, @RequestParam(value = "pageno", defaultValue = "1") Integer pageno, @RequestParam(value = "pagesize", defaultValue = "20") Integer pagesize, HttpServletRequest request) {
-        Map<String, Object> resMap = new HashMap<String, Object>();
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("list", basBusinessManage.listByType(typeid, typeiid, pageno, pagesize));
-        //只要第一次请求时才带上类别
-        if (pageno == 1) {
-            dataMap.put("types", basBusinessManage.listType(typeid));
-        }
-        resMap.put("data", dataMap);
-        resMap.put("code", ResultCode.SUCCESS);
-        return resMap;
-    }
-
 
     @RequestMapping(value = "search")
     @ResponseBody
@@ -54,25 +39,25 @@ public class BussinessApiController extends ApiBaseController {
     }
 
 
-    @RequestMapping(value = "detail")
-    @ResponseBody
-    public Map<String, Object> detail(Long id, HttpServletRequest request) {
-        Long uid = getUid(request);
-        Map<String, Object> resMap = new HashMap<String, Object>();
-        if (CommonUtils.isNull(id)) {
-            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
-            resMap.put("msg", "传入参数不能为空");
-            return resMap;
-        }
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        if (!CommonUtils.isNull(uid)) {
-            dataMap.put("isCollect", basBusinessManage.isCollect(uid, id));
-        }
-        dataMap.put("replyVos", basBusinessManage.listReplyByBid(id, 1, 10));
-        resMap.put("data", dataMap);
-        resMap.put("code", ResultCode.SUCCESS);
-        return resMap;
-    }
+//    @RequestMapping(value = "detail")
+//    @ResponseBody
+//    public Map<String, Object> detail(Long id, HttpServletRequest request) {
+//        Long uid = getUid(request);
+//        Map<String, Object> resMap = new HashMap<String, Object>();
+//        if (CommonUtils.isNull(id)) {
+//            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+//            resMap.put("msg", "传入参数不能为空");
+//            return resMap;
+//        }
+//        Map<String, Object> dataMap = new HashMap<String, Object>();
+//        if (!CommonUtils.isNull(uid)) {
+//            dataMap.put("isCollect", basBusinessManage.isCollect(uid, id));
+//        }
+//        dataMap.put("replyVos", basBusinessManage.listReplyByBid(id, 1, 10));
+//        resMap.put("data", dataMap);
+//        resMap.put("code", ResultCode.SUCCESS);
+//        return resMap;
+//    }
 
     /**
      * 收藏
