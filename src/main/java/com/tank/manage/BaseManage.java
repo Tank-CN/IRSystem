@@ -93,4 +93,10 @@ public class BaseManage {
         return userVo;
     }
 
+    public void restUserCache(Long uid){
+        userInfoCache.resetCache(uid);
+    }
+
+
+
 }

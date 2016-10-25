@@ -79,9 +79,8 @@ public class FileController extends ApiBaseController {
 		if (flag) {
 			account.setId(uid);
 			if (userManage.updateUser(account)) {
-				//// TODO: 2016/6/30  头像上传事件
-//				// 完成头像上传事件
-//				msgRecordManage.CompleteEvent(uid, Constants.MSG_TYPE_0102);
+				//修改用户缓存
+				userManage.restUserCache(uid);
 				resMap.put("code", ResultCode.SUCCESS);
 				resMap.put("msg", "头像上传成功");
 				resMap.put("data", account.getHeader());

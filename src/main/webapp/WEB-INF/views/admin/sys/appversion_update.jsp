@@ -54,15 +54,15 @@
                                 </div><div class="col-md-4" style="line-height: 34px; color: #888888">
                                                                     App版本必须为正整数</div>
                             </div>
-                            <div class="form-group" id="apk_file">
-                                <label class="control-label col-md-3">APP文件</label>
-                                <div class="col-md-4">
-                                    <div id="selImg" class="form-control"> <i class="fa fa-plus"></i>
-                                        <span>选择文件</span></div>
-                                    <input type="file" id="file" name="file" class="">
+                            <%--<div class="form-group" id="apk_file">--%>
+                                <%--<label class="control-label col-md-3">APP文件</label>--%>
+                                <%--<div class="col-md-4">--%>
+                                    <%--<div id="selImg" class="form-control"> <i class="fa fa-plus"></i>--%>
+                                        <%--<span>选择文件</span></div>--%>
+                                    <%--<input type="file" id="file" name="file" class="">--%>
 
-                                </div>
-                            </div>
+                                <%--</div>--%>
+                            <%--</div>--%>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">是否强制</label>
                                 <div class="col-md-4">

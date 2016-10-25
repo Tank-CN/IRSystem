@@ -45,6 +45,19 @@ public class UserInfoCache {
     }
 
 
+    public void resetCache(Long uid){
+        UserVo userVo = userInfoCache.get(uid);
+        if (null == userVo) {
+            return;
+        }
+        User user = userManage.getUserById(uid);
+        if(null!=user){
+            userVo = getUserVo(null, user);
+            userInfoCache.put(uid, userVo);
+        }
+    }
+
+
     public UserVo get(Long uid) {
         UserVo userVo = userInfoCache.get(uid);
         if (null == userVo) {

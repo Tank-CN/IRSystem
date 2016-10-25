@@ -184,6 +184,7 @@ public class UserInfoController extends ApiBaseController {
             resMap.put("msg", "修改失败,联系管理员");
             return resMap;
         }
+        userManage.restUserCache(uid);
         resMap.put("code", ResultCode.SUCCESS);
         resMap.put("msg", "修改成功");
         return resMap;
@@ -217,6 +218,7 @@ public class UserInfoController extends ApiBaseController {
             resMap.put("msg", "修改失败,联系管理员");
             return resMap;
         }
+        userManage.restUserCache(uid);
         resMap.put("code", ResultCode.SUCCESS);
         resMap.put("msg", "修改成功");
         return resMap;
@@ -250,6 +252,7 @@ public class UserInfoController extends ApiBaseController {
             resMap.put("msg", "修改失败,联系管理员");
             return resMap;
         }
+        userManage.restUserCache(uid);
         resMap.put("code", ResultCode.SUCCESS);
         resMap.put("msg", "修改成功");
         return resMap;
@@ -283,6 +286,7 @@ public class UserInfoController extends ApiBaseController {
             resMap.put("msg", "修改失败,联系管理员");
             return resMap;
         }
+        userManage.restUserCache(uid);
         resMap.put("code", ResultCode.SUCCESS);
         resMap.put("msg", "修改成功");
         return resMap;
