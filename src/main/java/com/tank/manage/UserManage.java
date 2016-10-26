@@ -91,6 +91,7 @@ public class UserManage extends BaseManage {
         user.setVip(Byte.valueOf("1"));
         user.setViptime(new Date());
         if(userExMapper.updateByPrimaryKeySelective(user)>0){
+            restUserCache(uid);
             return true;
         }
         return false;
@@ -107,6 +108,7 @@ public class UserManage extends BaseManage {
         user.setId(uid);
         user.setVip(Byte.valueOf("0"));
         if(userExMapper.updateByPrimaryKeySelective(user)>0){
+            restUserCache(uid);
             return true;
         }
         return false;
