@@ -1,8 +1,9 @@
 package com.tank.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BasAdBanner {
+public class BasAdBanner implements Serializable {
     private Long id;
 
     private Long bid;

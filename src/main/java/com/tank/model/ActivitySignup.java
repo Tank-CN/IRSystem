@@ -1,8 +1,9 @@
 package com.tank.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ActivitySignup {
+public class ActivitySignup implements Serializable {
     private Long id;
 
     private Long aid;

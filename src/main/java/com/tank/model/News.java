@@ -1,8 +1,9 @@
 package com.tank.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class News {
+public class News implements Serializable {
     private Long id;
 
     private String title;

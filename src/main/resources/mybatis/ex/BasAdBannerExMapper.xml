@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tank.mapper.ex.BasAdBannerExMapper">
+  <cache-ref namespace="com.tank.mapper.BasAdBannerMapper" />
   <insert id="insertBackId" parameterType="com.tank.model.BasAdBanner" keyProperty="id" useGeneratedKeys="true">
     insert into bas_ad_banner
     <trim prefix="(" suffix=")" suffixOverrides="," >

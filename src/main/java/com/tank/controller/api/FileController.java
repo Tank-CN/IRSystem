@@ -105,7 +105,7 @@ public class FileController extends ApiBaseController {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		boolean flag = false;
 		if (file != null) {
-			String ret = imageUploadService.formUpload(file, "7200x0","360x0");
+			String ret = imageUploadService.formUpload(file, "720x0","360x0");
 			if (!CommonUtils.isNull(ret)) {
 				Map jmap = JSON.parseObject(ret, Map.class);
 				if ("1".equals(jmap.get("code").toString())) {

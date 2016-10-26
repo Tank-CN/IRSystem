@@ -1,6 +1,8 @@
 package com.tank.model;
 
-public class AppNoticeSetting {
+import java.io.Serializable;
+
+public class AppNoticeSetting implements Serializable {
     private Long id;
 
     private Long uid;

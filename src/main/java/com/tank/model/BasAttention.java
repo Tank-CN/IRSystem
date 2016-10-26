@@ -1,8 +1,9 @@
 package com.tank.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BasAttention {
+public class BasAttention implements Serializable {
     private Long id;
 
     private Long uid;

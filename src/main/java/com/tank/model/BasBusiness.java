@@ -1,9 +1,10 @@
 package com.tank.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BasBusiness {
+public class BasBusiness implements Serializable {
     private Long id;
 
     private String title;
