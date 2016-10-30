@@ -58,10 +58,12 @@ public class BasTipController extends AdminBaseController {
     }
 
 
-//    @RequestMapping(value = "adbanner/detail/{id}", method = RequestMethod.POST)
-//    @ResponseBody
-//    public BasAdBanner detail(@PathVariable("id") Long id) {
-//        return basADBannerManage.getById(id);
-//    }
+    @RequestMapping(value = "tip/statue", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> statue(Long id, HttpServletRequest request) {
+        Map<String, Object> regMsg = new HashMap<String, Object>();
+        regMsg.put("code", basTipManage.statue(id)?ResultCode.SUCCESS:ResultCode.ERROR);
+        return regMsg;
+    }
 
 }

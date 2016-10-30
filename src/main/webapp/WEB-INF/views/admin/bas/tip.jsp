@@ -34,20 +34,20 @@
     <div class="row">
         <div class="col-md-12">
             <div class="portlet">
-                <div class="portlet-search clearfix">
-                    <form class="form-inline" id="search-form">
-                        <div class="form-group">
-                            <label for="region">所属地区</label> <input type="text" class="form-control" name="region"
-                                                                    id="region" placeholder="按所属地区搜索">
-                        </div>
-                        <div class="form-group">
-                            <label for="title">医院名称</label> <input type="text" class="form-control" name="title"
-                                                                   id="title" placeholder="按医院名称搜索">
-                        </div>
-                        <button type="submit" class="btn btn-info">搜索</button>
-                        <button type="button" class="btn btn-success j-showall">查看全部</button>
-                    </form>
-                </div>
+                <%--<div class="portlet-search clearfix">--%>
+                    <%--<form class="form-inline" id="search-form">--%>
+                        <%--<div class="form-group">--%>
+                            <%--<label for="region">所属地区</label> <input type="text" class="form-control" name="region"--%>
+                                                                    <%--id="region" placeholder="按所属地区搜索">--%>
+                        <%--</div>--%>
+                        <%--<div class="form-group">--%>
+                            <%--<label for="title">医院名称</label> <input type="text" class="form-control" name="title"--%>
+                                                                   <%--id="title" placeholder="按医院名称搜索">--%>
+                        <%--</div>--%>
+                        <%--<button type="submit" class="btn btn-info">搜索</button>--%>
+                        <%--<button type="button" class="btn btn-success j-showall">查看全部</button>--%>
+                    <%--</form>--%>
+                <%--</div>--%>
                 <div class="portlet-body" id="hospital-list">
                     <div class="table-pages clearfix">
                         <div class="table-page clearfix"></div>

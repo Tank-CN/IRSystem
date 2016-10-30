@@ -186,4 +186,16 @@ public class BussinessController extends AdminBaseController {
         regMsg.put("code", ResultCode.SUCCESS);
         return regMsg;
     }
+
+
+    @RequestMapping(value = "business/applychange", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> applychange(Long id, Byte flag,HttpServletRequest request) {
+        Map<String, Object> regMsg = new HashMap<String, Object>();
+        businessApplyManage.changeStatue(id,flag);
+        regMsg.put("code", ResultCode.SUCCESS);
+        return regMsg;
+    }
+
+
 }

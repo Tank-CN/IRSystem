@@ -39,7 +39,7 @@ public class BusinessApplyManage extends BaseManage {
     }
 
 
-    //'0 申请 1 审核 2处理完
+    //0 申请 1 审核 2处理完
     public List<BusinessApply> list(String title, String phone, Byte flag, Integer pageNumber,
                                     Integer pageSize) {
         BusinessApplyExample example = new BusinessApplyExample();
@@ -50,7 +50,7 @@ public class BusinessApplyManage extends BaseManage {
         if (!CommonUtils.isNull(phone)) {
             criteria.andTelephoneLike("%" + phone + "%");
         }
-        if (!CommonUtils.isNull(flag)&&flag.intValue()!=-1) {
+        if (!CommonUtils.isNull(flag) && flag.intValue() != -1) {
             criteria.andFlagEqualTo(flag);
         }
         example.setOrderByClause(getPage(pageNumber, pageSize));
@@ -67,7 +67,7 @@ public class BusinessApplyManage extends BaseManage {
         if (!CommonUtils.isNull(phone)) {
             criteria.andTelephoneLike("%" + phone + "%");
         }
-        if (!CommonUtils.isNull(flag)&&flag.intValue()!=-1) {
+        if (!CommonUtils.isNull(flag) && flag.intValue() != -1) {
             criteria.andFlagEqualTo(flag);
         }
         return businessApplyMapper.countByExample(example);
@@ -87,5 +87,22 @@ public class BusinessApplyManage extends BaseManage {
         }
     }
 
+
+    //0 申请 1 审核 2处理完
+    public void changeStatue(Long id, Byte flag) {
+        if (null != id && null != flag) {
+            BusinessApply apply = new BusinessApply();
+            apply.setId(id);
+            if (flag.intValue() == 0) {
+                apply.setFlag(Byte.valueOf("1"));
+            } else if (flag.intValue() == 1) {
+                apply.setFlag(Byte.valueOf("2"));
+            }
+            businessApplyMapper.updateByPrimaryKeySelective(apply);
+
+        }
+
+
+    }
 
 }

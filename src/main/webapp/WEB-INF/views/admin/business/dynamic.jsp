@@ -21,12 +21,12 @@
 		<li><a href="#">动态管理</a> <i class="iconfont ico-angle-right">&#xe605;</i></li>
 		<li><a href="#">动态列表</a></li>
 	</ul>
-	<div class="page-bar-actions">
-		<a class="btn btn-success btn-sm"
-		   href="${ctx}/admin/business/activity/addView?pcode=activity&subcode=activitylist"> <i
-				class="iconfont">&#xe612;</i> <span class="hidden-480">添加活动</span>
-		</a>
-	</div>
+	<%--<div class="page-bar-actions">--%>
+		<%--<a class="btn btn-success btn-sm"--%>
+		   <%--href="${ctx}/admin/business/activity/addView?pcode=activity&subcode=activitylist"> <i--%>
+				<%--class="iconfont">&#xe612;</i> <span class="hidden-480">添加活动</span>--%>
+		<%--</a>--%>
+	<%--</div>--%>
 </div>
 <!-- END PAGE HEADER-->
 

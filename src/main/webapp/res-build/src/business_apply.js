@@ -70,19 +70,26 @@ define(function (require, exports, module) {
             '{@else}',
             '{@each data as item,index}',
             '{@if index%2==0}',
-            '<tr role="row" class="odd" data-organizationid="${item.id}">',
+            '<tr role="row" class="odd" data-organizationid="${item.id}" data-flag="${item.flag}">',
             '{@else}',
-            '<tr role="row" class="even" data-organizationid="${item.id}">',
+            '<tr role="row" class="even" data-organizationid="${item.id}" data-flag="${item.flag}">',
             '{@/if}',
             '    <td>${item.title}</td>',
             '    <td>${item.typename}</td>',
             '    <td>${item.telephone}</td>',
             '    <td>${item.createdate}</td>',
-            '    <td>${item.flag}</td>',
+            '    <td>${item.flagstr}</td>',
             '    <td>${item.uid}</td>',
             '    <td class="">',
 
-            '        <a href="' + ROOTPAth + '/admin/business/business/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=business&subcode=businesslist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            // '        <a href="' + ROOTPAth + '/admin/business/business/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=business&subcode=businesslist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
+            '{@if item.flag==0}',
+            ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs"></span>1.更改为审核中</button>',
+            '{@else if item.flag==1}',
+            ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs"></span>2.更改为处理完</button>',
+            '{@else if item.flag==2}',
+            ' <button type="button" class="btn btn-default btn-xs j-edit" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs"></span>3.已处理结束</button>',
+            '{@/if}',
 
             '    </td>',
             '</tr>',
@@ -121,11 +128,11 @@ define(function (require, exports, module) {
                                 $.each(newData.data, function (i, val) {
                                     newData.data[i].currentpage = pageIndex.current;
                                     if (newData.data[i].flag == 0) {
-                                        newData.data[i].flag="申请中";
+                                        newData.data[i].flagstr="申请中";
                                     } else if (newData.data[i].flag == 1) {
-                                        newData.data[i].flag="审核中";
+                                        newData.data[i].flagstr="审核中";
                                     } else if (newData.data[i].flag == 2) {
-                                        newData.data[i].flag="已处理";
+                                        newData.data[i].flagstr="已处理";
                                     }
                                     newData.data[i].createdate=new Date(newData.data[i].createdate).Format("yyyy-MM-dd hh:mm:ss");
                                 });
@@ -135,7 +142,7 @@ define(function (require, exports, module) {
                             $table.find("tbody").empty().append(listTpl.render(newData));
 
                             $hospitalList.find(".j-del").confirmation({
-                                title: "确定删除吗？",
+                                title: "确定要更改状态吗？",
                                 btnOkLabel: "确定",
                                 btnCancelLabel: "取消",
                                 onConfirm: function (event, element) {
@@ -210,12 +217,22 @@ define(function (require, exports, module) {
         delitem: function ($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/business/business/delete/' + organizationid;
+            var flag = $tr.data("flag");
+            // var delPath = ROOTPAth + '/admin/business/applychange/' + organizationid+'/'+flag;
+            var delPath = ROOTPAth + '/admin/business/business/applychange';
             $.ajax({
                 url: delPath,
+                data:{
+                    id:organizationid,
+                    flag:flag
+                },
                 type: "POST",
                 success: function (data) {
-                    $tr.hide();
+                    pageIndex.resetgoto(pageIndex.current)
+                },
+                error: function () {
+                    tool.stopPageLoading();
+                    $("#ajax_fail").modal("show")
                 }
             });
         }

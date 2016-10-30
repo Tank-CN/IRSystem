@@ -78,10 +78,15 @@ define(function(require, exports, module) {
             '    <td>${item.name}</td>',
             '    <td class="">${item.typetext}</td>',
             '    <td class="">${item.createdate}</td>',
-            '    <td class="">${item.status}</td>',
+            '    <td class="">${item.statusstr}</td>',
             '    <td class="">',
-            //删除
+            '{@if item.status==0}',
             ' <button type="button" class="btn btn-danger btn-xs j-del" data-toggle="confirmation" data-placement="left"><span   class="iconfont iconfont-xs">&#xe61d;</span>删除 </button>',
+            '{@else if item.statuss==1}',
+            ' ',
+            '{@/if}',
+
+
 
             '    </td>',
             '</tr>',
@@ -117,7 +122,7 @@ define(function(require, exports, module) {
                             if (res.total > 0) {
                                 $.each(newData.data, function (i, val) {
                                     newData.data[i].currentpage = pageIndex.current;
-                                    newData.data[i].status = val.status === 1 ? "已处理" : "未处理";
+                                    newData.data[i].statusstr = val.status === 1 ? "已处理" : "未处理";
                                     newData.data[i].createdate = newData.data[i].createdate ? new Date(newData.data[i].createdate).Format("yyyy-MM-dd hh:mm:ss") : "";
                                 });
                             }
@@ -201,12 +206,16 @@ define(function(require, exports, module) {
         delitem: function($that) {
             var $tr = $that.closest("tr");
             var organizationid = $tr.data("organizationid");
-            var delPath = ROOTPAth + '/admin/business/business/delete/' + organizationid;
+            // var delPath = ROOTPAth + '/admin/business/dynamic/delete/' + organizationid;
+            var delPath = ROOTPAth + '/admin/bas/tip/statue';
             $.ajax({
                 url: delPath,
+                data:{
+                    id:organizationid
+                },
                 type: "POST",
                 success: function(data) {
-                    $tr.hide();
+                    pageIndex.resetgoto(pageIndex.current)
                 }
             });
         }

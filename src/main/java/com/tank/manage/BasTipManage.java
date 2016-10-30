@@ -125,4 +125,19 @@ public class BasTipManage extends BaseManage {
     }
 
 
+    public boolean statue(Long id) {
+        BasTip basTip = basTipMapper.selectByPrimaryKey(id);
+        if (null != basTip) {
+            if (basTip.getType().intValue() == 2) {
+                if (dynamicManage.delete(basTip.getTid())) {
+                    basTip.setStatus(Byte.valueOf("1"));
+                    basTipMapper.updateByPrimaryKeySelective(basTip);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }
