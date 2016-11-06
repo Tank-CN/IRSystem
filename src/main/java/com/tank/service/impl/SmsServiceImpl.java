@@ -25,8 +25,10 @@ import java.util.Map;
 public class SmsServiceImpl implements SmsService {
 
 	public static String sms_url = "http://106.ihuyi.cn/webservice/sms.php?method=Submit";
-	public static String sms_account = "cf_bsoft_test";
-	public static String sms_psd = "bsoft123456";
+//	public static String sms_account = "cf_bsoft_test";
+//	public static String sms_psd = "bsoft123456";
+	public static String sms_account = "cf_tuozun";
+	public static String sms_psd = "tuozunwangluo";
 	public static String sms_template_code = "您的确认码是：【变量】。请不要把确认码泄露给其他人。如非本人操作，可不用理会！";
 	public static String sms_template_psd = "您的新密码为【变量】。请不要泄露给其他人。请立即更改您的密码！";
 
