@@ -74,6 +74,27 @@ public class UserInfoController extends ApiBaseController {
     /**
      * 得到用户信息
      *
+     * @param uid
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "infoById", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> infoById(String uid, HttpServletRequest request) {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        if (CommonUtils.isEmpty(uid)) {
+            resMap.put("code", ResultCode.PARAMETERS_EMPTY);
+            return resMap;
+        }
+        resMap.put("data", userManage.getUserVo(Long.valueOf(uid)));
+        resMap.put("code", ResultCode.SUCCESS);
+        return resMap;
+    }
+
+
+    /**
+     * 得到用户信息-环信
+     *
      * @param ids
      * @param request
      * @return
