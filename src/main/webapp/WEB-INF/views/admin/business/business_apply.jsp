@@ -87,6 +87,8 @@
                                 <th class="sorting">申请时间</th>
                                 <th class="sorting">状态</th>
                                 <th class="sorting">申请人ID</th>
+                                <th class="sorting">地址</th>
+                                <th class="sorting">备注</th>
                                 <th class="heading sorting_disabled">操作</th>
                             </tr>
                             </thead>
