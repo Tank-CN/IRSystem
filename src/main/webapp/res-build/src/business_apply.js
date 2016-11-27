@@ -80,6 +80,8 @@ define(function (require, exports, module) {
             '    <td>${item.createdate}</td>',
             '    <td>${item.flagstr}</td>',
             '    <td>${item.uid}</td>',
+            '    <td>${item.address}</td>',
+            '    <td>${item.info}</td>',
             '    <td class="">',
 
             // '        <a href="' + ROOTPAth + '/admin/business/business/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=business&subcode=businesslist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',
