@@ -83,9 +83,44 @@ define(function (require, exports, module) {
                 $selImg.append('<span class="has-img">' + $file.val() + '</span>');
             });
             //编辑器
+            // $etitor.summernote({
+            //     height: 300
+            // });
             $etitor.summernote({
-                height: 300
+                height: 300,
+                callbacks: {
+                    onImageUpload: function (files, editor, welEditable) {
+                        for (var i = files.length - 1; i >= 0; i--) {
+                            sendFile(files[i], this);
+                        }
+                    }
+                }
             });
+            //create record for attachment
+            function sendFile(file, el) {
+                data = new FormData();
+                data.append("file", file); // 表单名称
+
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/business/fileupload",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function (response) {
+                        // 这里可能要根据你的服务端返回的上传结果做一些修改哦
+                        $(el).summernote('editor.insertImage', response.url, response.filename);
+                    },
+                    error: function (error) {
+                        alert('图片上传失败');
+                    },
+                    complete: function (response) {
+                    }
+                });
+            }
+
             //
             $addForm.on("focusin", 'input[name="regionname"]', function () {
                 $tree.show();
@@ -111,9 +146,9 @@ define(function (require, exports, module) {
                     serverpay: {
                         number: true
                     },
-                    score:{
-                        digits:true,
-                        range:[0,5]
+                    score: {
+                        digits: true,
+                        range: [0, 5]
                     }
                 },
                 messages: {
@@ -126,9 +161,9 @@ define(function (require, exports, module) {
                     serverpay: {
                         number: "请填写费用（必须是数字）"
                     },
-                    score:{
+                    score: {
                         digits: "评分必须是数字",
-                        range:"请填写0到5的数值"
+                        range: "请填写0到5的数值"
                     }
                 },
                 errorElement: 'span', //default input error message container

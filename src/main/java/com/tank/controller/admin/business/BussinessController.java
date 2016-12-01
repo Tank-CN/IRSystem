@@ -48,6 +48,23 @@ public class BussinessController extends AdminBaseController {
     HttpPostUploadUtil imageUploadService;
 
 
+    @RequestMapping(value = "fileupload", method = RequestMethod.POST)
+    public void fileupload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject map = new JSONObject();
+        if (file != null) {
+            String ret = imageUploadService.formUpload(file, "240x180");
+            if (!CommonUtils.isNull(ret)) {
+                Map jmap = JSON.parseObject(ret, Map.class);
+                if ("1".equals(jmap.get("code").toString())) {
+                    map.put("url",imageUploadService.getNetServiceUrl() + jmap.get("url"));
+                    map.put("filename","uploadfile");
+                }
+            }
+        }
+        response.getWriter().println(map.toJSONString());
+    }
+
+
     @RequestMapping(value = "business/typelist", method = RequestMethod.POST)
     @ResponseBody
     public List<Map<String, Object>> typelist(@RequestParam(value = "pid", defaultValue = "0") Long pid, @RequestParam(value = "children", defaultValue = "true") Boolean children) {
