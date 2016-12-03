@@ -392,12 +392,12 @@ define(function(require, exports, module) {
                      data: {
                      */
                     /*username: function () {
-                     return $UserForm.find('input[name="userName"]').val();
-                     }*/
+                                         return $UserForm.find('input[name="userName"]').val();
+                                         }*/
                     /*
-                     }
-                     }
-                     //                      },*/
+                                         }
+                                         }
+                    //                      },*/
                     // email: "required",
                     // mobile: "required"
                 },

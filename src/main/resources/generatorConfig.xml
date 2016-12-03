@@ -37,16 +37,17 @@
 		<!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
 
 
-		<!--<table tableName="bas_user_device"></table>-->
-
-		<!--<table tableName="dynamic_reply"></table>-->
-		<!--<table tableName="business_reply"></table>-->
-		<!--<table tableName="user"></table>-->
 		<!--<table tableName="business_collect"></table>-->
+		<!--<table tableName="dynamic_reply"></table>-->
+
+		<!--<table tableName="user"></table>-->
 		<!--<table tableName="bas_app_version"></table>-->
+		<!--<table tableName="bas_business"></table>-->
+		<!--<table tableName="business_reply"></table>-->
 		<!--<table tableName="news"></table>-->
 		<!--<table tableName="activity"></table>-->
 		<!--<table tableName="activity_signup"></table>-->
+
 		<!--<table tableName="admin"></table>-->
 		<!--<table tableName="sys_dictionary"></table>-->
 		<!--<table tableName="bas_department"></table>-->
