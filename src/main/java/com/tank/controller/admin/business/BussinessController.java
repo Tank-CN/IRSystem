@@ -48,6 +48,35 @@ public class BussinessController extends AdminBaseController {
     HttpPostUploadUtil imageUploadService;
 
 
+    @RequestMapping(value = "fileupload", method = RequestMethod.POST)
+    public void fileupload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject map = new JSONObject();
+        if (file != null) {
+            String ret = imageUploadService.formUpload(file, "960x0");
+            if (!CommonUtils.isNull(ret)) {
+                Map jmap = JSON.parseObject(ret, Map.class);
+                if ("1".equals(jmap.get("code").toString())) {
+                    String url=imageUploadService.getNetServiceUrl() + jmap.get("url");
+
+                    map.put("url",getURL(url,"_960x0"));
+                    map.put("filename","uploadfile");
+                }
+            }
+        }
+        response.getWriter().println(map.toJSONString());
+    }
+
+    String getURL(String url,String ext){
+        StringBuffer sb=new StringBuffer();
+        if(CommonUtils.isNotEmpty(url)){
+            sb.append(url.substring(0,url.lastIndexOf(".")));
+            sb.append(ext);
+            sb.append(url.substring(url.lastIndexOf(".")));
+        }
+        return sb.toString();
+    }
+
+
     @RequestMapping(value = "business/typelist", method = RequestMethod.POST)
     @ResponseBody
     public List<Map<String, Object>> typelist(@RequestParam(value = "pid", defaultValue = "0") Long pid, @RequestParam(value = "children", defaultValue = "true") Boolean children) {
