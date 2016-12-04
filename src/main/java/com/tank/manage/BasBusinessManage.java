@@ -395,6 +395,9 @@ public class BasBusinessManage extends BaseManage {
             BussinessVo bv = new BussinessVo();
             try {
                 PropertyUtils.copyProperties(bv, vo);
+                if(null!=vo.getUid()&&vo.getUid()!=0){
+                    bv.setUserVo(getUserVo(vo.getUid()));
+                }
                 return bv;
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
