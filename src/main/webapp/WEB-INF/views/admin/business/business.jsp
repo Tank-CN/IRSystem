@@ -82,6 +82,7 @@
 										<th class="sorting">名称</th>
 										<th class="sorting">类别</th>
 										<th class="sorting">电话</th>
+										<th class="sorting">绑定用户</th>
 										<th class="heading sorting_disabled">操作</th>
 									</tr>
 								</thead>

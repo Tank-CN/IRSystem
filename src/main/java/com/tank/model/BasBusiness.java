@@ -53,9 +53,11 @@ public class BasBusiness implements Serializable {
 
     private String website;
 
+    private String servertime;
+
     private Integer score;
 
-    private String servertime;
+    private Long uid;
 
     private Byte flag;
 
@@ -261,6 +263,14 @@ public class BasBusiness implements Serializable {
         this.website = website == null ? null : website.trim();
     }
 
+    public String getServertime() {
+        return servertime;
+    }
+
+    public void setServertime(String servertime) {
+        this.servertime = servertime == null ? null : servertime.trim();
+    }
+
     public Integer getScore() {
         return score;
     }
@@ -269,12 +279,12 @@ public class BasBusiness implements Serializable {
         this.score = score;
     }
 
-    public String getServertime() {
-        return servertime;
+    public Long getUid() {
+        return uid;
     }
 
-    public void setServertime(String servertime) {
-        this.servertime = servertime == null ? null : servertime.trim();
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 
     public Byte getFlag() {

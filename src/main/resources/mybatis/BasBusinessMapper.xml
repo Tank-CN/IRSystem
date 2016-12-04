@@ -27,8 +27,9 @@
     <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
     <result column="SPELL" property="spell" jdbcType="VARCHAR" />
     <result column="WEBSITE" property="website" jdbcType="VARCHAR" />
-    <result column="SCORE" property="score" jdbcType="INTEGER" />
     <result column="SERVERTIME" property="servertime" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="INTEGER" />
+    <result column="UID" property="uid" jdbcType="BIGINT" />
     <result column="FLAG" property="flag" jdbcType="TINYINT" />
     <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
     <result column="CREATEUSER" property="createuser" jdbcType="BIGINT" />
@@ -99,8 +100,8 @@
   <sql id="Base_Column_List" >
     ID, TITLE, ADDRESS, LONGITUDE, LATITUDE, TYPEID, TYPENAME, TYPEIID, TYPENNAME, PROVINCEID, 
     PROVINCENAME, CITYID, CITYNAME, DISTRICTID, DISTRICTNAME, STREETID, STREETNAME, VILLAGEID, 
-    VILLAGENAME, PICURL, INFO, TELEPHONE, SPELL, WEBSITE, SCORE, SERVERTIME, FLAG, CREATEDATE, 
-    CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
+    VILLAGENAME, PICURL, INFO, TELEPHONE, SPELL, WEBSITE, SERVERTIME, SCORE, UID, FLAG, 
+    CREATEDATE, CREATEUSER, LASTMODIFYUSER, LASTMODIFYDATE
   </sql>
   <sql id="Blob_Column_List" >
     INTRODUCE
@@ -162,9 +163,10 @@
       STREETID, STREETNAME, VILLAGEID, 
       VILLAGENAME, PICURL, INFO, 
       TELEPHONE, SPELL, WEBSITE, 
-      SCORE, SERVERTIME, FLAG, 
-      CREATEDATE, CREATEUSER, LASTMODIFYUSER, 
-      LASTMODIFYDATE, INTRODUCE)
+      SERVERTIME, SCORE, UID, 
+      FLAG, CREATEDATE, CREATEUSER, 
+      LASTMODIFYUSER, LASTMODIFYDATE, INTRODUCE
+      )
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{typeid,jdbcType=BIGINT}, 
       #{typename,jdbcType=VARCHAR}, #{typeiid,jdbcType=BIGINT}, #{typenname,jdbcType=VARCHAR}, 
@@ -173,9 +175,10 @@
       #{streetid,jdbcType=VARCHAR}, #{streetname,jdbcType=VARCHAR}, #{villageid,jdbcType=VARCHAR}, 
       #{villagename,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
       #{telephone,jdbcType=VARCHAR}, #{spell,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
-      #{score,jdbcType=INTEGER}, #{servertime,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, 
-      #{createdate,jdbcType=TIMESTAMP}, #{createuser,jdbcType=BIGINT}, #{lastmodifyuser,jdbcType=BIGINT}, 
-      #{lastmodifydate,jdbcType=TIMESTAMP}, #{introduce,jdbcType=LONGVARCHAR})
+      #{servertime,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{uid,jdbcType=BIGINT}, 
+      #{flag,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, #{createuser,jdbcType=BIGINT}, 
+      #{lastmodifyuser,jdbcType=BIGINT}, #{lastmodifydate,jdbcType=TIMESTAMP}, #{introduce,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.tank.model.BasBusiness" >
     insert into bas_business
@@ -252,11 +255,14 @@
       <if test="website != null" >
         WEBSITE,
       </if>
+      <if test="servertime != null" >
+        SERVERTIME,
+      </if>
       <if test="score != null" >
         SCORE,
       </if>
-      <if test="servertime != null" >
-        SERVERTIME,
+      <if test="uid != null" >
+        UID,
       </if>
       <if test="flag != null" >
         FLAG,
@@ -350,11 +356,14 @@
       <if test="website != null" >
         #{website,jdbcType=VARCHAR},
       </if>
+      <if test="servertime != null" >
+        #{servertime,jdbcType=VARCHAR},
+      </if>
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
       </if>
-      <if test="servertime != null" >
-        #{servertime,jdbcType=VARCHAR},
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
       </if>
       <if test="flag != null" >
         #{flag,jdbcType=TINYINT},
@@ -457,11 +466,14 @@
       <if test="record.website != null" >
         WEBSITE = #{record.website,jdbcType=VARCHAR},
       </if>
+      <if test="record.servertime != null" >
+        SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      </if>
       <if test="record.score != null" >
         SCORE = #{record.score,jdbcType=INTEGER},
       </if>
-      <if test="record.servertime != null" >
-        SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      <if test="record.uid != null" >
+        UID = #{record.uid,jdbcType=BIGINT},
       </if>
       <if test="record.flag != null" >
         FLAG = #{record.flag,jdbcType=TINYINT},
@@ -512,8 +524,9 @@
       TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       SPELL = #{record.spell,jdbcType=VARCHAR},
       WEBSITE = #{record.website,jdbcType=VARCHAR},
-      SCORE = #{record.score,jdbcType=INTEGER},
       SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      SCORE = #{record.score,jdbcType=INTEGER},
+      UID = #{record.uid,jdbcType=BIGINT},
       FLAG = #{record.flag,jdbcType=TINYINT},
       CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
       CREATEUSER = #{record.createuser,jdbcType=BIGINT},
@@ -550,8 +563,9 @@
       TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
       SPELL = #{record.spell,jdbcType=VARCHAR},
       WEBSITE = #{record.website,jdbcType=VARCHAR},
-      SCORE = #{record.score,jdbcType=INTEGER},
       SERVERTIME = #{record.servertime,jdbcType=VARCHAR},
+      SCORE = #{record.score,jdbcType=INTEGER},
+      UID = #{record.uid,jdbcType=BIGINT},
       FLAG = #{record.flag,jdbcType=TINYINT},
       CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
       CREATEUSER = #{record.createuser,jdbcType=BIGINT},
@@ -633,11 +647,14 @@
       <if test="website != null" >
         WEBSITE = #{website,jdbcType=VARCHAR},
       </if>
+      <if test="servertime != null" >
+        SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      </if>
       <if test="score != null" >
         SCORE = #{score,jdbcType=INTEGER},
       </if>
-      <if test="servertime != null" >
-        SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      <if test="uid != null" >
+        UID = #{uid,jdbcType=BIGINT},
       </if>
       <if test="flag != null" >
         FLAG = #{flag,jdbcType=TINYINT},
@@ -685,8 +702,9 @@
       TELEPHONE = #{telephone,jdbcType=VARCHAR},
       SPELL = #{spell,jdbcType=VARCHAR},
       WEBSITE = #{website,jdbcType=VARCHAR},
-      SCORE = #{score,jdbcType=INTEGER},
       SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=INTEGER},
+      UID = #{uid,jdbcType=BIGINT},
       FLAG = #{flag,jdbcType=TINYINT},
       CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
       CREATEUSER = #{createuser,jdbcType=BIGINT},
@@ -720,8 +738,9 @@
       TELEPHONE = #{telephone,jdbcType=VARCHAR},
       SPELL = #{spell,jdbcType=VARCHAR},
       WEBSITE = #{website,jdbcType=VARCHAR},
-      SCORE = #{score,jdbcType=INTEGER},
       SERVERTIME = #{servertime,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=INTEGER},
+      UID = #{uid,jdbcType=BIGINT},
       FLAG = #{flag,jdbcType=TINYINT},
       CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
       CREATEUSER = #{createuser,jdbcType=BIGINT},

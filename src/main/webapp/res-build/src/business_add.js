@@ -150,6 +150,10 @@ define(function (require, exports, module) {
                         digits: true,
                         range: [0, 5]
                     }
+                    ,
+                    uid: {
+                        digits: true
+                    }
                 },
                 messages: {
                     title: {
@@ -164,6 +168,10 @@ define(function (require, exports, module) {
                     score: {
                         digits: "评分必须是数字",
                         range: "请填写0到5的数值"
+                    }
+                    ,
+                    uid: {
+                        digits: "用户ID必须是数字"
                     }
                 },
                 errorElement: 'span', //default input error message container

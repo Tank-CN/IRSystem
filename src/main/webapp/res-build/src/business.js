@@ -61,6 +61,7 @@ define(function(require, exports, module) {
             '    <td>${item.title}</td>',
             '    <td>${item.typename}-${item.typenname}</td>',
             '    <td class="">${item.telephone}</td>',
+            '    <td class="">${item.uid}</td>',
             '    <td class="">',
 
             '        <a href="' + ROOTPAth + '/admin/business/business/updateView?id=${item.id}&currentpage=${item.currentpage}&pcode=business&subcode=businesslist" class="btn btn-default btn-xs j-edit" ><span class="iconfont iconfont-xs">&#xe62d;</span>查看</a> ',

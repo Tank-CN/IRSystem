@@ -181,11 +181,45 @@ define(function(require, exports, module) {
                 $(formDom).find("[name=spell]").prop("disabled", true);
                 $(formDom).find("#summernote-con").remove();
                 //编辑器
-                $('#summernote').summernote({
+                // $('#summernote').summernote({
+                //     height: 300,
+                //     lang: 'zh-CN',
+                //
+                // });
+                $etitor.summernote({
                     height: 300,
-                    lang: 'zh-CN',
-
+                    callbacks: {
+                        onImageUpload: function (files, editor, welEditable) {
+                            for (var i = files.length - 1; i >= 0; i--) {
+                                sendFile(files[i], this);
+                            }
+                        }
+                    }
                 });
+                //create record for attachment
+                function sendFile(file, el) {
+                    data = new FormData();
+                    data.append("file", file); // 表单名称
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/business/fileupload",
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: function (response) {
+                            // 这里可能要根据你的服务端返回的上传结果做一些修改哦
+                            $(el).summernote('editor.insertImage', response.url, response.filename);
+                        },
+                        error: function (error) {
+                            alert('图片上传失败');
+                        },
+                        complete: function (response) {
+                        }
+                    });
+                }
             });
 
             //
@@ -216,6 +250,9 @@ define(function(require, exports, module) {
                     score:{
                         digits:true,
                         range:[0,5]
+                    }  ,
+                    uid: {
+                        digits: true
                     }
                 },
                 messages: {
@@ -231,6 +268,10 @@ define(function(require, exports, module) {
                     score:{
                         digits: "评分必须是数字",
                         range:"请填写0到5的数值"
+                    }
+                    ,
+                    uid: {
+                        digits: "用户ID必须是数字"
                     }
                 },
                 errorElement: 'span', //default input error message container

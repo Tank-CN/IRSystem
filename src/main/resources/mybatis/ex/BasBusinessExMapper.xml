@@ -77,11 +77,14 @@
       <if test="website != null" >
         WEBSITE,
       </if>
+      <if test="servertime != null" >
+        SERVERTIME,
+      </if>
       <if test="score != null" >
         SCORE,
       </if>
-      <if test="servertime != null" >
-        SERVERTIME,
+      <if test="uid != null" >
+        UID,
       </if>
       <if test="flag != null" >
         FLAG,
@@ -175,11 +178,14 @@
       <if test="website != null" >
         #{website,jdbcType=VARCHAR},
       </if>
+      <if test="servertime != null" >
+        #{servertime,jdbcType=VARCHAR},
+      </if>
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
       </if>
-      <if test="servertime != null" >
-        #{servertime,jdbcType=VARCHAR},
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
       </if>
       <if test="flag != null" >
         #{flag,jdbcType=TINYINT},

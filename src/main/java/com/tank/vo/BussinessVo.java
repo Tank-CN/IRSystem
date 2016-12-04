@@ -57,6 +57,26 @@ public class BussinessVo implements Serializable {
 
     private Integer score;
 
+    private Long uid;
+
+    public UserVo userVo;
+
+    public UserVo getUserVo() {
+        return userVo;
+    }
+
+    public void setUserVo(UserVo userVo) {
+        this.userVo = userVo;
+    }
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
+
     public String getInfo() {
         return info;
     }

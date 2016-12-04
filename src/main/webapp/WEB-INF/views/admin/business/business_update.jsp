@@ -242,6 +242,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户绑定用户</label>
+
+                        <div class="col-md-4">
+                            <input type="text" id="uid" disabled name="uid" placeholder="商户绑定用户" class="form-control">
+                        </div>
+                    </div>
 
                     <div class="form-actions">
                         <div class="row">
