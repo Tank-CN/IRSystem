@@ -68,7 +68,7 @@
                             <input type="file" id="file" name="file" class="">
                         </div>
                         <div class="col-md-4" style="line-height: 34px; color: #888888">
-                            建议图片尺寸：1200x800(px)
+                            建议图片尺寸：1080x360(px)
                         </div>
                     </div>
 
